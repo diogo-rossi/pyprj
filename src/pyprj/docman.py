@@ -1,0 +1,229 @@
+import os
+import shutil
+import sys
+import tomllib
+from pathlib import Path
+from typing import TypedDict, cast
+
+
+class Author(TypedDict):
+    name: str
+    email: str
+
+
+class PyProjectData(TypedDict):
+    name: str
+    version: str
+    authors: list[Author]
+
+
+class PyProject(TypedDict):
+    project: PyProjectData
+
+
+CONF_PY = r"""# %%          IMPORTS AND SETTINGS
+############# IMPORTS AND SETTINGS #############################################################################################
+
+import os
+import tomllib
+from datetime import datetime
+from pathlib import Path
+from typing import Literal, TypedDict, cast
+
+
+class PyDomainInfo(TypedDict):
+    module: str
+    fullname: str
+
+
+class Author(TypedDict):
+    name: str
+    email: str
+
+
+class PyProjectData(TypedDict):
+    name: str
+    version: str
+    authors: list[Author]
+
+
+class PyProject(TypedDict):
+    project: PyProjectData
+
+
+THIS_DIR: Path = Path(__file__).parent.resolve()
+os.chdir(THIS_DIR)
+
+ROOT_DIR = THIS_DIR.parent.parent.parent
+PYPROJECT_TOML = ROOT_DIR / "pyproject.toml"
+
+with open(PYPROJECT_TOML, "rb") as f:
+    pyproject = cast(PyProject, tomllib.load(f))
+
+project_data: PyProjectData = pyproject["project"]
+project_name = project_data["name"]
+project_author = project_data["authors"][0]["name"]
+
+
+# %%          SPHINX DATA
+############# SPHINX DATA ######################################################################################################
+
+project = project_name
+copyright = f"{datetime.now().year}, {project_author}"
+author = project_author
+release = project_data["version"]
+
+# -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "myst_parser",
+    "sphinx_copybutton",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.extlinks",
+    "sphinxnotes.comboroles",
+    "sphinx.ext.linkcode",
+]
+
+templates_path = ["_templates"]
+exclude_patterns = []
+
+maximum_signature_line_length = 70
+napoleon_google_docstring = True
+napoleon_numpy_docstring = False
+default_role = "code"
+
+# -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+
+html_theme = "alabaster"
+html_static_path = ["_static"]
+
+html_theme = "furo"
+html_title = f'<p style="text-align: center"><b>{project_name}</b></p>'
+html_css_files = ["css/custom.css"]
+html_logo = "../../logo.png"
+myst_heading_anchors = 4
+
+
+def linkcode_resolve(domain: Literal["py", "c", "cpp", "javascript"], info: PyDomainInfo) -> str:
+    return "test"
+"""
+
+INDEX_MD = """# {pkg_name}
+
+Description of the project.
+
+## Installation
+
+```bash
+pip install {pkg_name}
+```
+
+```{{toctree}}
+:caption: Table of contents
+:maxdepth: 1
+
+userguide
+apireference
+```
+
+## Links
+
+- GitHub repository:
+  [https://github.com/{author_name}/{pkg_name}](https://github.com/{author_name}/{pkg_name})
+- PyPI:
+  [https://pypi.org/project/{pkg_name}/](https://pypi.org/project/{pkg_name}/)
+- Documentation:
+  [https://{pkg_name}.readthedocs.io/en/latest/](https://{pkg_name}.readthedocs.io/en/latest/)
+"""
+
+LOGO_PNG: Path = Path(__file__).parent.resolve() / "logo.png"
+
+DOC_FOLDER: Path = Path("./doc")
+SPHINX_SOURCE_FOLDER: Path = DOC_FOLDER / "sphinx/source"
+
+
+def doc():
+    """Manage documentation"""
+    pass
+
+
+def ini():
+    """Initialize documentation"""
+
+    cmd: str = f"uv add --group doc sphinx sphinx-copybutton sphinxnotes-comboroles myst-parser jupyter furo"
+    msg: str = f"> Adding 'doc' packages, running uv comand: `{cmd}`"
+    sep: str = "-" * len(msg)
+    print(f"{sep}\n{msg}\n{sep}")
+    exit_code = os.system(cmd)
+    if exit_code != 0:
+        sys.exit(exit_code)
+
+    print(f"{sep}")
+    for folder in ["doc", "doc/mkdocs", "doc/sphinx"]:
+        msg: str = f"> creating '{folder}' folder"
+        print(f"{msg}")
+        try:
+            os.mkdir(folder)
+        except:
+            print(f"{sep}")
+            raise
+
+    cmd: str = (
+        f"uv run sphinx-quickstart doc/sphinx --sep --project PROJECT --author AUTHOR --release RELEASE --language LANGUAGE"
+    )
+    msg: str = f"> running uv comand: `{cmd}`"
+    sep: str = "-" * len(msg)
+    print(f"{sep}\n{msg}\n{sep}")
+    exit_code = os.system(cmd)
+    if exit_code != 0:
+        sys.exit(exit_code)
+
+    msg: str = f"> editing '{SPHINX_SOURCE_FOLDER}/conf.py' file"
+    sep: str = "-" * len(msg)
+    print(f"{sep}\n{msg}")
+    with open(SPHINX_SOURCE_FOLDER / "conf.py", "w", encoding="utf-8") as file:
+        file.write(CONF_PY)
+
+    with open("pyproject.toml", "rb") as f:
+        pyproject = pyproject = cast(PyProject, tomllib.load(f))
+
+    pkg_name = pyproject["project"]["name"]
+    author_name = pyproject["project"]["authors"][0]["name"].replace(" ", "-").lower()
+
+    msg: str = f"> creating '{SPHINX_SOURCE_FOLDER}/index.md' file"
+    sep: str = "-" * len(msg)
+    print(f"{msg}")
+    with open(SPHINX_SOURCE_FOLDER / "index.md", "w", encoding="utf-8") as file:
+        file.write(INDEX_MD.format(pkg_name=pkg_name, author_name=author_name))
+
+    msg: str = f"> creating '{SPHINX_SOURCE_FOLDER}/userguide.md' file"
+    sep: str = "-" * len(msg)
+    print(f"{msg}")
+    with open(SPHINX_SOURCE_FOLDER / "userguide.md", "w", encoding="utf-8") as file:
+        file.write("# User guide")
+
+    msg: str = f"> creating '{SPHINX_SOURCE_FOLDER}/apireference.md' file"
+    sep: str = "-" * len(msg)
+    print(f"{msg}")
+    with open(SPHINX_SOURCE_FOLDER / "apireference.md", "w", encoding="utf-8") as file:
+        file.write("# API reference")
+
+    msg: str = f"> removing '{SPHINX_SOURCE_FOLDER}/index.rst' file"
+    sep: str = "-" * len(msg)
+    print(f"{msg}")
+    os.remove(SPHINX_SOURCE_FOLDER / "index.rst")
+
+    msg: str = f"> creating '{DOC_FOLDER}/logo.png' file"
+    sep: str = "-" * len(msg)
+    print(f"{msg}")
+    shutil.copy(LOGO_PNG, DOC_FOLDER)
+
+
+def modm():
+    """Process modules"""
+    print("TODO: not yet implemented")
