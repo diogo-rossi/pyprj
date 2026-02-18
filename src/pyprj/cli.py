@@ -1,11 +1,21 @@
+# %%          Imports
+############# Imports ##########################################################################################################
+
 import shutil
 import textwrap
 from functools import partial
 
 from clig import Command, Context
 
-from pyprj import nbex, nbmd
-from pyprj.newproj import init as initproj
+from pyprj import nbex as gen_jup_notebook_example
+from pyprj import nbmd as jup_notebook_to_markdown
+from pyprj.docman import doc as manage_documentation
+from pyprj.docman import ini as initialize_documentation
+from pyprj.docman import modm as modify_normal_py_modules
+from pyprj.newproj import ini as initialize_project
+
+# %%          Commands
+############# Commands #########################################################################################################
 
 
 def pyprj(ctx: Context):
@@ -15,23 +25,8 @@ def pyprj(ctx: Context):
         ctx.command.run(["--help"])
 
 
-def docs():
-    """Manage documentation"""
-    print(locals())
-
-
-def init():
-    """Initialize documentation"""
-    pass
-
-
-def modm():
-    """Process modules"""
-    pass
-
-
-def optmetavarmodifier(name: str):
-    return f"<{name}>"
+# %%          CLI customization
+############# CLI customization ################################################################################################
 
 
 def format_help(
@@ -39,7 +34,7 @@ def format_help(
     width: int | None = None,
     space: int = 24,
     dedent: bool = True,
-    final_newlines: bool = False,
+    final_newlines: bool = True,
     append_text: str = "",
 ) -> str:
     text = f"{text}{append_text}"
@@ -55,6 +50,10 @@ def format_help(
 opthelpmodifier = partial(format_help, width=80, append_text="\nDefaults to '%(default)s'.")
 
 
+def optmetavarmodifier(name: str):
+    return f"<{name.replace("_","-")}>"
+
+
 kwargs = {
     "make_shorts": True,
     "optmetavarmodifier": optmetavarmodifier,
@@ -62,17 +61,28 @@ kwargs = {
     "help_msg": format_help("Show this help message and exit.", width=80),
 }
 
+kwargs_only_help_flag_with_subcmds = kwargs.copy()
+kwargs_only_help_flag_with_subcmds["help_msg"] = format_help("Show this help message and exit.", width=80, final_newlines=False)
+kwargs_only_help_flag_with_subcmds.pop("opthelpmodifier")
+
+kwargs_without_optmetavarmodifier = kwargs.copy()
+kwargs_without_optmetavarmodifier.pop("optmetavarmodifier")
+
+
+# %%          Main function
+############# Main function ####################################################################################################
+
 
 def main():
     # fmt: off
     cmd: Command = (
-        Command(pyprj, **kwargs)
-            .add_subcommand(initproj, **kwargs)
-            .new_subcommand(docs)
-                .add_subcommand(init, **kwargs) 
-                .add_subcommand(nbmd, make_shorts=True)
-                .add_subcommand(nbex, **kwargs)
-                .end_subcommand(modm, **kwargs)
+        Command(pyprj, **kwargs_only_help_flag_with_subcmds)
+            .add_subcommand(initialize_project, **kwargs)
+            .new_subcommand(manage_documentation, **kwargs_only_help_flag_with_subcmds)
+                .add_subcommand(initialize_documentation, **kwargs) 
+                .add_subcommand(jup_notebook_to_markdown, **kwargs_without_optmetavarmodifier)
+                .add_subcommand(gen_jup_notebook_example, **kwargs)
+                .end_subcommand(modify_normal_py_modules, **kwargs)
     )
     # fmt: on
     cmd.run()
