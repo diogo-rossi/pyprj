@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from clig import Context
+from clig import Arg, Context, data
 
 from .taskscmd import run_task
 
@@ -243,6 +243,13 @@ def init():
     print("\nPlease, look at the `pyproject.toml` file for additional info.\n")
 
 
-def modm():
-    """Process modules"""
+def modm(filepath: Arg[list[Path] | Path | None, data(nargs="*", make_flag=False)] = None):
+    """Process documentation in modules.
+
+    Parameters
+    ----------
+    - `filepath` (`Arg[list[Path]  |  Path  |  None`, optional): Defaults to `None`.
+        The filepath or filepaths of modules (.py) to process.
+        If `None` (default), process all python files from the current directory.
+    """
     print("TODO: not yet implemented")
