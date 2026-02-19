@@ -1,6 +1,3 @@
-# %%          IMPORTS
-############# IMPORTS ##########################################################################################################
-
 import json
 import os
 from collections.abc import Iterable
@@ -22,9 +19,6 @@ from .cellfuncs import (
     __is_shell_command_code_cell,
 )
 
-# %%          PUBLIC FUNCTIONS
-############# PUBLIC FUNCTIONS #################################################################################################
-
 
 def nbmd(
     filepath: Arg[list[Path] | Path | None, data(nargs="*", make_flag=False)] = None,
@@ -32,13 +26,13 @@ def nbmd(
     no_prettier: bool = False,
     remove_pattern_shell_files: Arg[str, data(metavar="<pattern>")] = "examples/",
 ):
-    """Process jupyter nb files to generate markdown (md) files.
+    """Process jupyter (nb) files to generate markdown (md) files.
 
     Parameters
     ----------
     - `filepath` (`Arg[list[Path]  |  Path  |  None`, optional): Defaults to `None`.
         The filepath or filepaths of jupyter notebook (`.ipynb`) to convert do markdown.
-        If `None`, process all notebook files from the current directory.
+        If `None` (default), process all notebook files from the current directory.
 
     - `kind` (`Literal["tutorial", "function", "class"]`, optional): Defaults to `"tutorial"`.
         The kind of the notebook files documentation to convert.
@@ -112,11 +106,32 @@ def nbmd(
 
 
 def nbex(
-    filepath: Arg[list[Path] | Path, data(nargs="*")],
+    filepath: Arg[list[Path] | Path | None, data(nargs="*", make_flag=False)] = None,
     change_shell_cells: bool = False,
+    dest_directory: Path = Path("examples/"),
     output_suffix: str = "",
-    dest_directory: Path = Path("examples"),
 ):
+    """Process jupyter (nb) files to generate example files of code,
+    creating files from the cells starting with '%%python'
+
+    Parameters
+    ----------
+    - `filepath` (`Arg[list[Path]  |  Path  |  None`, optional): Defaults to `None`.
+        The filepath or filepaths of jupyter notebook (`.ipynb`) to generate examples.
+        If `None` (default), process all notebook files from the current directory.
+
+    - `change_shell_cells` (`bool`, optional): Defaults to `False`.
+        Whether to edit the following shell cells, after the example cells.
+
+    - `dest_directory` (`Path`, optional): Defaults to `Path("examples")`.
+        Directory of the resulting examples files.
+
+    - `output_suffix` (`str`, optional): Defaults to `""`.
+        If editing original notebook file (`change_shell_cells=True`) add this
+        suffix to the resulting file. Used for debbuging purposes, to not overwrite
+        the original file (which is done with the default value).
+    """
+
     dest_directory.mkdir(exist_ok=True)
 
     if not filepath:
