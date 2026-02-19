@@ -4,9 +4,13 @@ An opinionated CLI tool to manage python projects.
 
 ## Installation
 
-```bash
-pip install pyprj
+A good way to install CLI tools made with python is using `pipx`.
+
+```sh
+pipx install pyprj
 ```
+
+With it, the tool is globally installed in an isolated environment.
 
 ## Usage
 
