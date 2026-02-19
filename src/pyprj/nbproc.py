@@ -53,6 +53,10 @@ def nbmd(
     if not isinstance(filepath, Iterable):
         filepath = [filepath]
 
+    if len(filepath) == 0:
+        print("\nNo notebook files found.\n")
+        return
+
     print()
     prettier: bool = not no_prettier
     if prettier:
@@ -139,6 +143,10 @@ def nbex(
 
     if not isinstance(filepath, Iterable):
         filepath = [filepath]
+
+    if len(filepath) == 0:
+        print("\nNo notebook files found.\n")
+        return
 
     for path in filepath:
 
