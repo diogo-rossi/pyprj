@@ -30,6 +30,9 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Example folder in sphinx docs
+doc/sphinx/source/notebooks/examples/
 """
 
 PYPROJECT_EXTRALINES: str = r"""
