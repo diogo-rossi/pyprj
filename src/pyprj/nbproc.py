@@ -31,8 +31,9 @@ def nbmd(
     Parameters
     ----------
     - `filepath` (`Arg[list[Path]  |  Path  |  None`, optional): Defaults to `None`.
-        The filepath or filepaths of jupyter notebook (`.ipynb`) to convert do markdown.
-        If `None` (default), process all notebook files from the current directory.
+        The filepath or filepaths of jupyter notebook (`.ipynb`) to convert
+        to markdown. If `None` (default), process all notebook files from
+        the current directory.
 
     - `kind` (`Literal["tutorial", "function", "class"]`, optional): Defaults to `"tutorial"`.
         The kind of the notebook files documentation to convert.
@@ -121,8 +122,9 @@ def nbex(
     Parameters
     ----------
     - `filepath` (`Arg[list[Path]  |  Path  |  None`, optional): Defaults to `None`.
-        The filepath or filepaths of jupyter notebook (`.ipynb`) to generate examples.
-        If `None` (default), process all notebook files from the current directory.
+        The filepath or filepaths of jupyter notebook (`.ipynb`) to
+        generate examples. If `None` (default), process all notebook
+        files from the current directory.
 
     - `change_shell_cells` (`bool`, optional): Defaults to `False`.
         Whether to edit the following shell cells, after the example cells.
