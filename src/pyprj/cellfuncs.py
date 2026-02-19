@@ -66,10 +66,10 @@ def __format_python_file_cell(cell: Cell, previous_was_snippet: bool):
     return __end_snippet(previous_was_snippet) + "```python\n" + "".join(cell["source"][1:]) + "\n```\n"
 
 
-def __format_shell_cell(cell: Cell, previous_was_snippet: bool):
+def __format_shell_cell(cell: Cell, previous_was_snippet: bool, remove_pattern: str = ""):
     return (
         (__end_snippet(previous_was_snippet))
-        + ("```\n>" + cell["source"][0].lstrip("!"))
+        + ("```\n>" + cell["source"][0].lstrip("!").replace(remove_pattern, ""))
         + "\n\n"
         + __get_outputs(cell)
         + "```\n"
