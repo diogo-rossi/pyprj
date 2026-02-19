@@ -79,8 +79,8 @@ def main():
             .add_subcommand(test, **kwargs, help="Run task 'test' inside the project.")
             .new_subcommand(docs, **kwargs_only_help_flag_with_subcmds, help="Manage documentation of the project.")
                 .add_subcommand(init, **kwargs) 
-                .add_subcommand(nbmd, **kwargs_without_optmetavarmodifier)
                 .add_subcommand(nbex, **kwargs, help="Process jupyter (nb) files to generate example files of code.")
+                .add_subcommand(nbmd, **kwargs_without_optmetavarmodifier)
                 .end_subcommand(modm, **kwargs)
     )
     # fmt: on
