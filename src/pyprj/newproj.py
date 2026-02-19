@@ -38,6 +38,11 @@ doc/sphinx/source/notebooks/examples/
 """
 
 PYPROJECT_EXTRALINES: str = r"""
+[project.urls]
+Documentation = "{{documentation_page}}"
+Issues = "{{source_repo}}/issues"
+Source = "{{source_repo}}/blob/main/README.md"
+
 [tool.pytest]
 addopts = [
     "-rx",        # Show extra test summary: (x)failed
@@ -160,7 +165,17 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    from .pyproject import pkg_name
+    from .pyproject import documentation_page, pkg_name, source_repo
+
+    msg: str = f"> editing file 'pyproject.toml'"
+    sep: str = "-" * len(msg)
+    print(f"{msg}\n{sep}")
+    with open("pyproject.toml", "a", encoding="utf-8") as file:
+        file.write(
+            PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length))
+            .replace("{{source_repo}}", source_repo)
+            .replace("{{documentation_page}}", documentation_page)
+        )
 
     dev_pkgs: list[str] = ["black", "pytest", "taskipy"]
     cmd: str = f"uv add --dev {' '.join(dev_pkgs)}"
@@ -202,12 +217,6 @@ def init(
     print(f"{msg}")
     with open(".gitignore", "w", encoding="utf-8") as file:
         file.write(GITIGNORE)
-
-    msg: str = f"> editing file 'pyproject.toml'"
-    sep: str = "-" * len(msg)
-    print(f"{msg}\n{sep}")
-    with open("pyproject.toml", "a", encoding="utf-8") as file:
-        file.write(PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length)))
 
     print("\nCreated a project for a python package with the following structure:")
     print(TREE.format(pkg_name=pkg_name))
