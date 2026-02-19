@@ -115,7 +115,9 @@ def nbex(
     filepath: Arg[list[Path] | Path, data(nargs="*")],
     change_shell_cells: bool = False,
     output_suffix: str = "",
+    dest_directory: Path = Path("examples"),
 ):
+    dest_directory.mkdir(exist_ok=True)
 
     if not filepath:
         filepath = list(Path.cwd().glob("*.ipynb"))
@@ -125,6 +127,8 @@ def nbex(
 
     for path in filepath:
 
+        print(f"> processing file: {path.as_posix()}")
+
         with open(path.resolve(), "r", encoding="utf-8") as file:
             notebook: Notebook = json.load(file)
 
@@ -133,7 +137,7 @@ def nbex(
         example_number: int = 0
         previous_example_prefix: str = __get_notebook_example_prefix(cells[:1])
         example_prefix = previous_example_prefix
-
+        example_filename: str = ""
         for i, cell in enumerate(cells):
 
             source: list[str] | None = cell.get("source")
@@ -149,14 +153,16 @@ def nbex(
                 example_filename: str = f"{example_prefix}{example_number:02d}.py"
                 source[1] = f"# {example_filename}\n"
 
-                with open(example_filename, "w", encoding="utf-8") as file:
+                example_path: Path = dest_directory / example_filename
+                print(f"    > generating example: {example_path.as_posix()}")
+                with open(example_path, "w", encoding="utf-8") as file:
                     file.write("".join(source[1:]))
 
             if change_shell_cells:
                 if __is_shell_command_code_cell(cell):
                     if source[0].startswith("! python") and any([s.endswith(".py") for s in source[0].split()]):
                         parts: list[str] = source[0].split(".py")
-                        parts[0] = f"! python {example_prefix}{example_number:02d}.py"
+                        parts[0] = f"! python {dest_directory.as_posix()}/{example_filename}"
                         source[0] = "".join(parts)
 
             if source:
