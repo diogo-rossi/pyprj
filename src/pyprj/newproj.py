@@ -171,25 +171,26 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    if "PYPRJ_AUTHOR" in os.environ:
-        author = os.environ["PYPRJ_AUTHOR"]
-        cmd: str = f'git config --local user.name "{author}"'
-        msg: str = f"> running git comand: `{cmd}`"
-        sep: str = "-" * len(msg)
-        print(f"{sep}\n{msg}")
-        exit_code = os.system(cmd)
-        if exit_code != 0:
-            sys.exit(exit_code)
-
-    if "PYPRJ_EMAIL" in os.environ:
-        email = os.environ["PYPRJ_EMAIL"]
-        cmd: str = f'git config --local user.email "{email}"'
-        msg: str = f"> running git comand: `{cmd}`"
-        sep: str = "-" * len(msg)
-        print(f"{msg}")
-        exit_code = os.system(cmd)
-        if exit_code != 0:
-            sys.exit(exit_code)
+    for name in ["", ""]:
+        envvar = f"PYPRJ_{name.upper()}"
+        if envvar in os.environ:
+            variable = os.environ[envvar]
+            msg = f"Found env variable {envvar} = {variable}"
+            sep: str = "-" * len(msg)
+            print(f"{sep}\n{msg}")
+            cmd: str = f'git config --local user.{name} "{variable}"'
+            msg: str = f"> running git comand: `{cmd}`"
+            sep: str = "-" * len(msg)
+            print(f"{msg}\n{sep}")
+            exit_code = os.system(cmd)
+            if exit_code != 0:
+                sys.exit(exit_code)
+        else:
+            msg = f"> No env variables found, using the following git {name}:"
+            sep: str = "-" * len(msg)
+            print(f"{sep}\n{msg}")
+            os.system(f"git config get user.{name}")
+            print(f"{sep}")
 
     cmd: str = f"uv init --author-from git --python {python} --lib"
     msg: str = f"> running uv comand: `{cmd}`"
