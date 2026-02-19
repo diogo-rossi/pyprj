@@ -19,8 +19,7 @@ from .taskscmd import test
 
 def pyprj(ctx: Context):
     """CLI to manage python projects"""
-    subcommand = list(vars(ctx.namespace).values())[0]
-    if not subcommand:
+    if vars(ctx.namespace)[ctx.command.subparsers_dest] is None:
         ctx.command.run(["--help"])
 
 
