@@ -120,12 +120,12 @@ apireference
 
 ## Links
 
-- GitHub repository:
-  [https://github.com/{author_name}/{pkg_name}](https://github.com/{author_name}/{pkg_name})
+- Source repository:
+  [{source_repo}]({source_repo})
 - PyPI:
-  [https://pypi.org/project/{pkg_name}/](https://pypi.org/project/{pkg_name}/)
+  [{pypi_project}]({pypi_project})
 - Documentation:
-  [https://{pkg_name}.readthedocs.io/en/latest/](https://{pkg_name}.readthedocs.io/en/latest/)
+  [{documentation_page}]({documentation_page})
 """
 
 LOGO_PNG: Path = Path(__file__).parent.resolve() / "logo.png"
@@ -172,7 +172,7 @@ def docs(ctx: Context):
 def init():
     """Initialize documentation folder with packages."""
 
-    from .pyproject import author_name, pkg_name
+    from .pyproject import author_name, documentation_page, pkg_name, pypi_project, source_repo
 
     doc_pkgs: list[str] = ["sphinx", "sphinx-copybutton", "sphinxnotes-comboroles", "myst-parser", "jupyter", "furo"]
     cmd: str = f"uv add --group doc {' '.join(doc_pkgs)}"
@@ -224,7 +224,15 @@ def init():
     sep: str = "-" * len(msg)
     print(f"{msg}")
     with open(SPHINX_SOURCE_FOLDER / "index.md", "w", encoding="utf-8") as file:
-        file.write(INDEX_MD.format(pkg_name=pkg_name, author_name=author_name))
+        file.write(
+            INDEX_MD.format(
+                pkg_name=pkg_name,
+                author_name=author_name,
+                source_repo=source_repo,
+                pypi_project=pypi_project,
+                documentation_page=documentation_page,
+            )
+        )
 
     msg: str = f"> creating file '{SPHINX_SOURCE_FOLDER.as_posix()}/userguide.md'"
     sep: str = "-" * len(msg)
