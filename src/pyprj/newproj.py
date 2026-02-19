@@ -14,7 +14,7 @@ TREE: str = """
     │            __init__.py
     │            py.typed
     ├─── tests
-    |
+    │
     .gitignore
     .prettierrc.json
     .python-version
