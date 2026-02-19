@@ -18,7 +18,7 @@ from .taskscmd import test
 
 
 def pyprj(ctx: Context):
-    """CLI to manage python projects"""
+    """A CLI to manage python projects with predefined tools."""
     if vars(ctx.namespace)[ctx.command.subparsers_dest] is None:
         ctx.command.run(["--help"])
 
@@ -76,11 +76,11 @@ def main():
     cmd: Command = (
         Command(pyprj, **kwargs_only_help_flag_with_subcmds)
             .add_subcommand(inip, **kwargs)
-            .add_subcommand(test, **kwargs)
-            .new_subcommand(docs, **kwargs_only_help_flag_with_subcmds)
+            .add_subcommand(test, **kwargs, help="Run task 'test' inside the project.")
+            .new_subcommand(docs, **kwargs_only_help_flag_with_subcmds, help="Manage documentation of the project.")
                 .add_subcommand(init, **kwargs) 
                 .add_subcommand(nbmd, **kwargs_without_optmetavarmodifier)
-                .add_subcommand(nbex, **kwargs)
+                .add_subcommand(nbex, **kwargs, help="Process jupyter (nb) files to generate example files of code.")
                 .end_subcommand(modm, **kwargs)
     )
     # fmt: on
