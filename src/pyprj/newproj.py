@@ -13,6 +13,8 @@ TREE: str = """
     │    └─── mypkg
     │            __init__.py
     │            py.typed
+    ├─── tests
+    |
     .gitignore
     .python-version
     pyproject.toml
@@ -169,9 +171,17 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    msg: str = f"> creating folder '.vscode' "
+    msg: str = f"> creating folder 'tests/' "
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
+    try:
+        os.mkdir("tests")
+    except:
+        print(f"{sep}")
+        raise
+
+    msg: str = f"> creating folder '.vscode' "
+    print(f"{msg}")
     try:
         os.mkdir(".vscode")
     except:
