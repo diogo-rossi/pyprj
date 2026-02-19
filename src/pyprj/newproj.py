@@ -165,18 +165,6 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    from .pyproject import documentation_page, pkg_name, source_repo
-
-    msg: str = f"> editing file 'pyproject.toml'"
-    sep: str = "-" * len(msg)
-    print(f"{msg}\n{sep}")
-    with open("pyproject.toml", "a", encoding="utf-8") as file:
-        file.write(
-            PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length))
-            .replace("{{source_repo}}", source_repo)
-            .replace("{{documentation_page}}", documentation_page)
-        )
-
     dev_pkgs: list[str] = ["black", "pytest", "taskipy"]
     cmd: str = f"uv add --dev {' '.join(dev_pkgs)}"
     msg: str = f"> Adding 'dev' packages, running uv comand: `{cmd}`"
@@ -186,9 +174,21 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    msg: str = f"> creating folder 'tests/' "
+    from .pyproject import documentation_page, pkg_name, source_repo
+
+    msg: str = f"> editing file 'pyproject.toml'"
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
+    with open("pyproject.toml", "a", encoding="utf-8") as file:
+        file.write(
+            PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length))
+            .replace("{{source_repo}}", source_repo)
+            .replace("{{documentation_page}}", documentation_page)
+        )
+
+    msg: str = f"> creating folder 'tests/' "
+    sep: str = "-" * len(msg)
+    print(f"{msg}")
     try:
         os.mkdir("tests")
     except:
@@ -214,7 +214,8 @@ def init(
         file.write(TASKS_JSON)
 
     msg: str = f"> creating file '.gitignore'"
-    print(f"{msg}")
+    sep: str = "-" * len(msg)
+    print(f"{msg}\n{sep}")
     with open(".gitignore", "w", encoding="utf-8") as file:
         file.write(GITIGNORE)
 
