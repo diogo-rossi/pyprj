@@ -112,8 +112,9 @@ usage: pyprj docs nbmd [-h] [-k {tutorial,function,class}] [-n] [-r <pattern>] [
 Process jupyter (nb) files to generate markdown (md) files.
 
 positional arguments:
-  filepath              The filepath or filepaths of jupyter notebook (`.ipynb`) to convert do markdown.
-                        If `None` (default), process all notebook files from the current directory.
+  filepath              The filepath or filepaths of jupyter notebook (`.ipynb`) to convert
+                        to markdown. If `None` (default), process all notebook files from
+                        the current directory.
 
 options:
   -h, --help            Show this help message and exit.
@@ -129,7 +130,7 @@ options:
   -r <pattern>, --remove-pattern-shell-files <pattern>
                         Pattern to remove in shell command line cells. Aiming to
                         remove example command line folders from path.
-                        Defaults to 'examples/'
+                        Defaults to 'examples/'.
 ```
 
 #### `docs/nbex` subcommand
@@ -142,8 +143,9 @@ Process jupyter (nb) files to generate example files of code,
 creating files from the cells starting with '%%python'
 
 positional arguments:
-  filepath              The filepath or filepaths of jupyter notebook (`.ipynb`) to generate examples.
-                        If `None` (default), process all notebook files from the current directory.
+  filepath              The filepath or filepaths of jupyter notebook (`.ipynb`) to
+                        generate examples. If `None` (default), process all notebook
+                        files from the current directory.
 
 options:
   -h, --help            Show this help message and exit.
