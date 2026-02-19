@@ -16,6 +16,7 @@ TREE: str = """
     ├─── tests
     |
     .gitignore
+    .prettierrc.json
     .python-version
     pyproject.toml
     README.md
@@ -88,6 +89,39 @@ SETTINGS_JSON: str = r"""{
     "editor.codeActionsOnSave": {
         "source.organizeImports": "always"
     },
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        },
+        "files.trimTrailingWhitespace": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.rulers": [
+            {
+                "column": 80,
+                "color": "#8a8a8a"
+            }
+        ],
+        "rewrap.wrappingColumn": 0,
+        "prettier.proseWrap": "always",
+        "prettier.printWidth": 80,
+        "prettier.endOfLine": "auto",
+    },
+}"""
+
+PRETTIER_JSON: str = """{
+    "overrides": [
+        {
+            "files": "*.md",
+            "options": {
+                "proseWrap": "always",
+                "printWidth": 80,
+                "endOfLine": "auto"
+            }
+        }
+    ]
 }"""
 
 TASKS_JSON = r"""{
@@ -212,6 +246,11 @@ def init(
     print(f"{msg}")
     with open(".vscode/tasks.json", "w", encoding="utf-8") as file:
         file.write(TASKS_JSON)
+
+    msg: str = f"> creating file '.prettierrc.json'"
+    print(f"{msg}\n{sep}")
+    with open(".prettierrc.json", "w", encoding="utf-8") as file:
+        file.write(PRETTIER_JSON)
 
     msg: str = f"> creating file '.gitignore'"
     sep: str = "-" * len(msg)
