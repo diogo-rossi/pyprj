@@ -340,11 +340,11 @@ wheels = [
 
 [[package]]
 name = "clig"
-version = "0.6.0"
+version = "0.6.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/02/3e/d0812a058cf05dba7a43c0aaa89ace0a234c6a1ef35543f948e5c5d62479/clig-0.6.0.tar.gz", hash = "sha256:d374ca72d81937b527b5827c08431a2d0d48c6fffb179cbbce86ae0866d9c0ed", size = 167325, upload-time = "2026-01-30T18:51:25.772Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/85/d8/69054237cb6918dbeaeaae41a426d72743905f9dc296c60e25e73dc46bae/clig-0.6.1.tar.gz", hash = "sha256:a3a24d2f6c920f8223d34d7e94a04b98570e39f4cc9daced60b275b32066b453", size = 179302, upload-time = "2026-02-19T21:46:48.275Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/14/2f/0da1c1443bb3029b52d3f0c2443b200919e729eaff743f300db6cd829bcb/clig-0.6.0-py3-none-any.whl", hash = "sha256:d64c42d40be33d95dc6761cf82dc207baa9a3a778f998886046fdcc69d21241a", size = 22143, upload-time = "2026-01-30T18:51:27.136Z" },
+    { url = "https://files.pythonhosted.org/packages/12/b0/1de00fb01b6f5942800807bb1aa1283191f154de110b4ca872b793dda474/clig-0.6.1-py3-none-any.whl", hash = "sha256:bb545cc87dba81e2a469ebc8ff261cb064b530220dfb2c7b9c60f0c4fef4b935", size = 22181, upload-time = "2026-02-19T21:46:49.526Z" },
 ]
 
 [[package]]
@@ -1300,7 +1300,7 @@ doc = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "clig", specifier = ">=0.6.0" }]
+requires-dist = [{ name = "clig", specifier = ">=0.6.1" }]
 
 [package.metadata.requires-dev]
 dev = [
