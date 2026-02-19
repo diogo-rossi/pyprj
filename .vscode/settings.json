@@ -26,4 +26,24 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": "always"
     },
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        },
+        "files.trimTrailingWhitespace": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.rulers": [
+            {
+                "column": 80,
+                "color": "#8a8a8a"
+            }
+        ],
+        "rewrap.wrappingColumn": 0,
+        "prettier.proseWrap": "always",
+        "prettier.printWidth": 80,
+        "prettier.endOfLine": "auto",
+    },
 }
