@@ -4,15 +4,14 @@
 import shutil
 import textwrap
 from functools import partial
+from typing import Any
 
 from clig import Command, Context
 
-from pyprj.docman import doc as manage_documentation
-from pyprj.docman import ini as initialize_documentation
-from pyprj.docman import modm as modify_normal_py_modules
-from pyprj.nbproc import nbex as gen_jup_notebook_example
-from pyprj.nbproc import nbmd as jup_notebook_to_markdown
-from pyprj.newproj import ini as initialize_project
+from .docman import docs, init, modm
+from .nbproc import nbex, nbmd
+from .newproj import init as inip
+from .taskscmd import test
 
 # %%          Commands
 ############# Commands #########################################################################################################
@@ -77,12 +76,13 @@ def main():
     # fmt: off
     cmd: Command = (
         Command(pyprj, **kwargs_only_help_flag_with_subcmds)
-            .add_subcommand(initialize_project, **kwargs)
-            .new_subcommand(manage_documentation, **kwargs_only_help_flag_with_subcmds)
-                .add_subcommand(initialize_documentation, **kwargs) 
-                .add_subcommand(jup_notebook_to_markdown, **kwargs_without_optmetavarmodifier)
-                .add_subcommand(gen_jup_notebook_example, **kwargs)
-                .end_subcommand(modify_normal_py_modules, **kwargs)
+            .add_subcommand(inip, **kwargs)
+            .add_subcommand(test, **kwargs)
+            .new_subcommand(docs, **kwargs_only_help_flag_with_subcmds)
+                .add_subcommand(init, **kwargs) 
+                .add_subcommand(nbmd, **kwargs_without_optmetavarmodifier)
+                .add_subcommand(nbex, **kwargs)
+                .end_subcommand(modm, **kwargs)
     )
     # fmt: on
     cmd.run()
