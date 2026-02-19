@@ -248,7 +248,7 @@ def init(
         file.write(TASKS_JSON)
 
     msg: str = f"> creating file '.prettierrc.json'"
-    print(f"{msg}\n{sep}")
+    print(f"{msg}")
     with open(".prettierrc.json", "w", encoding="utf-8") as file:
         file.write(PRETTIER_JSON)
 
