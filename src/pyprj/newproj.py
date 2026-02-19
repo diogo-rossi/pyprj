@@ -171,14 +171,15 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    for name in ["", ""]:
-        envvar = f"PYPRJ_{name.upper()}"
+    for configvar in ["author", "email"]:
+        userconfig = "name" if configvar == "author" else configvar
+        envvar = f"PYPRJ_{configvar.upper()}"
         if envvar in os.environ:
             variable = os.environ[envvar]
             msg = f"Found env variable {envvar} = {variable}"
             sep: str = "-" * len(msg)
             print(f"{sep}\n{msg}")
-            cmd: str = f'git config --local user.{name} "{variable}"'
+            cmd: str = f'git config --local user.{userconfig} "{variable}"'
             msg: str = f"> running git comand: `{cmd}`"
             sep: str = "-" * len(msg)
             print(f"{msg}\n{sep}")
@@ -186,10 +187,10 @@ def init(
             if exit_code != 0:
                 sys.exit(exit_code)
         else:
-            msg = f"> No env variables found, using the following git {name}:"
+            msg = f"> No env variables found, using the following git {configvar}:"
             sep: str = "-" * len(msg)
             print(f"{sep}\n{msg}")
-            os.system(f"git config get user.{name}")
+            os.system(f"git config get user.{userconfig}")
             print(f"{sep}")
 
     cmd: str = f"uv init --author-from git --python {python} --lib"
