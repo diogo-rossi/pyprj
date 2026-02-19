@@ -150,8 +150,10 @@ TREE: str = f"""
             │   userguide.md
             │   apireference.md
             │
-            ├───_static
-            └───_templates
+            ├─── _static
+            ├─── _templates
+            └─── notebooks
+                 └─── examples
 ```
 """
 
@@ -182,11 +184,12 @@ def init():
         sys.exit(exit_code)
 
     print(f"{sep}")
-    for folder in ["doc", "doc/mkdocs", "doc/sphinx"]:
-        msg: str = f"> creating folder '{folder}'"
+    for folder in ["", "mkdocs", "sphinx"]:
+        folder_path: Path = DOC_FOLDER / folder
+        msg: str = f"> creating folder '{folder_path.as_posix()}'"
         print(f"{msg}")
         try:
-            os.mkdir(folder)
+            os.mkdir(folder_path)
         except:
             print(f"{sep}")
             raise
@@ -201,9 +204,19 @@ def init():
     if exit_code != 0:
         sys.exit(exit_code)
 
+    print(f"{sep}")
+    for folder in ["sphinx/source/notebooks", "sphinx/source/notebooks/examples"]:
+        folder_path: Path = DOC_FOLDER / folder
+        msg: str = f"> creating folder '{folder_path.as_posix()}'"
+        print(f"{msg}")
+        try:
+            os.mkdir(folder_path)
+        except:
+            print(f"{sep}")
+            raise
+
     msg: str = f"> editing file '{SPHINX_SOURCE_FOLDER.as_posix()}/conf.py'"
-    sep: str = "-" * len(msg)
-    print(f"{sep}\n{msg}")
+    print(f"{msg}")
     with open(SPHINX_SOURCE_FOLDER / "conf.py", "w", encoding="utf-8") as file:
         file.write(CONF_PY)
 
