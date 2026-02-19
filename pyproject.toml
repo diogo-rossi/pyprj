@@ -1,7 +1,7 @@
 [project]
 name = "pyprj"
-version = "0.0.0"
-description = "Add your description here"
+version = "0.1.0"
+description = "An opinionated CLI tool to manage python projects."
 readme = "README.md"
 authors = [
     { name = "Diogo Rossi", email = "rossi.diogo@gmail.com" },
