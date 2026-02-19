@@ -20,5 +20,8 @@ class PyProject(TypedDict):
 with open("pyproject.toml", "rb") as f:
     pyproject = pyproject = cast(PyProject, tomllib.load(f))
 
-pkg_name = pyproject["project"]["name"]
-author_name = pyproject["project"]["authors"][0]["name"].replace(" ", "-").lower()
+pkg_name: str = pyproject["project"]["name"]
+author_name: str = pyproject["project"]["authors"][0]["name"].replace(" ", "-").lower()
+source_repo: str = f"https://github.com/{author_name}/{pkg_name}"
+pypi_project: str = f"https://pypi.org/project/{pkg_name}/"
+documentation_page: str = f"https://{pkg_name}.readthedocs.io/en/latest/"
