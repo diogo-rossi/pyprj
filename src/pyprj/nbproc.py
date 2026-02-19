@@ -27,9 +27,10 @@ from .cellfuncs import (
 
 
 def nbmd(
-    filepath: Arg[list[Path] | Path | None, data(nargs="*")] = None,
+    filepath: Arg[list[Path] | Path | None, data(nargs="*", make_flag=False)] = None,
     kind: Literal["tutorial", "function", "class"] = "tutorial",
-    prettier: bool = True,
+    no_prettier: bool = False,
+    remove_pattern_shell_files: Arg[str, data(metavar="<pattern>")] = "examples/",
 ):
     """Process jupyter nb files to generate markdown (md) files.
 
@@ -42,19 +43,31 @@ def nbmd(
     - `kind` (`Literal["tutorial", "function", "class"]`, optional): Defaults to `"tutorial"`.
         The kind of the notebook files documentation to convert.
 
-    - `prettier` (`bool`, optional): Defaults to `True`.
-        Whether or not to pos process the generate md files with `prettier`, if prettier is available.
+    - `no_prettier` (`bool`, optional): Defaults to `False`.
+        Whether to not pos-process the generate .md files with 'prettier', if 'prettier' is available.
 
+    - `remove_pattern_shell_files` (`str`, optional): Defaults to `"examples/"`.
+        Pattern to remove in shell command line cells. Aiming to remove example command line folders from path.
     """
-
     if kind != "tutorial":
-        print("Not yet implemented")
+        print("\nNot yet implemented. Currently, only 'kind=tutorial' is accepted.\n")
+        return
 
     if not filepath:
         filepath = list(Path.cwd().glob("*.ipynb"))
 
     if not isinstance(filepath, Iterable):
         filepath = [filepath]
+
+    print()
+    prettier: bool = not no_prettier
+    if prettier:
+        print("> checking `prettier` version:")
+        error_code = os.system("prettier --version")
+        if error_code != 0:
+            print("> No valid `prettier` command found")
+            prettier = False
+        print()
 
     for path in filepath:
 
@@ -74,7 +87,7 @@ def nbmd(
                 previous_was_simple_python_repl_snippet = False
 
             if __is_shell_command_code_cell(cell):
-                lines.append(__format_shell_cell(cell, previous_was_simple_python_repl_snippet))
+                lines.append(__format_shell_cell(cell, previous_was_simple_python_repl_snippet, remove_pattern_shell_files))
                 previous_was_simple_python_repl_snippet = False
 
             if __is_python_file_code_cell(cell):
@@ -93,13 +106,9 @@ def nbmd(
             file.write(text)
 
         if prettier:
-            error_code = os.system("prettier --version")
-            if error_code == 0:
-                os.system(f"prettier --write {markdown_filepath}")
-            else:
-                print("No `prettier` command run")
+            os.system(f"prettier --write {markdown_filepath}")
 
-        print(f"Processed file {markdown_filepath}")
+        print(f"> generated markdown file '{markdown_filepath}'\n")
 
 
 def nbex(
