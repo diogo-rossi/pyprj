@@ -27,10 +27,25 @@ from .cellfuncs import (
 
 
 def nbmd(
-    filepath: Arg[list[Path] | Path, data(nargs="*")],
+    filepath: Arg[list[Path] | Path | None, data(nargs="*")] = None,
     kind: Literal["tutorial", "function", "class"] = "tutorial",
     prettier: bool = True,
 ):
+    """Process jupyter nb files to generate markdown (md) files.
+
+    Parameters
+    ----------
+    - `filepath` (`Arg[list[Path]  |  Path  |  None`, optional): Defaults to `None`.
+        The filepath or filepaths of jupyter notebook (`.ipynb`) to convert do markdown.
+        If `None`, process all notebook files from the current directory.
+
+    - `kind` (`Literal["tutorial", "function", "class"]`, optional): Defaults to `"tutorial"`.
+        The kind of the notebook files documentation to convert.
+
+    - `prettier` (`bool`, optional): Defaults to `True`.
+        Whether or not to pos process the generate md files with `prettier`, if prettier is available.
+
+    """
 
     if kind != "tutorial":
         print("Not yet implemented")
@@ -78,7 +93,13 @@ def nbmd(
             file.write(text)
 
         if prettier:
-            os.system(f"prettier --write {markdown_filepath}")
+            error_code = os.system("prettier --version")
+            if error_code == 0:
+                os.system(f"prettier --write {markdown_filepath}")
+            else:
+                print("No `prettier` command run")
+
+        print(f"Processed file {markdown_filepath}")
 
 
 def nbex(
