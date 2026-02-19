@@ -7,11 +7,11 @@ from functools import partial
 
 from clig import Command, Context
 
-from pyprj import nbex as gen_jup_notebook_example
-from pyprj import nbmd as jup_notebook_to_markdown
 from pyprj.docman import doc as manage_documentation
 from pyprj.docman import ini as initialize_documentation
 from pyprj.docman import modm as modify_normal_py_modules
+from pyprj.nbproc import nbex as gen_jup_notebook_example
+from pyprj.nbproc import nbmd as jup_notebook_to_markdown
 from pyprj.newproj import ini as initialize_project
 
 # %%          Commands
