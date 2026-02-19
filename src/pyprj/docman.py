@@ -158,8 +158,7 @@ TREE: str = f"""
 
 def docs(ctx: Context):
     """Manage documentation"""
-    subcmd = vars(ctx.namespace)[ctx.command.sub_commands["doc"].subparsers_dest]
-    if subcmd is None:
+    if vars(ctx.namespace)[ctx.command.sub_commands["doc"].subparsers_dest] is None:
         run_task("doc")
 
 
