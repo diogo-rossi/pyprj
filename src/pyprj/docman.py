@@ -1,25 +1,12 @@
 import os
 import shutil
 import sys
-import tomllib
 from pathlib import Path
-from typing import TypedDict, cast
+from typing import Any
 
+from clig import Context
 
-class Author(TypedDict):
-    name: str
-    email: str
-
-
-class PyProjectData(TypedDict):
-    name: str
-    version: str
-    authors: list[Author]
-
-
-class PyProject(TypedDict):
-    project: PyProjectData
-
+from .taskscmd import run_task
 
 CONF_PY = r"""# %%          IMPORTS AND SETTINGS
 ############# IMPORTS AND SETTINGS #############################################################################################
@@ -146,16 +133,43 @@ LOGO_PNG: Path = Path(__file__).parent.resolve() / "logo.png"
 DOC_FOLDER: Path = Path("./doc")
 SPHINX_SOURCE_FOLDER: Path = DOC_FOLDER / "sphinx/source"
 
+TREE: str = f"""
+```
+    {DOC_FOLDER}
+    │    logo.png
+    │
+    ├─── mkdocs
+    └─── sphinx
+        │   make.bat
+        │   Makefile
+        │
+        ├─── build
+        └─── source
+            │   conf.py
+            │   index.md
+            │   userguide.md
+            │   apireference.md
+            │
+            ├───_static
+            └───_templates
+```
+"""
 
-def doc():
+
+def docs(ctx: Context):
     """Manage documentation"""
-    pass
+    subcmd = vars(ctx.namespace)[ctx.command.sub_commands["doc"].subparsers_dest]
+    if subcmd is None:
+        run_task("doc")
 
 
-def ini():
+def init():
     """Initialize documentation"""
 
-    cmd: str = f"uv add --group doc sphinx sphinx-copybutton sphinxnotes-comboroles myst-parser jupyter furo"
+    from .pyproject import author_name, pkg_name
+
+    doc_pkgs: list[str] = ["sphinx", "sphinx-copybutton", "sphinxnotes-comboroles", "myst-parser", "jupyter", "furo"]
+    cmd: str = f"uv add --group doc {' '.join(doc_pkgs)}"
     msg: str = f"> Adding 'doc' packages, running uv comand: `{cmd}`"
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}\n{sep}")
@@ -165,7 +179,7 @@ def ini():
 
     print(f"{sep}")
     for folder in ["doc", "doc/mkdocs", "doc/sphinx"]:
-        msg: str = f"> creating '{folder}' folder"
+        msg: str = f"> creating folder '{folder}'"
         print(f"{msg}")
         try:
             os.mkdir(folder)
@@ -183,45 +197,46 @@ def ini():
     if exit_code != 0:
         sys.exit(exit_code)
 
-    msg: str = f"> editing '{SPHINX_SOURCE_FOLDER}/conf.py' file"
+    msg: str = f"> editing file '{SPHINX_SOURCE_FOLDER.as_posix()}/conf.py'"
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
     with open(SPHINX_SOURCE_FOLDER / "conf.py", "w", encoding="utf-8") as file:
         file.write(CONF_PY)
 
-    with open("pyproject.toml", "rb") as f:
-        pyproject = pyproject = cast(PyProject, tomllib.load(f))
-
-    pkg_name = pyproject["project"]["name"]
-    author_name = pyproject["project"]["authors"][0]["name"].replace(" ", "-").lower()
-
-    msg: str = f"> creating '{SPHINX_SOURCE_FOLDER}/index.md' file"
+    msg: str = f"> creating file '{SPHINX_SOURCE_FOLDER.as_posix()}/index.md'"
     sep: str = "-" * len(msg)
     print(f"{msg}")
     with open(SPHINX_SOURCE_FOLDER / "index.md", "w", encoding="utf-8") as file:
         file.write(INDEX_MD.format(pkg_name=pkg_name, author_name=author_name))
 
-    msg: str = f"> creating '{SPHINX_SOURCE_FOLDER}/userguide.md' file"
+    msg: str = f"> creating file '{SPHINX_SOURCE_FOLDER.as_posix()}/userguide.md'"
     sep: str = "-" * len(msg)
     print(f"{msg}")
     with open(SPHINX_SOURCE_FOLDER / "userguide.md", "w", encoding="utf-8") as file:
         file.write("# User guide")
 
-    msg: str = f"> creating '{SPHINX_SOURCE_FOLDER}/apireference.md' file"
+    msg: str = f"> creating file '{SPHINX_SOURCE_FOLDER.as_posix()}/apireference.md'"
     sep: str = "-" * len(msg)
     print(f"{msg}")
     with open(SPHINX_SOURCE_FOLDER / "apireference.md", "w", encoding="utf-8") as file:
         file.write("# API reference")
 
-    msg: str = f"> removing '{SPHINX_SOURCE_FOLDER}/index.rst' file"
+    msg: str = f"> creating file '{DOC_FOLDER.as_posix()}/logo.png'"
+    sep: str = "-" * len(msg)
+    print(f"{msg}")
+    shutil.copy(LOGO_PNG, DOC_FOLDER)
+
+    msg: str = f"> removing file '{SPHINX_SOURCE_FOLDER.as_posix()}/index.rst'"
     sep: str = "-" * len(msg)
     print(f"{msg}")
     os.remove(SPHINX_SOURCE_FOLDER / "index.rst")
 
-    msg: str = f"> creating '{DOC_FOLDER}/logo.png' file"
-    sep: str = "-" * len(msg)
-    print(f"{msg}")
-    shutil.copy(LOGO_PNG, DOC_FOLDER)
+    print(f"{sep}")
+    print(f"\nCreated subfolder '{DOC_FOLDER.as_posix()}' for documentation:")
+    print(TREE.format(pkg_name=pkg_name))
+    print("With the follwing packages in the `doc` dependency group:")
+    print("- " + " ".join(doc_pkgs))
+    print("\nPlease, look at the `pyproject.toml` file for additional info.\n")
 
 
 def modm():

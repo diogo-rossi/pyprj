@@ -1,6 +1,25 @@
 import os
 import sys
 
+TREE: str = """
+```
+    {pkg_name}
+    ├─── .venv # -> virtual environment
+    ├─── .vscode
+    │        settings.json
+    │        tasks.json
+    │
+    ├─── src
+    │    └─── mypkg
+    │            __init__.py
+    │            py.typed
+    .gitignore
+    .python-version
+    pyproject.toml
+    README.md
+```
+"""
+
 GITIGNORE: str = """# Python-generated files
 __pycache__/
 *.py[oc]
@@ -85,7 +104,7 @@ TASKS_JSON = r"""{
 }"""
 
 
-def ini(
+def init(
     python: str = "3.12",
     black_line_length: int = 128,
 ):
@@ -101,7 +120,7 @@ def ini(
     """
 
     cmd: str = f"git init"
-    msg: str = f"> running comand: `{cmd}`"
+    msg: str = f"> running git comand: `{cmd}`"
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}\n{sep}")
     exit_code = os.system(cmd)
@@ -136,7 +155,10 @@ def ini(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    cmd: str = f"uv add --dev black pytest taskipy"
+    from .pyproject import pkg_name
+
+    dev_pkgs: list[str] = ["black", "pytest", "taskipy"]
+    cmd: str = f"uv add --dev {' '.join(dev_pkgs)}"
     msg: str = f"> Adding 'dev' packages, running uv comand: `{cmd}`"
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}\n{sep}")
@@ -144,31 +166,38 @@ def ini(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    msg: str = f"> creating '.gitignore' file"
+    msg: str = f"> creating folder '.vscode' "
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
-    with open(".gitignore", "w", encoding="utf-8") as file:
-        file.write(GITIGNORE)
-
-    msg: str = f"> editing 'pyproject.toml' file"
-    print(f"{msg}")
-    with open("pyproject.toml", "a", encoding="utf-8") as file:
-        file.write(PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length)))
-
-    msg: str = f"> creating '.vscode' folder"
-    print(f"{msg}")
     try:
         os.mkdir(".vscode")
     except:
         print(f"{sep}")
         raise
 
-    msg: str = f"> creating '.vscode/settings.json' file"
+    msg: str = f"> creating file '.vscode/settings.json'"
     print(f"{msg}")
     with open(".vscode/settings.json", "w", encoding="utf-8") as file:
         file.write(SETTINGS_JSON.replace("{{line_length}}", str(black_line_length)))
 
-    msg: str = f"> creating '.vscode/tasks.json' file"
+    msg: str = f"> creating file '.vscode/tasks.json'"
     print(f"{msg}")
     with open(".vscode/tasks.json", "w", encoding="utf-8") as file:
         file.write(TASKS_JSON)
+
+    msg: str = f"> creating file '.gitignore'"
+    print(f"{msg}")
+    with open(".gitignore", "w", encoding="utf-8") as file:
+        file.write(GITIGNORE)
+
+    msg: str = f"> editing file 'pyproject.toml'"
+    sep: str = "-" * len(msg)
+    print(f"{msg}\n{sep}")
+    with open("pyproject.toml", "a", encoding="utf-8") as file:
+        file.write(PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length)))
+
+    print("\nCreated a project for a python package with the following structure:")
+    print(TREE.format(pkg_name=pkg_name))
+    print("With the follwing packages in the `dev` dependency group:")
+    print("- " + " ".join(dev_pkgs))
+    print("\nPlease, look at the `pyproject.toml` file for additional info.\n")
