@@ -16,7 +16,7 @@ def test():
     """Run task 'test' inside the project.
 
     This command only runs the task 'test' inside the project.
-    Tasks use the tool 'taskipy'. Currently are run with the tool 'uv.'
+    Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
     The task 'test' runs tests with 'pytest' in folder './tests'.
     """
     run_task("test")
