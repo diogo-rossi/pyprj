@@ -32,9 +32,9 @@ doc = [
 ]
 
 [project.urls]
-Documentation = "https://pyprj.readthedocs.io/en/latest/"
+Documentation = "https://github.com/diogo-rossi/pyprj/blob/main/README.md"
 Issues = "https://github.com/diogo-rossi/pyprj/issues"
-Source = "https://github.com/diogo-rossi/pyprj/blob/main/README.md"
+Source = "https://github.com/diogo-rossi/pyprj/"
 
 [tool.pytest]
 addopts = [
