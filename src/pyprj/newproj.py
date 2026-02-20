@@ -10,6 +10,7 @@ TREE: str = """
     ├─── .vscode
     │        settings.json
     │        tasks.json
+    │        pyprj.json
     │
     ├─── src
     │    └─── mypkg
@@ -61,6 +62,8 @@ line-length = {{line_length}}
 docs = { cmd = "make html", cwd = "./doc/sphinx", help = "Make docs with sphinx in folder './doc/sphinx'" }
 open = { cmd = "index.html", cwd = "./doc/sphinx/build/html", help = "Open sphinx docs in folder './doc/sphinx/build/html'" }
 test = { cmd = "pytest", cwd = "./tests", help = "Test with pytest in folder './tests'" }
+build = { cmd = "uv build", cwd = ".", help = "Build package" }
+publish = { cmd = "pyprj publish", cwd = ".", help = "Publish package to PyPI" }
 """
 
 SETTINGS_JSON: str = r"""{
@@ -147,6 +150,11 @@ TASKS_JSON = r"""{
             "command": "uv run task open",
         }
     ]
+}"""
+
+PYPRJ_JSON: str = """{
+    "token": "",
+    "published_versions": []
 }"""
 
 
@@ -238,6 +246,11 @@ def init(
     print(f"{msg}")
     with open(".vscode/tasks.json", "w", encoding="utf-8") as file:
         file.write(TASKS_JSON)
+
+    msg: str = f"> creating file '.vscode/pyprj.json'"
+    print(f"{msg}")
+    with open(".vscode/pyprj.json", "w", encoding="utf-8") as file:
+        file.write(PYPRJ_JSON)
 
     msg: str = f"> creating file '.prettierrc.json'"
     print(f"{msg}")
