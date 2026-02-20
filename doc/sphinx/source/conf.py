@@ -7,6 +7,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal, TypedDict, cast
 
+from pyprj import nbproc
+
 
 class PyDomainInfo(TypedDict):
     module: str
@@ -30,6 +32,8 @@ class PyProject(TypedDict):
 
 THIS_DIR: Path = Path(__file__).parent.resolve()
 os.chdir(THIS_DIR)
+
+nbproc.nbmd(Path("./notebooks"))
 
 ROOT_DIR = THIS_DIR.parent.parent.parent
 PYPROJECT_TOML = ROOT_DIR / "pyproject.toml"
