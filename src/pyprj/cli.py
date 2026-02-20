@@ -13,7 +13,9 @@ from clig import Arg, Command, Context, data
 from .docman import docs, init, modm
 from .nbproc import nbex, nbmd
 from .newproj import init as inip
-from .taskscmd import test
+from .publish import publish
+from .taskscmd import build, test
+from .version import version
 
 try:
     __version__ = pkg_version("pyprj")
@@ -93,6 +95,9 @@ def main():
                 .add_subcommand(nbex, **kwargs, help="Process jupyter (nb) files to generate example files of code.")
                 .add_subcommand(nbmd, **kwargs_without_optmetavarmodifier)
                 .end_subcommand(modm, **kwargs)
+            .add_subcommand(build, **kwargs, help="Build package with uv")
+            .add_subcommand(version, **kwargs, help="Update or show project version")
+            .add_subcommand(publish, **kwargs, help="Publish package to PyPI")
     )
     # fmt: on
     cmd.run()
