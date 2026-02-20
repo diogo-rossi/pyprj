@@ -263,7 +263,7 @@ def init():
     print(f"\nCreated subfolder '{DOC_FOLDER.as_posix()}' for documentation:")
     print(TREE.format(pkg_name=pkg_name))
     print("With the follwing packages in the `doc` dependency group:")
-    print("- " + " ".join(doc_pkgs))
+    print("- " + " | ".join(doc_pkgs))
     print("\nPlease, look at the `pyproject.toml` file for additional info.\n")
 
 
