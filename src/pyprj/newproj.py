@@ -363,14 +363,12 @@ def init(
         file.write(GITIGNORE)
 
     msg: str = f"> creating file 'README.md'"
-    sep: str = "-" * len(msg)
-    print(f"{msg}\n{sep}")
+    print(f"{msg}")
     with open("README.md", "w", encoding="utf-8") as file:
         file.write(README_MD.replace("{{author_name}}", pkg_name))
 
     msg: str = f"> creating file 'LICENSE.txt'"
-    sep: str = "-" * len(msg)
-    print(f"{msg}\n{sep}")
+    print(f"{msg}")
     with open("LICENSE.txt", "w", encoding="utf-8") as file:
         file.write(
             LICENSE_TXT.replace("{{author_name}}", author_name).replace("{{author_email}}", author_email),
