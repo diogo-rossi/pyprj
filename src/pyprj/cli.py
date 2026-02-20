@@ -4,20 +4,31 @@
 import shutil
 import textwrap
 from functools import partial
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as pkg_version
 from typing import Any
 
-from clig import Command, Context
+from clig import Arg, Command, Context, data
 
 from .docman import docs, init, modm
 from .nbproc import nbex, nbmd
 from .newproj import init as inip
 from .taskscmd import test
 
+try:
+    __version__ = pkg_version("pyprj")
+except PackageNotFoundError:
+    __version__ = "0.0.0"
+
+
 # %%          Commands
 ############# Commands #########################################################################################################
 
 
-def pyprj(ctx: Context):
+def pyprj(
+    ctx: Context,
+    version: Arg[str, data(action="version", version=f"%(prog)s {__version__}")],
+):
     """A CLI to manage python projects with predefined tools."""
     if vars(ctx.namespace)[ctx.command.subparsers_dest] is None:
         ctx.command.run(["--help"])
