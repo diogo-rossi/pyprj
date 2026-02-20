@@ -149,6 +149,34 @@ TASKS_JSON = r"""{
             "label": "Open docs with taskipy in folder './docs/sphinx/build/html'",
             "type": "shell",
             "command": "uv run task open",
+        },
+        {
+            "label": "Update version of package with uv",
+            "type": "shell",
+            "command": "uv version --bump ${input:semver}",
+        },
+        {
+            "label": "Build package with taskipy in root folder",
+            "type": "shell",
+            "command": "uv run task build",
+        },
+        {
+            "label": "Publish package with uv using taskipy and pyprj",
+            "type": "shell",
+            "command": "uv run task publish",
+        }
+    ],
+    "inputs": [
+        {
+            "id": "semver",
+            "type": "pickString",
+            "options": [
+                "major",
+                "minor",
+                "patch"
+            ],
+            "description": "Semantic version part",
+            "default": "minor"
         }
     ]
 }"""
