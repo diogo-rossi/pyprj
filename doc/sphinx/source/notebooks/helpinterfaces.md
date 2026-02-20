@@ -42,7 +42,7 @@ are bellow.
 ```none
 > pyprj --help
 
-usage: pyprj [-h] [-v] {init,test,docs,publish} ...
+usage: pyprj [-h] [-v] {init,test,docs,build,version,publish} ...
 
 A CLI to manage python projects with predefined tools.
 
@@ -51,11 +51,13 @@ options:
   -v, --version         show program's version number and exit
 
 subcommands:
-  {init,test,docs,publish}
+  {init,test,docs,build,version,publish}
     init                Create a new project for a python package.
     test                Run task 'test' inside the project.
     docs                Manage documentation of the project.
-    publish             PUBLISH PKG
+    build               Build package with uv
+    version             Update or show project version
+    publish             Publish package to PyPI
 ```
 
 ### `init` subcommand
@@ -221,6 +223,56 @@ Process documentation in modules.
 positional arguments:
   filepath    The filepath or filepaths of modules (.py) to process.
               If `None` (default), process all python files from the current directory.
+
+options:
+  -h, --help  Show this help message and exit.
+```
+
+### `build` subcommand
+
+```none
+> pyprj build --help
+
+usage: pyprj build [-h]
+
+Run task 'build' inside the project.
+
+This command only runs the task 'build' inside the project.
+Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
+The task 'build' builds the package with 'uv' in root folder.
+
+options:
+  -h, --help  Show this help message and exit.
+```
+
+### `version` subcommand
+
+```none
+> pyprj version --help
+
+usage: pyprj version [-h] [{major,minor,patch}]
+
+Update or show project version
+
+If called without 'semver' options, only show the project version.
+
+positional arguments:
+  {major,minor,patch}
+
+options:
+  -h, --help           Show this help message and exit.
+```
+
+### `publish` subcommand
+
+```none
+> pyprj publish --help
+
+usage: pyprj publish [-h]
+
+Publish package to PyPI
+
+Uses token from file '.vscode/pyprj.json'
 
 options:
   -h, --help  Show this help message and exit.
