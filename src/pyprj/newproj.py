@@ -256,8 +256,21 @@ def init(
         sys.exit(exit_code)
 
     print(f"{SEP}\nAdding dev packages:")
-    dev_pkgs: list[str] = ["black", "pytest", "taskipy"]
+    dev_pkgs: list[str] = ["black", "taskipy"]
     cmd: str = f"uv add --dev {' '.join(dev_pkgs)}"
+    exit_code = run_cmd(cmd, kind="uv", add_sep=False)
+    if exit_code != 0:
+        sys.exit(exit_code)
+
+    print(f"{SEP}\nAdding test packages:")
+    dev_pkgs: list[str] = ["pytest"]
+    cmd: str = f"uv add --group test {' '.join(dev_pkgs)}"
+    exit_code = run_cmd(cmd, kind="uv", add_sep=False)
+    if exit_code != 0:
+        sys.exit(exit_code)
+
+    cmd: str = "uv sync --all-groups"
+    print(f"{SEP}\nSyncing packages")
     exit_code = run_cmd(cmd, kind="uv", add_sep=False)
     if exit_code != 0:
         sys.exit(exit_code)
