@@ -365,7 +365,7 @@ def init(
     msg: str = f"> creating file 'README.md'"
     print(f"{msg}")
     with open("README.md", "w", encoding="utf-8") as file:
-        file.write(README_MD.replace("{{author_name}}", pkg_name))
+        file.write(README_MD.replace("{{pkg_name}}", pkg_name))
 
     msg: str = f"> creating file 'LICENSE.txt'"
     print(f"{msg}")
