@@ -24,6 +24,7 @@ TREE: str = """
     .python-version
     pyproject.toml
     README.md
+    LICENSE.txt
 ```
 """
 
@@ -40,6 +41,33 @@ wheels/
 
 # Example folder in sphinx docs
 doc/sphinx/source/notebooks/examples/
+"""
+
+LICENSE_TXT: str = r"""MIT License
+
+Copyright (c) 2024-present {{author_name}} <{{author_email}}>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+"""
+
+README_MD: str = r"""# {{pkg_name}}
+
+Description of the package.
 """
 
 PYPROJECT_EXTRALINES: str = r"""
@@ -275,7 +303,7 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    from .pyproject import documentation_page, pkg_name, source_repo
+    from .pyproject import author_email, author_name, documentation_page, pkg_name, source_repo
 
     msg: str = f"> editing file 'pyproject.toml'"
     sep: str = "-" * len(msg)
@@ -330,10 +358,26 @@ def init(
         file.write(PRETTIER_JSON)
 
     msg: str = f"> creating file '.gitignore'"
-    sep: str = "-" * len(msg)
-    print(f"{msg}\n{sep}")
+    print(f"{msg}")
     with open(".gitignore", "w", encoding="utf-8") as file:
         file.write(GITIGNORE)
+
+    msg: str = f"> creating file 'README.md'"
+    sep: str = "-" * len(msg)
+    print(f"{msg}\n{sep}")
+    with open("README.md", "w", encoding="utf-8") as file:
+        file.write(README_MD.replace("{{author_name}}", pkg_name))
+
+    msg: str = f"> creating file 'LICENSE.txt'"
+    sep: str = "-" * len(msg)
+    print(f"{msg}\n{sep}")
+    with open("LICENSE.txt", "w", encoding="utf-8") as file:
+        file.write(
+            LICENSE_TXT.replace("{{author_name}}", author_name).replace("{{author_email}}", author_email),
+        )
+
+    sep: str = "-" * len(msg)
+    print(sep)
 
     print("\nCreated a project for a python package with the following structure:")
     print(TREE.format(pkg_name=pkg_name))
