@@ -10,6 +10,7 @@ TREE: str = """
     ├─── .vscode
     │        settings.json
     │        tasks.json
+    │        launch.json
     │        pyprj.json
     │
     ├─── src
@@ -152,6 +153,31 @@ TASKS_JSON = r"""{
     ]
 }"""
 
+LAUNCH_JSON: str = r"""{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python debug: Current File in its folder",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${fileDirname}"
+        },
+        {
+            "name": "Python debug: Current File in root folder",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+        }
+    ]
+}
+"""
+
 PYPRJ_JSON: str = """{
     "token": "",
     "published_versions": []
@@ -246,6 +272,11 @@ def init(
     print(f"{msg}")
     with open(".vscode/tasks.json", "w", encoding="utf-8") as file:
         file.write(TASKS_JSON)
+
+    msg: str = f"> creating file '.vscode/launch.json'"
+    print(f"{msg}")
+    with open(".vscode/launch.json", "w", encoding="utf-8") as file:
+        file.write(LAUNCH_JSON)
 
     msg: str = f"> creating file '.vscode/pyprj.json'"
     print(f"{msg}")
