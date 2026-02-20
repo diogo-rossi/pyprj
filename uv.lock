@@ -1277,19 +1277,18 @@ wheels = [
 
 [[package]]
 name = "pyprj"
-version = "0.4.0"
+version = "0.5.0"
 source = { editable = "." }
 dependencies = [
     { name = "clig" },
+    { name = "taskipy" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "black" },
-    { name = "pytest" },
-    { name = "taskipy" },
 ]
-doc = [
+docs = [
     { name = "furo" },
     { name = "jupyter" },
     { name = "myst-parser" },
@@ -1297,17 +1296,19 @@ doc = [
     { name = "sphinx-copybutton" },
     { name = "sphinxnotes-comboroles" },
 ]
+test = [
+    { name = "pytest" },
+]
 
 [package.metadata]
-requires-dist = [{ name = "clig", specifier = ">=0.6.2" }]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "black", specifier = ">=26.1.0" },
-    { name = "pytest", specifier = ">=9.0.2" },
+requires-dist = [
+    { name = "clig", specifier = ">=0.6.2" },
     { name = "taskipy", specifier = ">=1.14.1" },
 ]
-doc = [
+
+[package.metadata.requires-dev]
+dev = [{ name = "black", specifier = ">=26.1.0" }]
+docs = [
     { name = "furo", specifier = ">=2025.12.19" },
     { name = "jupyter", specifier = ">=1.1.1" },
     { name = "myst-parser", specifier = ">=5.0.0" },
@@ -1315,6 +1316,7 @@ doc = [
     { name = "sphinx-copybutton", specifier = ">=0.5.2" },
     { name = "sphinxnotes-comboroles", specifier = ">=1.0" },
 ]
+test = [{ name = "pytest", specifier = ">=9.0.2" }]
 
 [[package]]
 name = "pytest"
