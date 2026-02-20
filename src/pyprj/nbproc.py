@@ -54,6 +54,11 @@ def nbmd(
     if not isinstance(filepath, Iterable):
         filepath = [filepath]
 
+    for path in filepath[:]:
+        if path.is_dir():
+            filepath.remove(path)
+            filepath.extend(path.glob("*.ipynb"))
+
     if len(filepath) == 0:
         print("\nNo notebook files found.\n")
         return
