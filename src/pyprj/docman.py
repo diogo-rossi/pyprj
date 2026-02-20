@@ -173,7 +173,7 @@ def docs(ctx: Context):
 def init():
     """Initialize documentation folder with packages."""
 
-    from .pyproject import author_name, documentation_page, pkg_name, pypi_project, source_repo
+    from .pyproject import author_name_url, documentation_page, pkg_name, pypi_project, source_repo
 
     doc_pkgs: list[str] = ["sphinx", "sphinx-copybutton", "sphinxnotes-comboroles", "myst-parser", "jupyter", "furo"]
     cmd: str = f"uv add --group docs {' '.join(doc_pkgs)}"
@@ -230,7 +230,7 @@ def init():
         file.write(
             INDEX_MD.format(
                 pkg_name=pkg_name,
-                author_name=author_name,
+                author_name=author_name_url,
                 source_repo=source_repo,
                 pypi_project=pypi_project,
                 documentation_page=documentation_page,
