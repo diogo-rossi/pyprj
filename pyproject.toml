@@ -7,7 +7,10 @@ authors = [
     { name = "Diogo Rossi", email = "rossi.diogo@gmail.com" },
 ]
 requires-python = ">=3.12"
-dependencies = ["clig>=0.6.2"]
+dependencies = [
+    "clig>=0.6.2",
+    "taskipy>=1.14.1",
+]
 
 [project.scripts]
 pyprj = "pyprj.cli:main"
@@ -17,12 +20,9 @@ requires = ["uv_build>=0.9.24,<0.10.0"]
 build-backend = "uv_build"
 
 [dependency-groups]
-dev = [
-    "black>=26.1.0",
-    "pytest>=9.0.2",
-    "taskipy>=1.14.1",
-]
-doc = [
+dev = ["black>=26.1.0"]
+test = ["pytest>=9.0.2"]
+docs = [
     "furo>=2025.12.19",
     "jupyter>=1.1.1",
     "myst-parser>=5.0.0",
