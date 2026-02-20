@@ -6,6 +6,7 @@ from typing import Any
 
 from clig import Arg, Context, data
 
+from .run_cmd import SEP, run_cmd
 from .taskscmd import run_task
 
 CONF_PY = r"""# %%          IMPORTS AND SETTINGS
@@ -176,14 +177,12 @@ def init():
 
     doc_pkgs: list[str] = ["sphinx", "sphinx-copybutton", "sphinxnotes-comboroles", "myst-parser", "jupyter", "furo"]
     cmd: str = f"uv add --group doc {' '.join(doc_pkgs)}"
-    msg: str = f"> Adding 'doc' packages, running uv comand: `{cmd}`"
-    sep: str = "-" * len(msg)
-    print(f"{sep}\n{msg}\n{sep}")
-    exit_code = os.system(cmd)
+
+    print(f"{SEP}\nAdding 'doc' packages")
+    exit_code = run_cmd(cmd, kind="uv", add_sep=False)
     if exit_code != 0:
         sys.exit(exit_code)
 
-    print(f"{sep}")
     for folder in ["", "mkdocs", "sphinx"]:
         folder_path: Path = DOC_FOLDER / folder
         msg: str = f"> creating folder '{folder_path.as_posix()}'"
@@ -191,20 +190,18 @@ def init():
         try:
             os.mkdir(folder_path)
         except:
-            print(f"{sep}")
+            print(f"{SEP}")
             raise
 
+    print(SEP)
+    print("Running Sphinx quick start in docs folder")
     cmd: str = (
         f"uv run sphinx-quickstart doc/sphinx --sep --project PROJECT --author AUTHOR --release RELEASE --language LANGUAGE"
     )
-    msg: str = f"> running uv comand: `{cmd}`"
-    sep: str = "-" * len(msg)
-    print(f"{sep}\n{msg}\n{sep}")
-    exit_code = os.system(cmd)
+    exit_code = run_cmd(cmd, kind="uv", add_sep=False)
     if exit_code != 0:
         sys.exit(exit_code)
 
-    print(f"{sep}")
     for folder in ["sphinx/source/notebooks", "sphinx/source/notebooks/examples"]:
         folder_path: Path = DOC_FOLDER / folder
         msg: str = f"> creating folder '{folder_path.as_posix()}'"
@@ -212,7 +209,7 @@ def init():
         try:
             os.mkdir(folder_path)
         except:
-            print(f"{sep}")
+            print(f"{SEP}")
             raise
 
     msg: str = f"> editing file '{SPHINX_SOURCE_FOLDER.as_posix()}/conf.py'"
