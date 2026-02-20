@@ -263,8 +263,8 @@ def init(
         sys.exit(exit_code)
 
     print(f"{SEP}\nAdding test packages:")
-    dev_pkgs: list[str] = ["pytest"]
-    cmd: str = f"uv add --group test {' '.join(dev_pkgs)}"
+    test_pkgs: list[str] = ["pytest"]
+    cmd: str = f"uv add --group test {' '.join(test_pkgs)}"
     exit_code = run_cmd(cmd, kind="uv", add_sep=False)
     if exit_code != 0:
         sys.exit(exit_code)
@@ -339,4 +339,6 @@ def init(
     print(TREE.format(pkg_name=pkg_name))
     print("With the follwing packages in the `dev` dependency group:")
     print("- " + " ".join(dev_pkgs))
+    print("With the follwing packages in the `dev` dependency group:")
+    print("- " + " ".join(test_pkgs))
     print("\nPlease, look at the `pyproject.toml` file for additional info.\n")
