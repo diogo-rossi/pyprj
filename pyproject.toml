@@ -51,3 +51,5 @@ line-length = 128
 docs = { cmd = "make html", cwd = "./doc/sphinx", help = "Make docs with sphinx in folder './doc/sphinx'" }
 open = { cmd = "index.html", cwd = "./doc/sphinx/build/html", help = "Open sphinx docs in folder './doc/sphinx/build/html'" }
 test = { cmd = "pytest", cwd = "./tests", help = "Test with pytest in folder './tests'" }
+build = { cmd = "uv build", cwd = ".", help = "Build package" }
+publish = { cmd = "pyprj publish", cwd = ".", help = "Publish package to PyPI" }
