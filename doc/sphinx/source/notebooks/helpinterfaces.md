@@ -1,0 +1,227 @@
+# PyPrj
+
+An opinionated CLI tool to manage python projects.
+
+Makes use of:
+
+- [VS Code](https://code.visualstudio.com/) as IDE.
+- [uv](https://docs.astral.sh/uv/) as package manager.
+- [pytest](https://docs.pytest.org/en/stable/#) as testing framework.
+- [black](https://black.readthedocs.io/en/stable/#) to format python files.
+- [Prettier](https://prettier.io/) to format markdown files.
+- [Sphinx](https://www.sphinx-doc.org/en/master/#) framework to write
+  documentation.
+- [MyST](https://myst-parser.readthedocs.io/en/latest/#) parser extension to
+  write sphinx docs with markdown.
+- [Furo](https://github.com/pradyunsg/furo?tab=readme-ov-file#furo) as sphinx
+  theme.
+- [Jupyter](https://jupyter.org/) to write jupyter notebooks that are converted
+  into markdown.
+- [taskipy](https://pypi.org/project/taskipy/) to run automated tasks.
+- [Read the Docs](https://about.readthedocs.com/) as pre-set option to host
+  documentation.
+
+## Installation
+
+A good way to install CLI tools made with python is using
+[`pipx`](https://pipx.pypa.io/stable/).
+
+```sh
+pipx install pyprj
+```
+
+With `pipx`, the tool is globally installed in an isolated environment.
+
+## Usage
+
+Look at the help messages from the CLI (using `--help`). Some of the messages
+are bellow.
+
+### Main command
+
+```none
+> pyprj --help
+
+usage: pyprj [-h] [-v] {init,test,docs,publish} ...
+
+A CLI to manage python projects with predefined tools.
+
+options:
+  -h, --help            Show this help message and exit.
+  -v, --version         show program's version number and exit
+
+subcommands:
+  {init,test,docs,publish}
+    init                Create a new project for a python package.
+    test                Run task 'test' inside the project.
+    docs                Manage documentation of the project.
+    publish             PUBLISH PKG
+```
+
+### `init` subcommand
+
+```none
+> pyprj init --help
+
+usage: pyprj init [-h] [-n <name>] [-p <python>] [-b <black-line-length>]
+
+Create a new project for a python package.
+
+options:
+  -h, --help            Show this help message and exit.
+
+  -n <name>, --name <name>
+                        The name of the project. If `None`, use the current
+                        directory's name.
+                        Defaults to 'None'.
+
+  -p <python>, --python <python>
+                        The Python interpreter to use to determine the minimum
+                        supported Python version.
+                        Defaults to '3.12'.
+
+  -b <black-line-length>, --black-line-length <black-line-length>
+                        Line length parameter to use with `black`.
+                        Defaults to '128'.
+```
+
+### `test` subcommand
+
+```none
+> pyprj test --help
+
+usage: pyprj test [-h]
+
+Run task 'test' inside the project.
+
+This command only runs the task 'test' inside the project.
+Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
+The task 'test' runs tests with 'pytest' in folder './tests'.
+
+options:
+  -h, --help  Show this help message and exit.
+```
+
+### `docs` subcommand
+
+```none
+> pyprj docs --help
+
+usage: pyprj docs [-h] {init,nbex,nbmd,modm} ...
+
+Manage documentation of the project.
+
+If called without subcommands, runs the task 'docs' inside the project.
+Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
+The task 'docs' makes docs with 'sphinx' in folder './doc/sphinx'.
+
+options:
+  -h, --help            Show this help message and exit.
+
+subcommands:
+  {init,nbex,nbmd,modm}
+    init                Initialize documentation folder with packages.
+    nbex                Process jupyter (nb) files to generate example files of code.
+    nbmd                Process jupyter (nb) files to generate markdown (md) files.
+    modm                Process documentation in modules.
+```
+
+#### `docs/init` subcommand
+
+```none
+> pyprj docs init --help
+
+usage: pyprj docs init [-h]
+
+Initialize documentation folder with packages.
+
+options:
+  -h, --help  Show this help message and exit.
+```
+
+#### `docs/nbmd` subcommand
+
+```none
+> pyprj docs nbmd --help
+
+usage: pyprj docs nbmd [-h] [-k {tutorial,function,class}] [-n] [-r <pattern>]
+                       [filepath ...]
+
+Process jupyter (nb) files to generate markdown (md) files.
+
+positional arguments:
+  filepath              The filepath or filepaths of jupyter notebook (`.ipynb`) to convert
+                        to markdown. If `None` (default), process all notebook files from
+                        the current directory.
+
+options:
+  -h, --help            Show this help message and exit.
+
+  -k {tutorial,function,class}, --kind {tutorial,function,class}
+                        The kind of the notebook files documentation to convert.
+                        Defaults to 'tutorial'.
+
+  -n, --no-prettier     Whether to not pos-process the generate .md files with
+                        'prettier', if 'prettier' is available.
+                        Defaults to 'False'.
+
+  -r <pattern>, --remove-pattern-shell-files <pattern>
+                        Pattern to remove in shell command line cells. Aiming to
+                        remove example command line folders from path.
+                        Defaults to 'examples/'.
+```
+
+#### `docs/nbex` subcommand
+
+```none
+> pyprj docs nbex --help
+
+usage: pyprj docs nbex [-h] [-c] [-d <dest-directory>] [-o <output-suffix>]
+                       [filepath ...]
+
+Process jupyter (nb) files to generate example files of code,
+creating files from the cells starting with '%%python'
+
+positional arguments:
+  filepath              The filepath or filepaths of jupyter notebook (`.ipynb`) to
+                        generate examples. If `None` (default), process all notebook
+                        files from the current directory.
+
+options:
+  -h, --help            Show this help message and exit.
+
+  -c, --change-shell-cells
+                        Whether to edit the following shell cells, after the
+                        example cells.
+                        Defaults to 'False'.
+
+  -d <dest-directory>, --dest-directory <dest-directory>
+                        Directory of the resulting examples files.
+                        Defaults to 'examples'.
+
+  -o <output-suffix>, --output-suffix <output-suffix>
+                        If editing original notebook file
+                        (`change_shell_cells=True`) add this
+                        suffix to the resulting file. Used for debbuging
+                        purposes, to not overwrite
+                        the original file (which is done with the default
+                        value).
+                        Defaults to ''.
+```
+
+#### `docs/modm` subcommand
+
+```none
+> pyprj docs modm --help
+
+usage: pyprj docs modm [-h] [filepath ...]
+
+Process documentation in modules.
+
+positional arguments:
+  filepath    The filepath or filepaths of modules (.py) to process.
+              If `None` (default), process all python files from the current directory.
+
+options:
+  -h, --help  Show this help message and exit.
+```
