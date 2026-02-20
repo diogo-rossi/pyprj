@@ -176,9 +176,15 @@ def init():
     from .pyproject import author_name, documentation_page, pkg_name, pypi_project, source_repo
 
     doc_pkgs: list[str] = ["sphinx", "sphinx-copybutton", "sphinxnotes-comboroles", "myst-parser", "jupyter", "furo"]
-    cmd: str = f"uv add --group doc {' '.join(doc_pkgs)}"
+    cmd: str = f"uv add --group docs {' '.join(doc_pkgs)}"
 
-    print(f"{SEP}\nAdding 'doc' packages")
+    print(f"{SEP}\nAdding 'docs' packages")
+    exit_code = run_cmd(cmd, kind="uv", add_sep=False)
+    if exit_code != 0:
+        sys.exit(exit_code)
+
+    cmd: str = "uv sync --all-groups"
+    print(f"{SEP}\nSyncing packages")
     exit_code = run_cmd(cmd, kind="uv", add_sep=False)
     if exit_code != 0:
         sys.exit(exit_code)
