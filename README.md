@@ -2,49 +2,80 @@
 
 An opinionated CLI tool to manage python projects.
 
+Makes use of:
+
+- [VS Code](https://code.visualstudio.com/) as IDE.
+- [uv](https://docs.astral.sh/uv/) as package manager.
+- [pytest](https://docs.pytest.org/en/stable/#) as testing framework.
+- [black](https://black.readthedocs.io/en/stable/#) to format python files.
+- [Prettier](https://prettier.io/) to format markdown files.
+- [Sphinx](https://www.sphinx-doc.org/en/master/#) framework to write
+  documentation.
+- [MyST](https://myst-parser.readthedocs.io/en/latest/#) parser extension to
+  write sphinx docs with markdown.
+- [Furo](https://github.com/pradyunsg/furo?tab=readme-ov-file#furo) as sphinx
+  theme.
+- [Jupyter](https://jupyter.org/) to write jupyter notebooks that are converted
+  into markdown.
+- [taskipy](https://pypi.org/project/taskipy/) to run automated tasks.
+- [Read the Docs](https://about.readthedocs.com/) as pre-set option to host
+  documentation.
+
 ## Installation
 
-A good way to install CLI tools made with python is using `pipx`.
+A good way to install CLI tools made with python is using
+[`pipx`](https://pipx.pypa.io/stable/).
 
 ```sh
 pipx install pyprj
 ```
 
-With it, the tool is globally installed in an isolated environment.
+With `pipx`, the tool is globally installed in an isolated environment.
 
 ## Usage
 
-Look at the help messages from the CLI (pass `--help`). Some of the messages are
-bellow.
+Look at the help messages from the CLI (using `--help`). Some of the messages
+are bellow.
 
 ### Main command
 
-```sh
-❯ pyprj --help
-usage: pyprj [-h] {init,test,docs} ...
+```none
+> pyprj --help
+
+usage: pyprj [-h] [-v] {init,test,docs,build,version,publish} ...
 
 A CLI to manage python projects with predefined tools.
 
 options:
-  -h, --help        Show this help message and exit.
+  -h, --help            Show this help message and exit.
+  -v, --version         show program's version number and exit
 
 subcommands:
-  {init,test,docs}
-    init            Create a new project for a python package.
-    test            Run task 'test' inside the project.
-    docs            Manage documentation of the project.
+  {init,test,docs,build,version,publish}
+    init                Create a new project for a python package.
+    test                Run task 'test' inside the project.
+    docs                Manage documentation of the project.
+    build               Build package with uv
+    version             Update or show project version
+    publish             Publish package to PyPI
 ```
 
 ### `init` subcommand
 
-```sh
-❯ pyprj init --help
-usage: pyprj init [-h] [-p <python>] [-b <black-line-length>]
+```none
+> pyprj init --help
+
+usage: pyprj init [-h] [-n <name>] [-p <python>] [-b <black-line-length>]
 
 Create a new project for a python package.
 
 options:
   -h, --help            Show this help message and exit.
+
+  -n <name>, --name <name>
+                        The name of the project. If `None`, use the current
+                        directory's name.
+                        Defaults to 'None'.
 
   -p <python>, --python <python>
                         The Python interpreter to use to determine the minimum
@@ -58,14 +89,15 @@ options:
 
 ### `test` subcommand
 
-```sh
-❯ pyprj test --help
+```none
+> pyprj test --help
+
 usage: pyprj test [-h]
 
 Run task 'test' inside the project.
 
 This command only runs the task 'test' inside the project.
-Tasks use the tool 'taskipy'. Currently are run with the tool 'uv.'
+Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
 The task 'test' runs tests with 'pytest' in folder './tests'.
 
 options:
@@ -74,31 +106,33 @@ options:
 
 ### `docs` subcommand
 
-```sh
-❯ pyprj docs --help
-usage: pyprj docs [-h] {init,nbmd,nbex,modm} ...
+```none
+> pyprj docs --help
+
+usage: pyprj docs [-h] {init,nbex,nbmd,modm} ...
 
 Manage documentation of the project.
 
 If called without subcommands, runs the task 'docs' inside the project.
-Tasks use the tool 'taskipy'. Currently are run with the tool 'uv.'
+Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
 The task 'docs' makes docs with 'sphinx' in folder './doc/sphinx'.
 
 options:
   -h, --help            Show this help message and exit.
 
 subcommands:
-  {init,nbmd,nbex,modm}
+  {init,nbex,nbmd,modm}
     init                Initialize documentation folder with packages.
-    nbmd                Process jupyter (nb) files to generate markdown (md) files.
     nbex                Process jupyter (nb) files to generate example files of code.
+    nbmd                Process jupyter (nb) files to generate markdown (md) files.
     modm                Process documentation in modules.
 ```
 
 #### `docs/init` subcommand
 
-```sh
-❯ pyprj docs init --help
+```none
+> pyprj docs init --help
+
 usage: pyprj docs init [-h]
 
 Initialize documentation folder with packages.
@@ -109,9 +143,11 @@ options:
 
 #### `docs/nbmd` subcommand
 
-```sh
-❯ pyprj docs nbmd --help
-usage: pyprj docs nbmd [-h] [-k {tutorial,function,class}] [-n] [-r <pattern>] [filepath ...]
+```none
+> pyprj docs nbmd --help
+
+usage: pyprj docs nbmd [-h] [-k {tutorial,function,class}] [-n] [-r <pattern>]
+                       [filepath ...]
 
 Process jupyter (nb) files to generate markdown (md) files.
 
@@ -139,9 +175,11 @@ options:
 
 #### `docs/nbex` subcommand
 
-```sh
-❯ pyprj docs nbex --help
-usage: pyprj docs nbex [-h] [-c] [-d <dest-directory>] [-o <output-suffix>] [filepath ...]
+```none
+> pyprj docs nbex --help
+
+usage: pyprj docs nbex [-h] [-c] [-d <dest-directory>] [-o <output-suffix>]
+                       [filepath ...]
 
 Process jupyter (nb) files to generate example files of code,
 creating files from the cells starting with '%%python'
@@ -175,8 +213,9 @@ options:
 
 #### `docs/modm` subcommand
 
-```sh
-❯ pyprj docs modm --help
+```none
+> pyprj docs modm --help
+
 usage: pyprj docs modm [-h] [filepath ...]
 
 Process documentation in modules.
@@ -184,6 +223,56 @@ Process documentation in modules.
 positional arguments:
   filepath    The filepath or filepaths of modules (.py) to process.
               If `None` (default), process all python files from the current directory.
+
+options:
+  -h, --help  Show this help message and exit.
+```
+
+### `build` subcommand
+
+```none
+> pyprj build --help
+
+usage: pyprj build [-h]
+
+Run task 'build' inside the project.
+
+This command only runs the task 'build' inside the project.
+Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
+The task 'build' builds the package with 'uv' in root folder.
+
+options:
+  -h, --help  Show this help message and exit.
+```
+
+### `version` subcommand
+
+```none
+> pyprj version --help
+
+usage: pyprj version [-h] [{major,minor,patch}]
+
+Update or show project version
+
+If called without 'semver' options, only show the project version.
+
+positional arguments:
+  {major,minor,patch}
+
+options:
+  -h, --help           Show this help message and exit.
+```
+
+### `publish` subcommand
+
+```none
+> pyprj publish --help
+
+usage: pyprj publish [-h]
+
+Publish package to PyPI
+
+Uses token from file '.vscode/pyprj.json'
 
 options:
   -h, --help  Show this help message and exit.
