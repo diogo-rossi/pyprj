@@ -278,6 +278,7 @@ def init(
         else:
             print(f"No env variables found, using the following git {configvar}:")
             os.system(f"git config get user.{userconfig}")
+            print()
 
     project_name_arg = f"--name {name} " if name is not None else ""
     print(f"Initializing project {project_name_arg}")
