@@ -1,13 +1,10 @@
-import os
 import sys
+
+from .run_cmd import run_cmd
 
 
 def run_task(task: str):
-    cmd: str = f"uv run task {task}"
-    msg: str = f"> running comand: `{cmd}`"
-    sep: str = "-" * len(msg)
-    print(f"{sep}\n{msg}\n{sep}")
-    exit_code = os.system(cmd)
+    exit_code = run_cmd(f"uv run task {task}", kind="uv")
     if exit_code != 0:
         sys.exit(exit_code)
 
