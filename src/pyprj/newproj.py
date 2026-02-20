@@ -1,7 +1,10 @@
 import os
 import sys
+from datetime import datetime
 
 from .run_cmd import SEP, run_cmd
+
+year = datetime.now().year
 
 TREE: str = """
 ```
@@ -45,7 +48,7 @@ doc/sphinx/source/notebooks/examples/
 
 LICENSE_TXT: str = r"""MIT License
 
-Copyright (c) 2024-present {{author_name}} <{{author_email}}>
+Copyright (c) {{year}}-present {{author_name}} <{{author_email}}>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -371,7 +374,9 @@ def init(
     print(f"{msg}")
     with open("LICENSE.txt", "w", encoding="utf-8") as file:
         file.write(
-            LICENSE_TXT.replace("{{author_name}}", author_name).replace("{{author_email}}", author_email),
+            LICENSE_TXT.replace("{{author_name}}", author_name)
+            .replace("{{author_email}}", author_email)
+            .replace("{{year}}", str(year))
         )
 
     sep: str = "-" * len(msg)
