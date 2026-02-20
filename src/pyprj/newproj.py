@@ -1,6 +1,8 @@
 import os
 import sys
 
+from .run_cmd import SEP, run_cmd
+
 TREE: str = """
 ```
     {pkg_name}
@@ -149,6 +151,7 @@ TASKS_JSON = r"""{
 
 
 def init(
+    name: str | None = None,
     python: str = "3.12",
     black_line_length: int = 128,
 ):
@@ -156,6 +159,9 @@ def init(
 
     Parameters
     ----------
+    - `name` (`str | None`, optional): Defaults to `None`.
+        The name of the project. If `None`, use the current directory's name.
+
     - `python` (`str`, optional): Defaults to `"3.12"`.
         The Python interpreter to use to determine the minimum supported Python version.
 
@@ -163,11 +169,7 @@ def init(
         Line length parameter to use with `black`.
     """
 
-    cmd: str = f"git init"
-    msg: str = f"> running git comand: `{cmd}`"
-    sep: str = "-" * len(msg)
-    print(f"{sep}\n{msg}\n{sep}")
-    exit_code = os.system(cmd)
+    exit_code = run_cmd("git init", "git")
     if exit_code != 0:
         sys.exit(exit_code)
 
@@ -176,37 +178,25 @@ def init(
         envvar = f"PYPRJ_{configvar.upper()}"
         if envvar in os.environ:
             variable = os.environ[envvar]
-            msg = f"Found env variable {envvar} = {variable}"
-            sep: str = "-" * len(msg)
-            print(f"{sep}\n{msg}")
-            cmd: str = f'git config --local user.{userconfig} "{variable}"'
-            msg: str = f"> running git comand: `{cmd}`"
-            sep: str = "-" * len(msg)
-            print(f"{msg}\n{sep}")
-            exit_code = os.system(cmd)
+            print(f"Found env variable {envvar} = {variable}")
+            exit_code = run_cmd(cmd=f'git config --local user.{userconfig} "{variable}"', kind="git", add_sep=False)
             if exit_code != 0:
                 sys.exit(exit_code)
         else:
-            msg = f"> No env variables found, using the following git {configvar}:"
-            sep: str = "-" * len(msg)
-            print(f"{sep}\n{msg}")
+            print(f"No env variables found, using the following git {configvar}:")
             os.system(f"git config get user.{userconfig}")
-            print(f"{sep}")
 
-    cmd: str = f"uv init --author-from git --python {python} --lib"
-    msg: str = f"> running uv comand: `{cmd}`"
-    sep: str = "-" * len(msg)
-    print(f"{sep}\n{msg}\n{sep}")
-    exit_code = os.system(cmd)
+    project_name_arg = f"--name {name} " if name is not None else ""
+    print(f"Initializing project {project_name_arg}")
+    cmd = f"uv init --lib --author-from git --python {python} {project_name_arg}"
+    exit_code = run_cmd(cmd, kind="uv", add_sep=False)
     if exit_code != 0:
         sys.exit(exit_code)
 
+    print(f"{SEP}\nAdding dev packages:")
     dev_pkgs: list[str] = ["black", "pytest", "taskipy"]
     cmd: str = f"uv add --dev {' '.join(dev_pkgs)}"
-    msg: str = f"> Adding 'dev' packages, running uv comand: `{cmd}`"
-    sep: str = "-" * len(msg)
-    print(f"{sep}\n{msg}\n{sep}")
-    exit_code = os.system(cmd)
+    exit_code = run_cmd(cmd, kind="uv", add_sep=False)
     if exit_code != 0:
         sys.exit(exit_code)
 
