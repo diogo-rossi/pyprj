@@ -1,7 +1,5 @@
 import os
 
-from .pyproject import pyproject
-
 COLUMNS = 50
 try:
     COLUMNS = os.get_terminal_size().columns
@@ -10,10 +8,13 @@ except OSError:
 
 
 SEP: str = "-" * COLUMNS
-pyproject_dirpath = pyproject.dirpath.as_posix()
 
 
 def run_cmd(cmd: str, kind: str | None = None, add_sep: bool = True):
+    from .pyproject import pyproject
+
+    pyproject_dirpath = pyproject.dirpath.as_posix()
+
     cmdkind: str = f"`{kind}` " if kind else ""
     msg: str = f"> running {cmdkind}command: `{cmd}`"
 
