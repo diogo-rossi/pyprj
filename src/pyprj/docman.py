@@ -76,7 +76,7 @@ def init():
         msg: str = f"> creating folder '{folder_path.as_posix()}'"
         print(f"{msg}")
         try:
-            os.mkdir(folder_path)
+            folder_path.mkdir(exist_ok=True)
         except:
             print(f"{SEP}")
             raise
@@ -95,7 +95,7 @@ def init():
         msg: str = f"> creating folder '{folder_path.as_posix()}'"
         print(f"{msg}")
         try:
-            os.mkdir(folder_path)
+            folder_path.mkdir(exist_ok=True)
         except:
             print(f"{SEP}")
             raise

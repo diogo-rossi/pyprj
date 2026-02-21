@@ -1,6 +1,7 @@
 import os
 import sys
 from datetime import datetime
+from pathlib import Path
 
 from .run_cmd import SEP, run_cmd
 from .templates.GITIGNORE import GITIGNORE
@@ -107,7 +108,7 @@ def init(
     sep: str = "-" * len(msg)
     print(f"{msg}")
     try:
-        os.mkdir("tests")
+        Path("tests").mkdir(exist_ok=True)
     except:
         print(f"{sep}")
         raise
@@ -115,7 +116,7 @@ def init(
     msg: str = f"> creating folder '.vscode' "
     print(f"{msg}")
     try:
-        os.mkdir(".vscode")
+        Path(".vscode").mkdir(exist_ok=True)
     except:
         print(f"{sep}")
         raise
