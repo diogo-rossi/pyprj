@@ -91,7 +91,7 @@ def nbmd(
         previous_was_simple_python_repl_snippet: bool = False
         for cell in notebook["cells"]:
 
-            if cell["metadata"] and "to_hide" in cell["metadata"]["tags"]:
+            if cell["metadata"] and "tags" in cell["metadata"] and "to_hide" in cell["metadata"]["tags"]:
                 continue
 
             if cell["cell_type"] == "markdown":
