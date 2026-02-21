@@ -20,6 +20,7 @@ Makes use of:
 - [taskipy](https://pypi.org/project/taskipy/) to run automated tasks.
 - [Read the Docs](https://about.readthedocs.com/) as pre-set option to host
   documentation.
+- [MIT](https://opensource.org/license/mit) as license.
 
 ## Installation
 
@@ -65,7 +66,8 @@ subcommands:
 ```none
 > pyprj init --help
 
-usage: pyprj init [-h] [-n <name>] [-p <python>] [-b <black-line-length>]
+usage: pyprj init [-h] [-n <name>] [-p <python-version>]
+                  [-b <black-line-length>]
 
 Create a new project for a python package.
 
@@ -77,9 +79,9 @@ options:
                         directory's name.
                         Defaults to 'None'.
 
-  -p <python>, --python <python>
-                        The Python interpreter to use to determine the minimum
-                        supported Python version.
+  -p <python-version>, --python-version <python-version>
+                        The Python interpreter version to use to determine the
+                        minimum supported Python version.
                         Defaults to '3.12'.
 
   -b <black-line-length>, --black-line-length <black-line-length>
