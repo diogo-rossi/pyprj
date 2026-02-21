@@ -8,7 +8,7 @@ from .run_cmd import run_cmd
 def version(semver_part: Arg[Literal["major", "minor", "patch"], data(nargs="?")]):
     """Update or show project version
 
-    If called without 'semver' options, only show the project version.
+    If called without positional arguments, only show the project version.
     """
     if not semver_part:
         from .pyproject import pkg_name, pkg_version
