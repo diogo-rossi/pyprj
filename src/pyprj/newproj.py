@@ -86,6 +86,15 @@ def init(
     msg: str = f"> editing file 'pyproject.toml'"
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
+
+    with open("pyproject.toml", "r", encoding="utf-8") as file:
+        content: str = file.read()
+
+    content = content.replace('readme = "README.md"', 'readme = "README.md"\nlicense = "MIT"')
+
+    with open("pyproject.toml", "w", encoding="utf-8", newline="\n") as file:
+        file.write(content)
+
     with open("pyproject.toml", "a", encoding="utf-8") as file:
         file.write(
             PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length))
