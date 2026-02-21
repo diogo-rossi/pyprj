@@ -129,8 +129,8 @@ def nbex(
     dest_directory: Path = Path("examples/"),
     output_suffix: str = "",
 ):
-    """Process jupyter (nb) files to generate example files of code,
-    creating files from the cells starting with '%%python'
+    """Process jupyter (nb) files to generate example files of code.
+    Create files from the cells starting with '%%python'.
 
     Parameters
     ----------
