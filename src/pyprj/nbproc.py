@@ -18,6 +18,7 @@ from .cellfuncs import (
     __is_python_repl_code_cell,
     __is_shell_command_code_cell,
 )
+from .run_cmd import run_cmd
 
 
 def nbmd(
@@ -25,6 +26,7 @@ def nbmd(
     kind: Literal["tutorial", "function", "class"] = "tutorial",
     no_prettier: bool = False,
     remove_pattern_shell_files: Arg[str, data(metavar="<pattern>")] = "examples/",
+    dont_run_notebooks_before: bool = False,
 ):
     """Process jupyter (nb) files to generate markdown (md) files.
 
@@ -43,6 +45,9 @@ def nbmd(
 
     - `remove_pattern_shell_files` (`str`, optional): Defaults to `"examples/"`.
         Pattern to remove in shell command line cells. Aiming to remove example command line folders from path.
+
+    - `dont_run_notebooks_before` (`bool`, optional): Defaults to `False`.
+        Whether to not run the jupyter notebooks before processing.
     """
     if kind != "tutorial":
         print("\nNot yet implemented. Currently, only 'kind=tutorial' is accepted.\n")
@@ -74,6 +79,9 @@ def nbmd(
         print()
 
     for path in filepath:
+
+        if not dont_run_notebooks_before:
+            run_cmd(f"uv run jupyter nbconvert --to notebook --execute --inplace {path}", kind="uv")
 
         with open(path.resolve(), "r", encoding="utf-8") as file:
             notebook: Notebook = json.load(file)
