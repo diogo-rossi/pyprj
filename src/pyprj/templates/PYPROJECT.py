@@ -2,7 +2,7 @@ PYPROJECT_EXTRALINES: str = r"""
 [project.urls]
 Documentation = "{{documentation_page}}"
 Issues = "{{source_repo}}/issues"
-Source = "{{source_repo}}/blob/main/README.md"
+Source = "{{source_repo}}"
 
 [tool.pytest]
 addopts = [
