@@ -17,7 +17,7 @@ notebooks/helpinterfaces
 
 ## Links
 
-- GitHub repository:
+- Source repository:
   [https://github.com/diogo-rossi/pyprj](https://github.com/diogo-rossi/pyprj)
 - PyPI: [https://pypi.org/project/pyprj/](https://pypi.org/project/pyprj/)
 - Documentation:
