@@ -5,7 +5,7 @@ from clig import Arg, data
 from .run_cmd import run_cmd
 
 
-def version(semver_part: Arg[Literal["major", "minor", "patch"], data(nargs="?")]):
+def upver(semver_part: Arg[Literal["major", "minor", "patch"], data(nargs="?")]):
     """Update or show project version.
 
     If called without positional arguments, only show the project version.

@@ -10,12 +10,15 @@ from typing import Any
 
 from clig import Arg, Command, Context, data
 
-from .docman import docs, init, modm
-from .nbproc import nbex, nbmd
-from .newproj import init as inip
+from .docs import docs
+from .init_docs import init
+from .init_proj import init as inip
+from .modm import modm
+from .nbex import nbex
+from .ndmd import nbmd
 from .publish import publish
 from .taskscmd import build, test
-from .version import version
+from .upver import upver
 
 try:
     __version__ = pkg_version("pyprj")
@@ -95,8 +98,8 @@ def main():
                 .add_subcommand(nbex, **kwargs)
                 .add_subcommand(nbmd, **kwargs_without_optmetavarmodifier)
                 .end_subcommand(modm, **kwargs)
+            .add_subcommand(upver, **kwargs)
             .add_subcommand(build, **kwargs)
-            .add_subcommand(version, **kwargs)
             .add_subcommand(publish, **kwargs)
     )
     # fmt: on

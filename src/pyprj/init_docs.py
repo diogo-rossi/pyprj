@@ -3,10 +3,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from clig import Arg, Context, data
-
 from .run_cmd import SEP, run_cmd
-from .taskscmd import run_task
 from .templates.CONF import CONF_PY
 from .templates.INDEX import INDEX_MD
 
@@ -38,17 +35,6 @@ TREE: str = f"""
                  └─── examples
 ```
 """
-
-
-def docs(ctx: Context):
-    """Manage documentation of the project.
-
-    If called without subcommands, runs the task 'docs' inside the project.
-    Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
-    The task 'docs' makes docs with 'sphinx' in folder './doc/sphinx'.
-    """
-    if vars(ctx.namespace)[ctx.command.sub_commands["docs"].subparsers_dest] is None:
-        run_task("docs")
 
 
 def init():
@@ -146,15 +132,3 @@ def init():
     print("With the follwing packages in the `doc` dependency group:")
     print("- " + " | ".join(doc_pkgs))
     print("\nPlease, look at the `pyproject.toml` file for additional info.\n")
-
-
-def modm(filepath: Arg[list[Path] | Path | None, data(nargs="*", make_flag=False)] = None):
-    """Process documentation in modules.
-
-    Parameters
-    ----------
-    - `filepath` (`Arg[list[Path]  |  Path  |  None`, optional): Defaults to `None`.
-        The filepath or filepaths of modules (.py) to process.
-        If `None` (default), process all python files from the current directory.
-    """
-    print("\nTODO: not yet implemented!\n")
