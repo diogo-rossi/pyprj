@@ -147,7 +147,7 @@ options:
 ```none
 > pyprj docs nbmd --help
 
-usage: pyprj docs nbmd [-h] [-k {tutorial,function,class}] [-n] [-r <pattern>] [filepath ...]
+usage: pyprj docs nbmd [-h] [-k {tutorial,function,class}] [-n] [-r <pattern>] [-d] [filepath ...]
 
 Process jupyter (nb) files to generate markdown (md) files.
 
@@ -171,6 +171,11 @@ options:
                         Pattern to remove in shell command line cells. Aiming to
                         remove example command line folders from path.
                         Defaults to 'examples/'.
+
+  -d, --dont-run-notebooks-before
+                        Whether to not run the jupyter notebooks before
+                        processing.
+                        Defaults to 'False'.
 ```
 
 #### `docs/nbex` subcommand
@@ -253,7 +258,7 @@ usage: pyprj version [-h] [{major,minor,patch}]
 
 Update or show project version
 
-If called without 'semver' options, only show the project version.
+If called without positional arguments, only show the project version.
 
 positional arguments:
   {major,minor,patch}
