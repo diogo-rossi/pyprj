@@ -22,7 +22,6 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = ["black>=26.1.0"]
-test = ["pytest>=9.0.2"]
 docs = [
     "furo>=2025.12.19",
     "jupyter>=1.1.1",
@@ -31,6 +30,7 @@ docs = [
     "sphinx-copybutton>=0.5.2",
     "sphinxnotes-comboroles>=1.0",
 ]
+test = ["pytest>=9.0.2"]
 
 [project.urls]
 Documentation = "https://github.com/diogo-rossi/pyprj/blob/main/README.md"
