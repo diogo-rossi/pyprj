@@ -11,9 +11,9 @@ def version(semver_part: Arg[Literal["major", "minor", "patch"], data(nargs="?")
     If called without 'semver' options, only show the project version.
     """
     if not semver_part:
-        from .pyproject import pkg_name, version
+        from .pyproject import pkg_name, pkg_version
 
-        print(f"Package '{pkg_name}' version: {version}")
+        print(f"Package '{pkg_name}' version: {pkg_version}")
         return
 
     run_cmd(f"uv version --bump {semver_part}", kind="uv")

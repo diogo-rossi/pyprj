@@ -7,10 +7,10 @@ def publish():
     Uses token from file '.vscode/pyprj.json'
     """
     from .pyprj_json_data import json_content, published_versions, save_content, token
-    from .pyproject import pyproject, version
+    from .pyproject import pkg_version, pyproject
 
-    if version in published_versions:
-        print(f"\nThe version '{version}' has already been published. Please, update it first.\n")
+    if pkg_version in published_versions:
+        print(f"\nThe version '{pkg_version}' has already been published. Please, update it first.\n")
         return
 
     if not token:
@@ -19,5 +19,5 @@ def publish():
 
     error_code: int = run_cmd(f"uv publish {(pyproject.dirpath / 'dist/*').as_posix()} --token {token}", kind="uv")
     if error_code == 0:
-        published_versions.append(version)
+        published_versions.append(pkg_version)
         save_content(json_content)
