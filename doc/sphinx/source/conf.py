@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Literal, TypedDict
 
 from pyprj import nbproc
+from pyprj.markdown_utils import get_markdown_sections
 from pyprj.pyproject import author_name, pkg_name, pkg_version, pyproject
 
 
@@ -22,8 +23,12 @@ notebooks_dirpath: Path = Path("./notebooks")
 
 nbproc.nbmd(notebooks_dirpath)
 
-with open(notebooks_dirpath / "helps.md", "r", encoding="utf-8") as file:
-    readme: str = file.read()
+index_sections: list[str] = get_markdown_sections(Path("index.md"))
+usage_sections: list[str] = [
+    f"#{sec}" if sec.startswith("#") else sec for sec in get_markdown_sections(notebooks_dirpath / "helps.md")
+]
+
+readme: str = "".join(index_sections[0:3]) + "".join(usage_sections)
 
 with open(pyproject.dirpath / "README.md", "w", encoding="utf-8") as file:
     file.write(readme)
