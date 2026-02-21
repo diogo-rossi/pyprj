@@ -147,7 +147,7 @@ def init(
 
     msg: str = f"> creating file '.readthedocs.yaml'"
     print(f"{msg}")
-    with open(".readthedocs.yaml", "w", encoding="utf-8") as file:
+    with open(".readthedocs.yaml", "w", encoding="utf-8", newline="\n") as file:
         file.write(READTHEDOCS_YAML.replace("{{python_version}}", python_version))
 
     msg: str = f"> creating file '.gitignore'"
