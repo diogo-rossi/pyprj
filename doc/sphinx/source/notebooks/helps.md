@@ -57,8 +57,8 @@ subcommands:
     test                Run task 'test' inside the project.
     docs                Manage documentation of the project.
     build               Run task 'build' inside the project.
-    version             Update or show project version
-    publish             Publish package to PyPI
+    version             Update or show project version.
+    publish             Publish package to PyPI.
 ```
 
 ### `init` subcommand
@@ -124,7 +124,7 @@ options:
 subcommands:
   {init,nbex,nbmd,modm}
     init                Initialize documentation folder with packages.
-    nbex                Process jupyter (nb) files to generate example files of code,
+    nbex                Process jupyter (nb) files to generate example files of code.
     nbmd                Process jupyter (nb) files to generate markdown (md) files.
     modm                Process documentation in modules.
 ```
@@ -185,8 +185,8 @@ options:
 
 usage: pyprj docs nbex [-h] [-c] [-d <dest-directory>] [-o <output-suffix>] [filepath ...]
 
-Process jupyter (nb) files to generate example files of code,
-creating files from the cells starting with '%%python'
+Process jupyter (nb) files to generate example files of code.
+Create files from the cells starting with '%%python'.
 
 positional arguments:
   filepath              The filepath or filepaths of jupyter notebook (`.ipynb`) to
@@ -256,7 +256,7 @@ options:
 
 usage: pyprj version [-h] [{major,minor,patch}]
 
-Update or show project version
+Update or show project version.
 
 If called without positional arguments, only show the project version.
 
@@ -274,7 +274,7 @@ options:
 
 usage: pyprj publish [-h]
 
-Publish package to PyPI
+Publish package to PyPI.
 
 Uses token from file '.vscode/pyprj.json'
 
