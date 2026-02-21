@@ -12,7 +12,7 @@ pip install pyprj
 :caption: Table of contents
 :maxdepth: 1
 
-notebooks/helpinterfaces
+notebooks/helps
 ```
 
 ## Links
