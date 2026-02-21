@@ -13,7 +13,8 @@ def upver(semver_part: Arg[Literal["major", "minor", "patch"], data(nargs="?")])
     if not semver_part:
         from .pyproject import pkg_name, pkg_version
 
-        print(f"Package '{pkg_name}' version: {pkg_version}")
+        print(f"\nThe Package '{pkg_name}' is in version: {pkg_version}")
+        print("To update the project version, use positional arguments to 'upver' subcommand.\n")
         return
 
     run_cmd(f"uv version --bump {semver_part}", kind="uv")
