@@ -8,7 +8,7 @@ are bellow.
 ```none
 > pyprj --help
 
-usage: pyprj [-h] [-v] {init,test,docs,build,version,publish} ...
+usage: pyprj [-h] [-v] {init,test,docs,upver,build,publish} ...
 
 A CLI to manage python projects with predefined tools.
 
@@ -17,12 +17,12 @@ options:
   -v, --version         show program's version number and exit
 
 subcommands:
-  {init,test,docs,build,version,publish}
+  {init,test,docs,upver,build,publish}
     init                Create a new project for a python package.
     test                Run task 'test' inside the project.
     docs                Manage documentation of the project.
+    upver               Update or show project version.
     build               Run task 'build' inside the project.
-    version             Update or show project version.
     publish             Publish package to PyPI.
 ```
 
@@ -214,12 +214,12 @@ options:
   -h, --help  Show this help message and exit.
 ```
 
-## `version` subcommand
+## `upver` subcommand
 
 ```none
-> pyprj version --help
+> pyprj upver --help
 
-usage: pyprj version [-h] [{major,minor,patch}]
+usage: pyprj upver [-h] [{major,minor,patch}]
 
 Update or show project version.
 
