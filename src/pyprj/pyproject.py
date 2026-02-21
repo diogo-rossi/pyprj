@@ -1,7 +1,9 @@
+import sys
 import tomllib
 from pathlib import Path
 from typing import TypedDict, cast
 
+from taskipy.exceptions import MissingPyProjectFileError
 from taskipy.pyproject import PyProject
 
 
@@ -20,7 +22,10 @@ class PyProjectDict(TypedDict):
     project: ProjectData
 
 
-pyproject: PyProject = PyProject(Path(".").resolve())
+try:
+    pyproject: PyProject = PyProject(Path(".").resolve())
+except MissingPyProjectFileError:
+    sys.exit("\nNo 'pyproject.toml' file found in this directory or parent directories. It is not a project yet.\n")
 
 pyproject_filepath: Path = pyproject.dirpath / "pyproject.toml"
 
