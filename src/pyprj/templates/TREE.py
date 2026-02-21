@@ -17,6 +17,7 @@ TREE: str = """
     .gitignore
     .prettierrc.json
     .python-version
+    .readthedocs.yaml
     pyproject.toml
     README.md
     LICENSE.txt

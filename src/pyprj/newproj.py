@@ -10,6 +10,7 @@ from .templates.PRETTIER import PRETTIER_JSON
 from .templates.PYPRJ import PYPRJ_JSON
 from .templates.PYPROJECT import PYPROJECT_EXTRALINES
 from .templates.README import README_MD
+from .templates.READTHEDOCS import READTHEDOCS_YAML
 from .templates.SETTINGS import SETTINGS_JSON
 from .templates.TASKS import TASKS_JSON
 from .templates.TREE import TREE
@@ -143,6 +144,11 @@ def init(
     print(f"{msg}")
     with open(".prettierrc.json", "w", encoding="utf-8") as file:
         file.write(PRETTIER_JSON)
+
+    msg: str = f"> creating file '.readthedocs.yaml'"
+    print(f"{msg}")
+    with open(".readthedocs.yaml", "w", encoding="utf-8") as file:
+        file.write(READTHEDOCS_YAML.replace("{{python_version}}", python_version))
 
     msg: str = f"> creating file '.gitignore'"
     print(f"{msg}")
