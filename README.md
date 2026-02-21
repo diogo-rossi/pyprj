@@ -56,7 +56,7 @@ subcommands:
     init                Create a new project for a python package.
     test                Run task 'test' inside the project.
     docs                Manage documentation of the project.
-    build               Build package with uv
+    build               Run task 'build' inside the project.
     version             Update or show project version
     publish             Publish package to PyPI
 ```
@@ -124,7 +124,7 @@ options:
 subcommands:
   {init,nbex,nbmd,modm}
     init                Initialize documentation folder with packages.
-    nbex                Process jupyter (nb) files to generate example files of code.
+    nbex                Process jupyter (nb) files to generate example files of code,
     nbmd                Process jupyter (nb) files to generate markdown (md) files.
     modm                Process documentation in modules.
 ```
