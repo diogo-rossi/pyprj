@@ -2,7 +2,7 @@ from .run_cmd import run_cmd
 
 
 def publish():
-    """Publish package to PyPI
+    """Publish package to PyPI.
 
     Uses token from file '.vscode/pyprj.json'
     """
