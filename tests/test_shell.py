@@ -61,7 +61,7 @@ def test_2nd_shell_cell():
 ############# Third cell #######################################################################################################
 
 third_cell: str = """```none
-> example03.py 38
+> python example03.py 38
 
 Printing the input as integer number:  38
 ```
@@ -76,7 +76,7 @@ markdown_cell_text_after_3rd_cell: str = """The next shows the output error but 
 
 
 def test_3rd_shell_cell():
-    assert third_cell == genbdoc.__format_shell_cell(cells[cells_indexes[2]], False)
+    assert third_cell == genbdoc.__format_shell_cell(cells[cells_indexes[2]], False, "examples/")
     assert third_cell_output == genbdoc.__get_outputs(cells[cells_indexes[2]])
     assert markdown_cell_text_after_3rd_cell == genbdoc.__format_markdown_cell(cells[cells_indexes[2] + 1], False)
 
@@ -85,7 +85,7 @@ def test_3rd_shell_cell():
 ############# Fourth cell ######################################################################################################
 
 fourth_cell: str = """```none
-> python script_argv_example.py -
+> python example03.py -
 
 ValueError: invalid literal for int() with base 10: '-'
 ```
@@ -100,6 +100,6 @@ markdown_cell_text_after_4th_cell: str = """Only the `ValueError` is shown.
 
 
 def test_4th_shell_cell():
-    assert fourth_cell == genbdoc.__format_shell_cell(cells[cells_indexes[3]], False)
+    assert fourth_cell == genbdoc.__format_shell_cell(cells[cells_indexes[3]], False, "examples/")
     assert fourth_cell_output == genbdoc.__get_outputs(cells[cells_indexes[3]])
     assert markdown_cell_text_after_4th_cell == genbdoc.__format_markdown_cell(cells[cells_indexes[3] + 1], False)

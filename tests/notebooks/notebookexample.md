@@ -65,7 +65,7 @@ The output above should not be rendered
 
 The follwing cell has a shell command, that has an output.
 
-```
+```none
 > python -c "print('hello')"
 
 hello
@@ -73,7 +73,7 @@ hello
 
 The above code renders as a shell command with output.
 
-```
+```none
 > python -c "print(-)"
 
 File "<string>", line 1
@@ -94,7 +94,7 @@ import sys
 print("Printing the input as integer number: ", int(sys.argv[1]))
 ```
 
-```
+```none
 > python example03.py 38
 
 Printing the input as integer number:  38
@@ -102,7 +102,7 @@ Printing the input as integer number:  38
 
 The next shows the output error but removing the traceback.
 
-```
+```none
 > python example03.py -
 
 ValueError: invalid literal for int() with base 10: '-'

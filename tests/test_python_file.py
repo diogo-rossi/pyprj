@@ -8,7 +8,7 @@ cells_indexes: list[int] = [cells.index(cell) for cell in cells if genbdoc.__is_
 ############# First file cell ##################################################################################################
 
 first_cell: str = """```python
-# script.py
+# example01.py
 from pathlib import Path
 cwd = Path().cwd()
 ```
@@ -32,7 +32,7 @@ def test_1st_file_cell():
 ############# Second file cell #################################################################################################
 
 second_cell: str = """```python
-# example.py
+# example02.py
 from pathlib import Path
 cwd = Path().cwd()
 print(cwd)
