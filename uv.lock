@@ -340,10 +340,11 @@ wheels = [
 
 [[package]]
 name = "clig"
-version = "0.6.2"
+version = "0.6.3"
 source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/5d/a4/56f5cf984b92ff38aaf380c0cd6d90d0da2f9dccd649a4031a2456cf702d/clig-0.6.3.tar.gz", hash = "sha256:a7f4a48f302dd5c3a2395d1b278169b9e8bcbaf256995103daf142f58a6422a0", size = 187525, upload-time = "2026-02-21T05:21:54.6Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/31/ea/48f246ce5beb95af0f8e529f9d0468b2162c52ef9bec58757ce98593c32d/clig-0.6.2-py3-none-any.whl", hash = "sha256:f3a99f515dae9505c5c71fdc4af32dd3714248c10c7c555c928929346f09020a", size = 22574, upload-time = "2026-02-20T05:04:52.711Z" },
+    { url = "https://files.pythonhosted.org/packages/09/ac/bcfa4683f59777bfbde02422d1a4c4b9d513f4374f99fbe404d22b3d51be/clig-0.6.3-py3-none-any.whl", hash = "sha256:08421764a3a037cebcf946be979a8f83bd37aa65118f13d6a6718e885d3a39b7", size = 22611, upload-time = "2026-02-21T05:21:55.766Z" },
 ]
 
 [[package]]
@@ -1302,7 +1303,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "clig", specifier = ">=0.6.2" },
+    { name = "clig", specifier = ">=0.6.3" },
     { name = "taskipy", specifier = ">=1.14.1" },
 ]
 
