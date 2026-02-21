@@ -19,7 +19,7 @@ year = datetime.now().year
 
 def init(
     name: str | None = None,
-    python: str = "3.12",
+    python_version: str = "3.12",
     black_line_length: int = 128,
 ):
     """Create a new project for a python package.
@@ -29,8 +29,8 @@ def init(
     - `name` (`str | None`, optional): Defaults to `None`.
         The name of the project. If `None`, use the current directory's name.
 
-    - `python` (`str`, optional): Defaults to `"3.12"`.
-        The Python interpreter to use to determine the minimum supported Python version.
+    - `python_version` (`str`, optional): Defaults to `"3.12"`.
+        The Python interpreter version to use to determine the minimum supported Python version.
 
     - `black_line_length` (`int`, optional): Defaults to `128`.
         Line length parameter to use with `black`.
@@ -56,7 +56,7 @@ def init(
 
     project_name_arg = f"--name {name} " if name is not None else ""
     print(f"Initializing project {project_name_arg}")
-    cmd = f"uv init --lib --author-from git --python {python} {project_name_arg}"
+    cmd = f"uv init --lib --author-from git --python {python_version} {project_name_arg}"
     exit_code = run_cmd(cmd, kind="uv", add_sep=False)
     if exit_code != 0:
         sys.exit(exit_code)
