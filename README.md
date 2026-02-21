@@ -66,8 +66,7 @@ subcommands:
 ```none
 > pyprj init --help
 
-usage: pyprj init [-h] [-n <name>] [-p <python-version>]
-                  [-b <black-line-length>]
+usage: pyprj init [-h] [-n <name>] [-p <python-version>] [-b <black-line-length>]
 
 Create a new project for a python package.
 
@@ -148,8 +147,7 @@ options:
 ```none
 > pyprj docs nbmd --help
 
-usage: pyprj docs nbmd [-h] [-k {tutorial,function,class}] [-n] [-r <pattern>]
-                       [filepath ...]
+usage: pyprj docs nbmd [-h] [-k {tutorial,function,class}] [-n] [-r <pattern>] [filepath ...]
 
 Process jupyter (nb) files to generate markdown (md) files.
 
@@ -180,8 +178,7 @@ options:
 ```none
 > pyprj docs nbex --help
 
-usage: pyprj docs nbex [-h] [-c] [-d <dest-directory>] [-o <output-suffix>]
-                       [filepath ...]
+usage: pyprj docs nbex [-h] [-c] [-d <dest-directory>] [-o <output-suffix>] [filepath ...]
 
 Process jupyter (nb) files to generate example files of code,
 creating files from the cells starting with '%%python'

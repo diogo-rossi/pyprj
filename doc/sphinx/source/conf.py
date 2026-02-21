@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Literal, TypedDict
 
 from pyprj import nbproc
-from pyprj.pyproject import author_name, pkg_name, pkg_version
+from pyprj.pyproject import author_name, pkg_name, pkg_version, pyproject
 
 
 class PyDomainInfo(TypedDict):
@@ -18,8 +18,15 @@ class PyDomainInfo(TypedDict):
 THIS_DIR: Path = Path(__file__).parent.resolve()
 os.chdir(THIS_DIR)
 
-nbproc.nbmd(Path("./notebooks"))
+notebooks_dirpath: Path = Path("./notebooks")
 
+nbproc.nbmd(notebooks_dirpath)
+
+with open(notebooks_dirpath / "helps.md", "r", encoding="utf-8") as file:
+    readme: str = file.read()
+
+with open(pyproject.dirpath / "README.md", "w", encoding="utf-8") as file:
+    file.write(readme)
 
 # %%          SPHINX DATA
 ############# SPHINX DATA ######################################################################################################
