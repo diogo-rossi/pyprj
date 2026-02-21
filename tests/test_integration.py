@@ -1,6 +1,6 @@
 from resources import notebook_filepath
 
-import pyprj.nbproc as genbdoc
+import pyprj.ndmd as genbdoc
 
 
 def test_write_md_file():
