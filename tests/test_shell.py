@@ -7,7 +7,7 @@ cells_indexes: list[int] = [cells.index(cell) for cell in cells if genbdoc.__is_
 # %%          First cell
 ############# First cell #######################################################################################################
 
-first_cell: str = """```
+first_cell: str = """```none
 > python -c "print('hello')"
 
 hello
@@ -30,7 +30,7 @@ def test_1st_shell_cell():
 # %%          Second cell
 ############# Second cell ######################################################################################################
 
-second_cell: str = """```
+second_cell: str = """```none
 > python -c "print(-)"
 
 File "<string>", line 1
@@ -60,8 +60,8 @@ def test_2nd_shell_cell():
 # %%          Third cell
 ############# Third cell #######################################################################################################
 
-third_cell: str = """```
-> python script_argv_example.py 38
+third_cell: str = """```none
+> example03.py 38
 
 Printing the input as integer number:  38
 ```
@@ -84,7 +84,7 @@ def test_3rd_shell_cell():
 # %%          Fourth cell
 ############# Fourth cell ######################################################################################################
 
-fourth_cell: str = """```
+fourth_cell: str = """```none
 > python script_argv_example.py -
 
 ValueError: invalid literal for int() with base 10: '-'
