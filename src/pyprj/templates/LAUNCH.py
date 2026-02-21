@@ -20,5 +20,4 @@ LAUNCH_JSON: str = r"""{
             "console": "integratedTerminal",
         }
     ]
-}
-"""
+}"""
