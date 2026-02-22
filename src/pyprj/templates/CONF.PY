@@ -41,7 +41,7 @@ project_data: PyProjectData = pyproject["project"]
 project_name = project_data["name"]
 project_author = project_data["authors"][0]["name"]
 
-os.system("pyprj docs nbmd")
+os.system("pyprj docs nbmd notebooks") # convert files inside 'notebooks/' folder
 
 # %%          SPHINX DATA
 ############# SPHINX DATA ######################################################################################################
