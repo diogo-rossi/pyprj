@@ -26,7 +26,7 @@ def init(
     name: str | None = None,
     python_version: str = "3.12",
     black_line_length: int = 128,
-    cli: Arg[str | None, data(nargs="?", const="clicmd", helpmodifier=str)] = None,
+    cli: Arg[str | bool, data(nargs="?", const=True, helpmodifier=str)] = False,
 ):
     """Create a new project for a python package.
 
@@ -41,9 +41,10 @@ def init(
     - `black_line_length` (`int`, optional): Defaults to `128`.
         Line length parameter to use with `black`.
 
-    - `cli` (`str`, optional): Defaults to `None`.
+    - `cli` (`str`, optional): Defaults to `False`.
         Optional CLI script name. If omitted, No CLI command is added.
-        If provided without a value, the CLI command name defaults to `clicmd`.
+        If provided without a value, the CLI command name defaults to
+        the name of the package.
     """
 
     exit_code = run_cmd("git init", "git")
@@ -102,6 +103,7 @@ def init(
     from .pyproject import author_email, author_name, documentation_page, pkg_name, source_repo
 
     msg: str = f"> editing file 'pyproject.toml'"
+    cli = pkg_name if cli and cli == True else cli
     pyproject_cli_script = PYPROJECT_CLI_SCRIPT.replace("{{cli_name}}", cli).replace("{{pkg_name}}", pkg_name) if cli else ""
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
