@@ -66,7 +66,7 @@ subcommands:
 ```none
 > pyprj init --help
 
-usage: pyprj init [-h] [-n <name>] [-p <python-version>] [-b <black-line-length>]
+usage: pyprj init [-h] [-n <name>] [-p <python-version>] [-b <black-line-length>] [-c [<cli>]]
 
 Create a new project for a python package.
 
@@ -74,18 +74,22 @@ options:
   -h, --help            Show this help message and exit.
 
   -n <name>, --name <name>
-                        The name of the project. If `None`, use the current
-                        directory's name.
+                        The name of the project. If `None`, use the current directory's
+                        name.
                         Defaults to 'None'.
 
   -p <python-version>, --python-version <python-version>
-                        The Python interpreter version to use to determine the
-                        minimum supported Python version.
+                        The Python interpreter version to use to determine the minimum
+                        supported Python version.
                         Defaults to '3.12'.
 
   -b <black-line-length>, --black-line-length <black-line-length>
                         Line length parameter to use with `black`.
                         Defaults to '128'.
+
+  -c [<cli>], --cli [<cli>]
+                        Optional CLI script name. If omitted, No CLI command is added.
+                        If provided without a value, the CLI command name defaults to 'clicmd'.
 ```
 
 ### `test` subcommand
@@ -163,18 +167,17 @@ options:
                         The kind of the notebook files documentation to convert.
                         Defaults to 'tutorial'.
 
-  -n, --no-prettier     Whether to not pos-process the generate .md files with
-                        'prettier', if 'prettier' is available.
+  -n, --no-prettier     Whether to not pos-process the generate .md files with 'prettier',
+                        if 'prettier' is available.
                         Defaults to 'False'.
 
   -r <pattern>, --remove-pattern-shell-files <pattern>
-                        Pattern to remove in shell command line cells. Aiming to
-                        remove example command line folders from path.
+                        Pattern to remove in shell command line cells. Aiming to remove
+                        example command line folders from path.
                         Defaults to 'examples/'.
 
   -d, --dont-run-notebooks-before
-                        Whether to not run the jupyter notebooks before
-                        processing.
+                        Whether to not run the jupyter notebooks before processing.
                         Defaults to 'False'.
 ```
 
@@ -197,8 +200,8 @@ options:
   -h, --help            Show this help message and exit.
 
   -c, --change-shell-cells
-                        Whether to edit the following shell cells, after the
-                        example cells.
+                        Whether to edit the following shell cells, after the example
+                        cells.
                         Defaults to 'False'.
 
   -d <dest-directory>, --dest-directory <dest-directory>
@@ -206,11 +209,9 @@ options:
                         Defaults to 'examples'.
 
   -o <output-suffix>, --output-suffix <output-suffix>
-                        If editing original notebook file
-                        (`change_shell_cells=True`) add this
-                        suffix to the resulting file. Used for debbuging
-                        purposes, to not overwrite
-                        the original file (which is done with the default
+                        If editing original notebook file (`change_shell_cells=True`) add
+                        this suffix to the resulting file. Used for debbuging purposes, to
+                        not overwrite the original file (which is done with the default
                         value).
                         Defaults to ''.
 ```
