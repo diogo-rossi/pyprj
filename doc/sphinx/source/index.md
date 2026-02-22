@@ -40,6 +40,7 @@ With `pipx`, the tool is globally installed in an isolated environment.
 :maxdepth: 1
 
 notebooks/helps
+apireference
 ```
 
 ## Links
