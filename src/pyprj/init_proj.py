@@ -43,7 +43,7 @@ def init(
 
     - `cli` (`str`, optional): Defaults to `None`.
         Optional CLI script name. If omitted, No CLI command is added.
-        If provided without a value, the CLI command name defaults to 'clicmd'.
+        If provided without a value, the CLI command name defaults to `clicmd`.
     """
 
     exit_code = run_cmd("git init", "git")

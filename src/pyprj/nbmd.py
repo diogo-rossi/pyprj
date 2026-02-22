@@ -39,7 +39,7 @@ def nbmd(
         The kind of the notebook files documentation to convert.
 
     - `no_prettier` (`bool`, optional): Defaults to `False`.
-        Whether to not pos-process the generate .md files with 'prettier', if 'prettier' is available.
+        Whether to not pos-process the generate .md files with `prettier`, if `prettier` is available.
 
     - `remove_pattern_shell_files` (`str`, optional): Defaults to `"examples/"`.
         Pattern to remove in shell command line cells. Aiming to remove example command line folders from path.
