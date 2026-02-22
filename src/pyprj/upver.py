@@ -1,3 +1,4 @@
+import sys
 from typing import Literal
 
 from clig import Arg, data
@@ -5,7 +6,7 @@ from clig import Arg, data
 from .run_cmd import run_cmd
 
 
-def upver(semver_part: Arg[Literal["major", "minor", "patch"], data(nargs="?")]):
+def upver(semver_part: Arg[Literal["major", "minor", "patch"], data(nargs="?")]) -> int:
     """Update or show project version.
 
     Currently, it uses the command 'uv version'.
@@ -18,5 +19,6 @@ def upver(semver_part: Arg[Literal["major", "minor", "patch"], data(nargs="?")])
         print(f"\nThe current pPackage is in this version")
         print("To update the project version, use positional arguments to 'upver' subcommand.")
         print(" | ".join(["major", "minor", "patch"]))
+        return error_code
 
-    run_cmd(f"uv version --bump {semver_part}", kind="uv")
+    return run_cmd(f"uv version --bump {semver_part}", kind="uv")
