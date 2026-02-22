@@ -6,7 +6,7 @@ Source = "{{source_repo}}"
 
 [tool.pytest]
 addopts = [
-    "-rx",        # Show extra test summary: (x)failed
+    "-rx",        # Show extra test summary (r): (x)failed
     "-vv",        # Increase verbosity
     "-s",         # Shortcut for --capture=no (Per-test capturing method)
     "--tb=short", # Traceback print mode = short
