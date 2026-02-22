@@ -10,7 +10,7 @@ TREE: str = """
     │
     ├─── src
     │    └─── mypkg
-    │            __init__.py
+    │            __init__.py{cli_file}
     │            py.typed
     ├─── tests
     │
