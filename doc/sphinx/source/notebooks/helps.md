@@ -19,10 +19,10 @@ options:
 subcommands:
   {init,test,docs,upver,build,publish}
     init                Create a new project for a python package.
-    test                Run task 'test' inside the project.
+    test                Run task `test` inside the project.
     docs                Manage documentation of the project.
     upver               Update or show project version.
-    build               Run task 'build' inside the project.
+    build               Run task `build` inside the project.
     publish             Publish package to PyPI.
 ```
 
@@ -54,7 +54,7 @@ options:
 
   -c [<cli>], --cli [<cli>]
                         Optional CLI script name. If omitted, No CLI command is added.
-                        If provided without a value, the CLI command name defaults to 'clicmd'.
+                        If provided without a value, the CLI command name defaults to `clicmd`.
 ```
 
 ## `test` subcommand
@@ -64,11 +64,11 @@ options:
 
 usage: pyprj test [-h]
 
-Run task 'test' inside the project.
+Run task `test` inside the project.
 
-This command only runs the task 'test' inside the project.
-Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
-The task 'test' runs tests with 'pytest' in folder './tests'.
+This command only runs the task `test` inside the project.
+Tasks use the tool `taskipy`. Currently are run with the tool `uv`.
+The task `test` runs tests with `pytest` in folder `./tests`.
 
 options:
   -h, --help  Show this help message and exit.
@@ -83,9 +83,9 @@ usage: pyprj docs [-h] {init,nbex,nbmd,modm} ...
 
 Manage documentation of the project.
 
-If called without subcommands, runs the task 'docs' inside the project.
-Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
-The task 'docs' makes docs with 'sphinx' in folder './doc/sphinx'.
+If called without subcommands, runs the task `docs` inside the project.
+Tasks use the tool `taskipy`. Currently are run with the tool `uv`.
+The task `docs` makes docs with `sphinx` in folder `./doc/sphinx`.
 
 options:
   -h, --help            Show this help message and exit.
@@ -132,8 +132,8 @@ options:
                         The kind of the notebook files documentation to convert.
                         Defaults to 'tutorial'.
 
-  -n, --no-prettier     Whether to not pos-process the generate .md files with 'prettier',
-                        if 'prettier' is available.
+  -n, --no-prettier     Whether to not pos-process the generate .md files with `prettier`,
+                        if `prettier` is available.
                         Defaults to 'False'.
 
   -r <pattern>, --remove-pattern-shell-files <pattern>
@@ -154,7 +154,7 @@ options:
 usage: pyprj docs nbex [-h] [-c] [-d <dest-directory>] [-o <output-suffix>] [filepath ...]
 
 Process jupyter (nb) files to generate example files of code.
-Create files from the cells starting with '%%python'.
+Create files from the cells starting with `%%python`.
 
 positional arguments:
   filepath              The filepath or filepaths of jupyter notebook (`.ipynb`) to
@@ -205,11 +205,11 @@ options:
 
 usage: pyprj build [-h]
 
-Run task 'build' inside the project.
+Run task `build` inside the project.
 
-This command only runs the task 'build' inside the project.
-Tasks use the tool 'taskipy'. Currently are run with the tool 'uv'.
-The task 'build' builds the package with 'uv' in root folder.
+This command only runs the task `build` inside the project.
+Tasks use the tool `taskipy`. Currently are run with the tool `uv`.
+The task `build` builds the package with `uv` in root folder.
 
 options:
   -h, --help  Show this help message and exit.
@@ -234,7 +234,7 @@ options:
                        Defaults to 'False'.
 
 
-Currently, it uses the command 'uv version'.
+Currently, it uses the command `uv version`.
 If called without positional arguments, only show the project version.
 ```
 
@@ -247,7 +247,7 @@ usage: pyprj publish [-h]
 
 Publish package to PyPI.
 
-Uses token from file '.vscode/pyprj.json'
+Uses token from file `.vscode/pyprj.json`.
 
 options:
   -h, --help  Show this help message and exit.
