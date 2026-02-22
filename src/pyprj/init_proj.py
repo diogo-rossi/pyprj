@@ -26,7 +26,7 @@ def init(
     name: str | None = None,
     python_version: str = "3.12",
     black_line_length: int = 128,
-    cli_project: Arg[str | None, data(nargs="?", const="clicmd")] = None,
+    cli: Arg[str | None, data(nargs="?", const="clicmd", helpmodifier=str)] = None,
 ):
     """Create a new project for a python package.
 
@@ -40,6 +40,10 @@ def init(
 
     - `black_line_length` (`int`, optional): Defaults to `128`.
         Line length parameter to use with `black`.
+
+    - `cli` (`str`, optional): Defaults to `None`.
+        Optional CLI script name for the project. If omitted, No CLI command is added.
+        If provided without a value, the CLI command name defaults to 'clicmd'.
     """
 
     exit_code = run_cmd("git init", "git")
@@ -81,7 +85,7 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
-    if cli_project:
+    if cli:
         print(f"{SEP}\nAdding CLI packages:")
         dep_pkgs: list[str] = ["clig"]
         cmd: str = f"uv add {' '.join(dep_pkgs)}"
@@ -98,9 +102,7 @@ def init(
     from .pyproject import author_email, author_name, documentation_page, pkg_name, source_repo
 
     msg: str = f"> editing file 'pyproject.toml'"
-    pyproject_cli_script = (
-        PYPROJECT_CLI_SCRIPT.replace("{{cli_name}}", cli_project).replace("{{pkg_name}}", pkg_name) if cli_project else ""
-    )
+    pyproject_cli_script = PYPROJECT_CLI_SCRIPT.replace("{{cli_name}}", cli).replace("{{pkg_name}}", pkg_name) if cli else ""
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
     with open("pyproject.toml", "r", encoding="utf-8") as file:
@@ -131,15 +133,15 @@ def init(
         .replace("{{author_email}}", author_email)
         .replace("{{year}}", str(year)),
     )
-    if cli_project:
+    if cli:
         __create_file(f"src/{pkg_name}/cli.py", CLI_PY.replace("{{pkg_name}}", pkg_name), newline=None)
 
     sep: str = "-" * len(msg)
     print(sep)
 
     print("\nCreated a project for a python package with the following structure:")
-    print(TREE.format(pkg_name=pkg_name, cli_file="\n    │            cli.py" if cli_project else ""))
-    if cli_project:
+    print(TREE.format(pkg_name=pkg_name, cli_file="\n    │            cli.py" if cli else ""))
+    if cli:
         print("With the follwing packages in dependencies:")
         print("- " + " | ".join(dep_pkgs))
         print()
