@@ -4,6 +4,14 @@ from .run_cmd import run_cmd
 
 
 def run_task(task: str):
+    """Run task with taskipy
+
+    Parameters
+    ----------
+    - `task` (`str`):
+        The name of the task to run
+
+    """
     exit_code = run_cmd(f"uv run task {task}", kind="uv")
     if exit_code != 0:
         sys.exit(exit_code)
