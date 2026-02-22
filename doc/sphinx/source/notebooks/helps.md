@@ -220,18 +220,22 @@ options:
 ```none
 > pyprj upver --help
 
-usage: pyprj upver [-h] [{major,minor,patch}]
+usage: pyprj upver [-h] [-b] [{major,minor,patch}]
 
 Update or show project version.
 
-Currently, it uses the command 'uv version'.
-If called without positional arguments, only show the project version.
-
 positional arguments:
-  {major,minor,patch}
+  {major,minor,patch}  Semantic version pattern of the updated version.
 
 options:
   -h, --help           Show this help message and exit.
+
+  -b, --build          Whether to build the project after update version.
+                       Defaults to 'False'.
+
+
+Currently, it uses the command 'uv version'.
+If called without positional arguments, only show the project version.
 ```
 
 ## `publish` subcommand
