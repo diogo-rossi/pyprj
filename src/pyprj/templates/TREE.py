@@ -9,7 +9,7 @@ TREE: str = """
     │        pyprj.json
     │
     ├─── src
-    │    └─── mypkg
+    │    └─── {pkg_name}
     │            __init__.py{cli_file}
     │            py.typed
     ├─── tests
