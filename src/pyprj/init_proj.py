@@ -42,7 +42,7 @@ def init(
         Line length parameter to use with `black`.
 
     - `cli` (`str`, optional): Defaults to `None`.
-        Optional CLI script name for the project. If omitted, No CLI command is added.
+        Optional CLI script name. If omitted, No CLI command is added.
         If provided without a value, the CLI command name defaults to 'clicmd'.
     """
 
