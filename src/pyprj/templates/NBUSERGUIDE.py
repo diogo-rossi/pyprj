@@ -7,7 +7,7 @@ NBUSERGUIDE: str = r"""{
             "source": [
                 "# Userguide\n",
                 "\n",
-                "Userguide text"
+                "Introduction text to the userguid document"
             ]
         },
         {
@@ -17,7 +17,7 @@ NBUSERGUIDE: str = r"""{
             "source": [
                 "## Code cell:\n",
                 "\n",
-                "This is a cell code running in the virtual environment."
+                "This is a cell code running in the virtual environment. It is rendered with the `>>>` layout. "
             ]
         },
         {
@@ -39,7 +39,7 @@ NBUSERGUIDE: str = r"""{
             "source": [
                 "## File cell\n",
                 "\n",
-                "This is a file code running in the virtual environment."
+                "This is a file code running in the virtual environment. It is rendered as is (without the `%%` command)."
             ]
         },
         {
@@ -66,7 +66,7 @@ NBUSERGUIDE: str = r"""{
             "source": [
                 "## Shell cell\n",
                 "\n",
-                "This is a shell cell running the previous example."
+                "This is a shell cell running the previous example. It is rendered with `>` as shell prompt."
             ]
         },
         {
