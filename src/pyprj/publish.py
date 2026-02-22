@@ -4,7 +4,7 @@ from .run_cmd import run_cmd
 def publish():
     """Publish package to PyPI.
 
-    Uses token from file '.vscode/pyprj.json'
+    Uses token from file `.vscode/pyprj.json`.
     """
     from .pyprj_json_data import json_content, published_versions, save_content, token
     from .pyproject import pkg_version, pyproject
