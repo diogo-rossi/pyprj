@@ -1,8 +1,8 @@
 import os
 import sys
 from datetime import datetime
-from pathlib import Path
 
+from .create_file_folder import __create_file, __create_folder
 from .run_cmd import SEP, run_cmd
 from .templates.GITIGNORE import GITIGNORE
 from .templates.LAUNCH import LAUNCH_JSON
@@ -99,20 +99,19 @@ def init(
             .replace("{{documentation_page}}", documentation_page)
         )
 
-    create_folder("tests")
-    create_folder(".vscode")
-    create_file(".vscode/settings.json", SETTINGS_JSON.replace("{{line_length}}", str(black_line_length)))
-    create_file(".vscode/tasks.json", TASKS_JSON)
-    create_file(".vscode/launch.json", LAUNCH_JSON)
-    create_file(".vscode/pyprj.json", PYPRJ_JSON)
-    create_file(".prettierrc.json", PRETTIER_JSON)
-    create_file(".readthedocs.yaml", READTHEDOCS_YAML.replace("{{python_version}}", python_version))
-    create_file(".gitignore", GITIGNORE)
-    create_file("README.md", README_MD.replace("{{pkg_name}}", pkg_name), newline=None)
-
-    create_file(
-        path="LICENSE.txt",
-        content=LICENSE_TXT.replace("{{author_name}}", author_name)
+    __create_folder("tests")
+    __create_folder(".vscode")
+    __create_file(".vscode/settings.json", SETTINGS_JSON.replace("{{line_length}}", str(black_line_length)))
+    __create_file(".vscode/tasks.json", TASKS_JSON)
+    __create_file(".vscode/launch.json", LAUNCH_JSON)
+    __create_file(".vscode/pyprj.json", PYPRJ_JSON)
+    __create_file(".prettierrc.json", PRETTIER_JSON)
+    __create_file(".readthedocs.yaml", READTHEDOCS_YAML.replace("{{python_version}}", python_version))
+    __create_file(".gitignore", GITIGNORE)
+    __create_file("README.md", README_MD.replace("{{pkg_name}}", pkg_name), newline=None)
+    __create_file(
+        "LICENSE.txt",
+        LICENSE_TXT.replace("{{author_name}}", author_name)
         .replace("{{author_email}}", author_email)
         .replace("{{year}}", str(year)),
     )
@@ -128,21 +127,3 @@ def init(
     print("With the follwing packages in the `test` dependency group:")
     print("- " + " | ".join(test_pkgs))
     print("\nPlease, look at the `pyproject.toml` file for additional info.\n")
-
-
-def create_file(path: str, content: str, newline: str | None = "\n"):
-    msg: str = f"> creating file '{path}'"
-    print(f"{msg}")
-    with open(path, "w", encoding="utf-8", newline=newline) as file:
-        file.write(content)
-
-
-def create_folder(path: str):
-    msg: str = f"> creating folder '{path}/' "
-    sep: str = "-" * len(msg)
-    print(f"{msg}")
-    try:
-        Path(path).mkdir(exist_ok=True)
-    except:
-        print(f"{sep}")
-        raise
