@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal, TypedDict
 
-from pyprj import ndmd
+from pyprj import nbmd
 from pyprj.markdown_utils import get_markdown_sections
 from pyprj.pyproject import author_name, pkg_name, pkg_version, pyproject
 
@@ -21,7 +21,7 @@ os.chdir(THIS_DIR)
 
 notebooks_dirpath: Path = Path("./notebooks")
 
-ndmd.nbmd(notebooks_dirpath)
+nbmd.nbmd(notebooks_dirpath)
 
 index_sections: list[str] = get_markdown_sections(Path("index.md"))
 usage_sections: list[str] = [
