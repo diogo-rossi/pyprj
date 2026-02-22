@@ -88,87 +88,34 @@ def init(
     msg: str = f"> editing file 'pyproject.toml'"
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
-
     with open("pyproject.toml", "r", encoding="utf-8") as file:
         content: str = file.read()
-
     content = content.replace('readme = "README.md"', 'readme = "README.md"\nlicense = "MIT"')
-
     with open("pyproject.toml", "w", encoding="utf-8", newline="\n") as file:
-        file.write(content)
-
-    with open("pyproject.toml", "a", encoding="utf-8") as file:
         file.write(
-            PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length))
+            content
+            + PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length))
             .replace("{{source_repo}}", source_repo)
             .replace("{{documentation_page}}", documentation_page)
         )
 
-    msg: str = f"> creating folder 'tests/' "
-    sep: str = "-" * len(msg)
-    print(f"{msg}")
-    try:
-        Path("tests").mkdir(exist_ok=True)
-    except:
-        print(f"{sep}")
-        raise
+    create_folder("tests")
+    create_folder(".vscode")
+    create_file(".vscode/settings.json", SETTINGS_JSON.replace("{{line_length}}", str(black_line_length)))
+    create_file(".vscode/tasks.json", TASKS_JSON)
+    create_file(".vscode/launch.json", LAUNCH_JSON)
+    create_file(".vscode/pyprj.json", PYPRJ_JSON)
+    create_file(".prettierrc.json", PRETTIER_JSON)
+    create_file(".readthedocs.yaml", READTHEDOCS_YAML.replace("{{python_version}}", python_version))
+    create_file(".gitignore", GITIGNORE)
+    create_file("README.md", README_MD.replace("{{pkg_name}}", pkg_name), newline=None)
 
-    msg: str = f"> creating folder '.vscode' "
-    print(f"{msg}")
-    try:
-        Path(".vscode").mkdir(exist_ok=True)
-    except:
-        print(f"{sep}")
-        raise
-
-    msg: str = f"> creating file '.vscode/settings.json'"
-    print(f"{msg}")
-    with open(".vscode/settings.json", "w", encoding="utf-8") as file:
-        file.write(SETTINGS_JSON.replace("{{line_length}}", str(black_line_length)))
-
-    msg: str = f"> creating file '.vscode/tasks.json'"
-    print(f"{msg}")
-    with open(".vscode/tasks.json", "w", encoding="utf-8") as file:
-        file.write(TASKS_JSON)
-
-    msg: str = f"> creating file '.vscode/launch.json'"
-    print(f"{msg}")
-    with open(".vscode/launch.json", "w", encoding="utf-8") as file:
-        file.write(LAUNCH_JSON)
-
-    msg: str = f"> creating file '.vscode/pyprj.json'"
-    print(f"{msg}")
-    with open(".vscode/pyprj.json", "w", encoding="utf-8") as file:
-        file.write(PYPRJ_JSON)
-
-    msg: str = f"> creating file '.prettierrc.json'"
-    print(f"{msg}")
-    with open(".prettierrc.json", "w", encoding="utf-8") as file:
-        file.write(PRETTIER_JSON)
-
-    msg: str = f"> creating file '.readthedocs.yaml'"
-    print(f"{msg}")
-    with open(".readthedocs.yaml", "w", encoding="utf-8", newline="\n") as file:
-        file.write(READTHEDOCS_YAML.replace("{{python_version}}", python_version))
-
-    msg: str = f"> creating file '.gitignore'"
-    print(f"{msg}")
-    with open(".gitignore", "w", encoding="utf-8") as file:
-        file.write(GITIGNORE)
-
-    msg: str = f"> creating file 'README.md'"
-    print(f"{msg}")
-    with open("README.md", "w", encoding="utf-8") as file:
-        file.write(README_MD.replace("{{pkg_name}}", pkg_name))
-
-    msg: str = f"> creating file 'LICENSE.txt'"
-    print(f"{msg}")
-    with open("LICENSE.txt", "w", encoding="utf-8") as file:
-        file.write(
-            LICENSE_TXT.replace("{{author_name}}", author_name)
-            .replace("{{author_email}}", author_email)
-            .replace("{{year}}", str(year))
-        )
+    create_file(
+        path="LICENSE.txt",
+        content=LICENSE_TXT.replace("{{author_name}}", author_name)
+        .replace("{{author_email}}", author_email)
+        .replace("{{year}}", str(year)),
+    )
 
     sep: str = "-" * len(msg)
     print(sep)
@@ -178,6 +125,24 @@ def init(
     print("With the follwing packages in the `dev` dependency group:")
     print("- " + " | ".join(dev_pkgs))
     print()
-    print("With the follwing packages in the `dev` dependency group:")
+    print("With the follwing packages in the `test` dependency group:")
     print("- " + " | ".join(test_pkgs))
     print("\nPlease, look at the `pyproject.toml` file for additional info.\n")
+
+
+def create_file(path: str, content: str, newline: str | None = "\n"):
+    msg: str = f"> creating file '{path}'"
+    print(f"{msg}")
+    with open(path, "w", encoding="utf-8", newline=newline) as file:
+        file.write(content)
+
+
+def create_folder(path: str):
+    msg: str = f"> creating folder '{path}/' "
+    sep: str = "-" * len(msg)
+    print(f"{msg}")
+    try:
+        Path(path).mkdir(exist_ok=True)
+    except:
+        print(f"{sep}")
+        raise
