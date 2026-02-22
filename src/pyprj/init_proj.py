@@ -2,14 +2,17 @@ import os
 import sys
 from datetime import datetime
 
+from clig import Arg, data
+
 from .create_file_folder import __create_file, __create_folder
 from .run_cmd import SEP, run_cmd
+from .templates.CLI import CLI_PY
 from .templates.GITIGNORE import GITIGNORE
 from .templates.LAUNCH import LAUNCH_JSON
 from .templates.LICENSE import LICENSE_TXT
 from .templates.PRETTIER import PRETTIER_JSON
 from .templates.PYPRJ import PYPRJ_JSON
-from .templates.PYPROJECT import PYPROJECT_EXTRALINES
+from .templates.PYPROJECT import PYPROJECT_CLI_SCRIPT, PYPROJECT_EXTRALINES
 from .templates.README import README_MD
 from .templates.READTHEDOCS import READTHEDOCS_YAML
 from .templates.SETTINGS import SETTINGS_JSON
@@ -23,6 +26,7 @@ def init(
     name: str | None = None,
     python_version: str = "3.12",
     black_line_length: int = 128,
+    cli_project: Arg[str | None, data(nargs="?", const="clicmd")] = None,
 ):
     """Create a new project for a python package.
 
@@ -77,6 +81,14 @@ def init(
     if exit_code != 0:
         sys.exit(exit_code)
 
+    if cli_project:
+        print(f"{SEP}\nAdding CLI packages:")
+        dep_pkgs: list[str] = ["clig"]
+        cmd: str = f"uv add {' '.join(dep_pkgs)}"
+        exit_code = run_cmd(cmd, kind="uv", add_sep=False)
+        if exit_code != 0:
+            sys.exit(exit_code)
+
     cmd: str = "uv sync --all-groups"
     print(f"{SEP}\nSyncing packages")
     exit_code = run_cmd(cmd, kind="uv", add_sep=False)
@@ -86,6 +98,9 @@ def init(
     from .pyproject import author_email, author_name, documentation_page, pkg_name, source_repo
 
     msg: str = f"> editing file 'pyproject.toml'"
+    pyproject_cli_script = (
+        PYPROJECT_CLI_SCRIPT.replace("{{cli_name}}", cli_project).replace("{{pkg_name}}", pkg_name) if cli_project else ""
+    )
     sep: str = "-" * len(msg)
     print(f"{sep}\n{msg}")
     with open("pyproject.toml", "r", encoding="utf-8") as file:
@@ -94,6 +109,7 @@ def init(
     with open("pyproject.toml", "w", encoding="utf-8", newline="\n") as file:
         file.write(
             content
+            + pyproject_cli_script
             + PYPROJECT_EXTRALINES.replace("{{line_length}}", str(black_line_length))
             .replace("{{source_repo}}", source_repo)
             .replace("{{documentation_page}}", documentation_page)
@@ -115,12 +131,18 @@ def init(
         .replace("{{author_email}}", author_email)
         .replace("{{year}}", str(year)),
     )
+    if cli_project:
+        __create_file(f"src/{pkg_name}/cli.py", CLI_PY.replace("{{pkg_name}}", pkg_name), newline=None)
 
     sep: str = "-" * len(msg)
     print(sep)
 
     print("\nCreated a project for a python package with the following structure:")
-    print(TREE.format(pkg_name=pkg_name))
+    print(TREE.format(pkg_name=pkg_name, cli_file="\n    │            cli.py" if cli_project else ""))
+    if cli_project:
+        print("With the follwing packages in dependencies:")
+        print("- " + " | ".join(dep_pkgs))
+        print()
     print("With the follwing packages in the `dev` dependency group:")
     print("- " + " | ".join(dev_pkgs))
     print()
