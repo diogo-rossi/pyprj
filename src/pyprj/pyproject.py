@@ -25,7 +25,7 @@ class PyProjectDict(TypedDict):
 try:
     pyproject: PyProject = PyProject(Path(".").resolve())
 except MissingPyProjectFileError:
-    sys.exit("\nNo 'pyproject.toml' file found in this directory or parent directories. It is not a project yet.\n")
+    sys.exit("\nNo 'pyproject.toml' file found in this directory or parent directories.\nIt is not a project yet.\n")
 
 pyproject_filepath: Path = pyproject.dirpath / "pyproject.toml"
 
