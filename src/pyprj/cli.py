@@ -87,7 +87,7 @@ kwargs_without_optmetavarmodifier.pop("optmetavarmodifier")
 ############# Main function ####################################################################################################
 
 
-def main():
+def main() -> int:
     # fmt: off
     cmd: Command = (
         Command(pyprj, **kwargs_only_help_flag_with_subcmds)
@@ -103,4 +103,4 @@ def main():
             .add_subcommand(publish, **kwargs)
     )
     # fmt: on
-    cmd.run()
+    return cmd.run()
