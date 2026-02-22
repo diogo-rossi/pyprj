@@ -258,6 +258,7 @@ usage: pyprj upver [-h] [{major,minor,patch}]
 
 Update or show project version.
 
+Currently, it uses the command 'uv version'.
 If called without positional arguments, only show the project version.
 
 positional arguments:
