@@ -5,8 +5,10 @@ from pathlib import Path
 
 from .create_file_folder import __create_file, __create_folder
 from .run_cmd import SEP, run_cmd
+from .templates.APIREFERENCE import APIREFRENCE
 from .templates.CONF import CONF_PY
 from .templates.INDEX import INDEX_MD
+from .templates.NBUSERGUIDE import NBUSERGUIDE
 
 LOGO_PNG: Path = Path(__file__).parent.resolve() / "logo.png"
 
@@ -24,16 +26,18 @@ TREE: str = f"""
         │   Makefile
         │
         ├─── build
-        └─── source
+        └───source
+            │   advanceduse.md
+            │   apireference.md
             │   conf.py
             │   index.md
-            │   userguide.md
-            │   apireference.md
             │
-            ├─── _static
-            ├─── _templates
-            └─── notebooks
-                 └─── examples
+            ├───notebooks
+            │   │   userguide.ipynb
+            │   │
+            │   └───examples
+            ├───_static
+            └───_templates
 ```
 """
 
@@ -87,8 +91,9 @@ def init():
             documentation_page=documentation_page,
         ),
     )
-    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/userguide.md", "# User guide\n")
-    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/apireference.md", "# API reference\n")
+    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/advanceduse.md", "# Advanced use\n")
+    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/apireference.md", APIREFRENCE.replace("{{pkg_name}}", pkg_name))
+    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/notebooks/userguide.ipynb", NBUSERGUIDE)
 
     msg: str = f"> creating file '{DOC_FOLDER.as_posix()}/logo.png'"
     sep: str = "-" * len(msg)
