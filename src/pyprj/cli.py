@@ -61,7 +61,7 @@ def format_help(
     return "\n".join(lines) + ("\n\n" if final_newlines else "")
 
 
-opthelpmodifier = partial(format_help, width=80, append_text="\nDefaults to '%(default)s'.")
+opthelpmodifier = partial(format_help, width=93, append_text=" Defaults to '%(default)s'.")
 
 
 def optmetavarmodifier(name: str):
