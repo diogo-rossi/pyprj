@@ -54,7 +54,8 @@ options:
 
   -c [<cli>], --cli [<cli>]
                         Optional CLI script name. If omitted, No CLI command is added.
-                        If provided without a value, the CLI command name defaults to `clicmd`.
+                        If provided without a value, the CLI command name defaults to
+                        the name of the package.
 ```
 
 ## `test` subcommand
