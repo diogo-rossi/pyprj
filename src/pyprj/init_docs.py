@@ -3,6 +3,7 @@ import shutil
 import sys
 from pathlib import Path
 
+from .create_file_folder import __create_file, __create_folder
 from .run_cmd import SEP, run_cmd
 from .templates.CONF import CONF_PY
 from .templates.INDEX import INDEX_MD
@@ -57,14 +58,7 @@ def init():
         sys.exit(exit_code)
 
     for folder in ["", "mkdocs", "sphinx"]:
-        folder_path: Path = DOC_FOLDER / folder
-        msg: str = f"> creating folder '{folder_path.as_posix()}'"
-        print(f"{msg}")
-        try:
-            folder_path.mkdir(exist_ok=True)
-        except:
-            print(f"{SEP}")
-            raise
+        __create_folder(DOC_FOLDER / folder)
 
     print(SEP)
     print("Running Sphinx quick start in docs folder")
@@ -76,45 +70,25 @@ def init():
         sys.exit(exit_code)
 
     for folder in ["sphinx/source/notebooks", "sphinx/source/notebooks/examples"]:
-        folder_path: Path = DOC_FOLDER / folder
-        msg: str = f"> creating folder '{folder_path.as_posix()}'"
-        print(f"{msg}")
-        try:
-            folder_path.mkdir(exist_ok=True)
-        except:
-            print(f"{SEP}")
-            raise
+        __create_folder(DOC_FOLDER / folder)
 
     msg: str = f"> editing file '{SPHINX_SOURCE_FOLDER.as_posix()}/conf.py'"
     print(f"{msg}")
     with open(SPHINX_SOURCE_FOLDER / "conf.py", "w", encoding="utf-8") as file:
         file.write(CONF_PY)
 
-    msg: str = f"> creating file '{SPHINX_SOURCE_FOLDER.as_posix()}/index.md'"
-    sep: str = "-" * len(msg)
-    print(f"{msg}")
-    with open(SPHINX_SOURCE_FOLDER / "index.md", "w", encoding="utf-8") as file:
-        file.write(
-            INDEX_MD.format(
-                pkg_name=pkg_name,
-                author_name=author_name_url,
-                source_repo=source_repo,
-                pypi_project=pypi_project,
-                documentation_page=documentation_page,
-            )
-        )
-
-    msg: str = f"> creating file '{SPHINX_SOURCE_FOLDER.as_posix()}/userguide.md'"
-    sep: str = "-" * len(msg)
-    print(f"{msg}")
-    with open(SPHINX_SOURCE_FOLDER / "userguide.md", "w", encoding="utf-8") as file:
-        file.write("# User guide")
-
-    msg: str = f"> creating file '{SPHINX_SOURCE_FOLDER.as_posix()}/apireference.md'"
-    sep: str = "-" * len(msg)
-    print(f"{msg}")
-    with open(SPHINX_SOURCE_FOLDER / "apireference.md", "w", encoding="utf-8") as file:
-        file.write("# API reference")
+    __create_file(
+        f"{SPHINX_SOURCE_FOLDER.as_posix()}/index.md",
+        INDEX_MD.format(
+            pkg_name=pkg_name,
+            author_name=author_name_url,
+            source_repo=source_repo,
+            pypi_project=pypi_project,
+            documentation_page=documentation_page,
+        ),
+    )
+    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/userguide.md", "# User guide\n")
+    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/apireference.md", "# API reference\n")
 
     msg: str = f"> creating file '{DOC_FOLDER.as_posix()}/logo.png'"
     sep: str = "-" * len(msg)
