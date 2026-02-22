@@ -22,3 +22,9 @@ test = { cmd = "pytest", cwd = "./tests", help = "Test with pytest in folder './
 build = { cmd = "uv build", cwd = ".", help = "Build package" }
 publish = { cmd = "pyprj publish", cwd = ".", help = "Publish package to PyPI" }
 """
+
+
+PYPROJECT_CLI_SCRIPT: str = r"""
+[project.scripts]
+{{cli_name}} = "{{pkg_name}}.cli:main"
+"""
