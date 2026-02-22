@@ -33,12 +33,9 @@ pipx install pyprj
 
 With `pipx`, the tool is globally installed in an isolated environment.
 
-## User guide
-
-Look at the pages bellow
+## Table of contents
 
 ```{toctree}
-:caption: Table of contents
 :maxdepth: 1
 
 notebooks/helps
