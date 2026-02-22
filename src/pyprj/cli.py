@@ -15,7 +15,7 @@ from .init_docs import init
 from .init_proj import init as inip
 from .modm import modm
 from .nbex import nbex
-from .ndmd import nbmd
+from .nbmd import nbmd
 from .publish import publish
 from .taskscmd import build, test
 from .upver import upver
