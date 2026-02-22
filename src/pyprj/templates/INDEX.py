@@ -8,11 +8,13 @@ Description of the project.
 pip install {pkg_name}
 ```
 
+## Table of contents
+
 ```{{toctree}}
-:caption: Table of contents
 :maxdepth: 1
 
-userguide
+notebooks/userguide
+advanceduse
 apireference
 ```
 
