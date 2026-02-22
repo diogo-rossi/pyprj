@@ -21,6 +21,7 @@ Makes use of:
 - [Read the Docs](https://about.readthedocs.com/) as pre-set option to host
   documentation.
 - [MIT](https://opensource.org/license/mit) as license.
+- [clig](https://pypi.org/project/clig/) library for CLI projects.
 
 ## Installation
 
