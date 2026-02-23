@@ -117,7 +117,7 @@ def __get_notebook_example_prefix(cells: list[Cell]) -> str:
     return "example"
 
 
-def __generate_example(cell_source: list[str], example_filename: str, dest_directory: Path):
+def _generate_example(cell_source: list[str], example_filename: str, dest_directory: Path):
     example_path: Path = dest_directory / example_filename
     print(f"    > generating example: {example_path.as_posix()}")
     with open(example_path, "w", encoding="utf-8") as file:

@@ -7,10 +7,10 @@ from clig import Arg, data
 from .cellfuncs import (
     Cell,
     Notebook,
-    __generate_example,
     __get_notebook_example_prefix,
     __is_python_file_code_cell,
     __is_shell_command_code_cell,
+    _generate_example,
 )
 
 
@@ -59,7 +59,6 @@ def nbex(
     files_in_folders = []
     for path in filepath[:]:
         if path.is_dir():
-            print(path)
             files_in_folders.extend(list(path.glob("*.ipynb")))
             filepath.remove(path)
     filepath.extend(files_in_folders)
@@ -95,7 +94,7 @@ def nbex(
                 if not only_rename_examples:
                     file_dest_dir: Path = path.parent / dest_directory
                     file_dest_dir.mkdir(exist_ok=True)
-                    __generate_example(source[1:], example_filename, file_dest_dir)
+                    _generate_example(source[1:], example_filename, file_dest_dir)
 
             if not no_change_shell_cells:
                 if __is_shell_command_code_cell(cell):
