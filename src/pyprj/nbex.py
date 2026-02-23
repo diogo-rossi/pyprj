@@ -47,6 +47,14 @@ def nbex(
         print("\nNo notebook files found.\n")
         return
 
+    files_in_folders = []
+    for path in filepath[:]:
+        if path.is_dir():
+            print(path)
+            files_in_folders.extend(list(path.glob("*.ipynb")))
+            filepath.remove(path)
+    filepath.extend(files_in_folders)
+
     for path in filepath:
 
         print(f"> processing file: {path.as_posix()}")
