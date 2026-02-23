@@ -1285,6 +1285,11 @@ dependencies = [
     { name = "taskipy" },
 ]
 
+[package.optional-dependencies]
+ipython = [
+    { name = "ipython" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "black" },
@@ -1304,8 +1309,10 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "clig", specifier = ">=0.7.0" },
+    { name = "ipython", marker = "extra == 'ipython'", specifier = ">=9.10.0" },
     { name = "taskipy", specifier = ">=1.14.1" },
 ]
+provides-extras = ["ipython"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "black", specifier = ">=26.1.0" }]
