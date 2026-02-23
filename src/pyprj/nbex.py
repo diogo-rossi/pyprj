@@ -9,7 +9,8 @@ from .cellfuncs import Cell, Notebook, __get_notebook_example_prefix, __is_pytho
 
 def nbex(
     filepath: Arg[list[Path] | Path | None, data(nargs="*", make_flag=False)] = None,
-    change_shell_cells: bool = False,
+    only_rename_examples: bool = False,
+    no_change_shell_cells: bool = False,
     dest_directory: Path = Path("examples/"),
     output_suffix: str = "",
 ):
@@ -23,8 +24,11 @@ def nbex(
         generate examples. If `None` (default), process all notebook
         files from the current directory.
 
-    - `change_shell_cells` (`bool`, optional): Defaults to `False`.
-        Whether to edit the following shell cells, after the example cells.
+    - `only_rename_examples` (`bool`, optional): Defaults to `False`.
+        Whether to only rename the example cells, not generating example files.
+
+    - `no_change_shell_cells` (`bool`, optional): Defaults to `False`.
+        Whether to not edit the following shell cells, after the example cells.
 
     - `dest_directory` (`Path`, optional): Defaults to `Path("examples")`.
         Directory of the resulting examples files.
@@ -88,7 +92,7 @@ def nbex(
                 with open(example_path, "w", encoding="utf-8") as file:
                     file.write("".join(source[1:]))
 
-            if change_shell_cells:
+            if not no_change_shell_cells:
                 if __is_shell_command_code_cell(cell):
                     if source[0].startswith("! python") and any([s.endswith(".py") for s in source[0].split()]):
                         parts: list[str] = source[0].split(".py")
