@@ -4,7 +4,14 @@ from pathlib import Path
 
 from clig import Arg, data
 
-from .cellfuncs import Cell, Notebook, __get_notebook_example_prefix, __is_python_file_code_cell, __is_shell_command_code_cell
+from .cellfuncs import (
+    Cell,
+    Notebook,
+    __generate_example,
+    __get_notebook_example_prefix,
+    __is_python_file_code_cell,
+    __is_shell_command_code_cell,
+)
 
 
 def nbex(
@@ -38,8 +45,6 @@ def nbex(
         suffix to the resulting file. Used for debbuging purposes, to not overwrite
         the original file (which is done with the default value).
     """
-
-    dest_directory.mkdir(exist_ok=True)
 
     if not filepath:
         filepath = list(Path.cwd().glob("*.ipynb"))
@@ -87,10 +92,10 @@ def nbex(
                 example_filename: str = f"{example_prefix}{example_number:02d}.py"
                 source[1] = f"# {example_filename}\n"
 
-                example_path: Path = dest_directory / example_filename
-                print(f"    > generating example: {example_path.as_posix()}")
-                with open(example_path, "w", encoding="utf-8") as file:
-                    file.write("".join(source[1:]))
+                if not only_rename_examples:
+                    file_dest_dir: Path = path.parent / dest_directory
+                    file_dest_dir.mkdir(exist_ok=True)
+                    __generate_example(source[1:], example_filename, file_dest_dir)
 
             if not no_change_shell_cells:
                 if __is_shell_command_code_cell(cell):
