@@ -22,7 +22,7 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "editor.formatOnSave": true,
-    "editor.formatOnType": true,
+    "editor.formatOnType": false,
     "editor.codeActionsOnSave": {
         "source.organizeImports": "always"
     },
