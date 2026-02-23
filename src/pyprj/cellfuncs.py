@@ -109,7 +109,7 @@ def __is_python_repl_code_cell(cell: Cell) -> bool:
 
 def __get_notebook_example_prefix(cells: list[Cell]) -> str:
     for cell in reversed(cells):
-        if cell["metadata"]:
+        if cell["metadata"] and "tags" in cell["metadata"]:
             for tag in cell["metadata"]["tags"]:
                 if tag.startswith("ex_"):
                     return tag.removeprefix("ex_")
