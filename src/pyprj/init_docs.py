@@ -61,7 +61,7 @@ def init():
     if exit_code != 0:
         sys.exit(exit_code)
 
-    for folder in ["", "mkdocs", "sphinx"]:
+    for folder in ["", "mkdocs", "sphinx", "icon"]:
         __create_folder(DOC_FOLDER / folder)
 
     print(SEP)
@@ -95,10 +95,10 @@ def init():
     __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/apireference.md", APIREFRENCE.replace("{{pkg_name}}", pkg_name))
     __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/notebooks/userguide.ipynb", NBUSERGUIDE)
 
-    msg: str = f"> creating file '{DOC_FOLDER.as_posix()}/logo.png'"
+    msg: str = f"> creating file '{DOC_FOLDER.as_posix()}/icon/logo.png'"
     sep: str = "-" * len(msg)
     print(f"{msg}")
-    shutil.copy(LOGO_PNG, DOC_FOLDER)
+    shutil.copy(LOGO_PNG, DOC_FOLDER / "icon")
 
     msg: str = f"> removing file '{SPHINX_SOURCE_FOLDER.as_posix()}/index.rst'"
     sep: str = "-" * len(msg)
