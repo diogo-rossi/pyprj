@@ -45,12 +45,20 @@ TREE: str = f"""
 """
 
 
-def init():
-    """Initialize documentation folder with packages."""
+def init(add_pyprj: bool = False):
+    """Initialize documentation folder with packages.
+
+    Parameters
+    ----------
+    - `add_pyprj` (`bool`, optional): Defaults to `False`.
+        Whether to add `pyprj` itself in the `docs` dependency group of the project.
+    """
 
     from .pyproject import author_name_url, documentation_page, pkg_name, pypi_project, source_repo
 
     doc_pkgs: list[str] = ["sphinx", "sphinx-copybutton", "sphinxnotes-comboroles", "myst-parser", "jupyter", "furo"]
+    if add_pyprj:
+        doc_pkgs.append("pyprj")
     cmd: str = f"uv add --group docs {' '.join(doc_pkgs)}"
 
     print(f"{SEP}\nAdding 'docs' packages")
