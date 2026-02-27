@@ -1,10 +1,12 @@
 import os
 import sys
 from datetime import datetime
+from functools import partial
 
 from clig import Arg, data
 
 from .create_file_folder import __create_file, __create_folder
+from .help_modifiers import format_help
 from .run_cmd import SEP, run_cmd
 from .templates.CLI import CLI_PY
 from .templates.GITIGNORE import GITIGNORE
@@ -19,6 +21,8 @@ from .templates.SETTINGS import SETTINGS_JSON
 from .templates.TASKS import TASKS_JSON
 from .templates.TREE import TREE
 
+modifier = partial(format_help, width=90)
+
 year = datetime.now().year
 
 
@@ -26,7 +30,7 @@ def init(
     name: str | None = None,
     python_version: str = "3.12",
     black_line_length: int = 128,
-    cli: Arg[str | bool, data(nargs="?", const=True, helpmodifier=str)] = False,
+    cli: Arg[str | bool, data(nargs="?", const=True, helpmodifier=modifier, metavar="<cli-name>")] = False,
     no_about: bool = False,
 ):
     """Create a new project for a python package.
@@ -140,8 +144,12 @@ def init(
         .replace("{{author_email}}", author_email)
         .replace("{{year}}", str(year)),
     )
+
     if cli:
         __create_file(f"src/{pkg_name}/cli.py", CLI_PY.replace("{{pkg_name}}", pkg_name), newline=None)
+
+    if not no_about:
+        __create_file(f"src/{pkg_name}/__about__.py", "", newline=None)
 
     sep: str = "-" * len(msg)
     print(sep)
