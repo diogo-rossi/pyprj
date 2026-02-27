@@ -100,7 +100,7 @@ myst_enable_extensions = [
 html_static_path = ["_static"]
 
 html_theme = "furo"
-html_title = f'<p style="text-align: center"><b>{project_name}</b></p>'
+html_title = f'<p style="text-align: center"><b>{project_name}</b></p><p style="text-align: center">version {release}</p>'
 html_css_files = ["css/custom.css"]
 html_logo = "../../icon/logo.png"
 
