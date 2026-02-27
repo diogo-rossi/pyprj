@@ -41,7 +41,7 @@ def init(
     - `black_line_length` (`int`, optional): Defaults to `128`.
         Line length parameter to use with `black`.
 
-    - `cli` (`str`, optional): Defaults to `False`.
+    - `cli` (`str | bool`, optional): Defaults to `False`.
         Optional CLI script name. If omitted, No CLI command is added.
         If provided without a value, the CLI command name defaults to
         the name of the package.
