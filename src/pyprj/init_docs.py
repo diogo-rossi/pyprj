@@ -18,7 +18,9 @@ SPHINX_SOURCE_FOLDER: Path = DOC_FOLDER / "sphinx/source"
 TREE: str = f"""
 ```
     {DOC_FOLDER}
-    │    logo.png
+    │
+    ├───icon
+    │       logo.png
     │
     ├─── mkdocs
     └─── sphinx
