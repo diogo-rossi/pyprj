@@ -56,7 +56,15 @@ def init(add_pyprj: bool = False):
 
     from .pyproject import author_name_url, documentation_page, pkg_name, pypi_project, source_repo
 
-    doc_pkgs: list[str] = ["sphinx", "sphinx-copybutton", "sphinxnotes-comboroles", "myst-parser", "jupyter", "furo"]
+    doc_pkgs: list[str] = [
+        "sphinx",
+        "sphinx-copybutton",
+        "sphinx-mathjax-offline",
+        "sphinxnotes-comboroles",
+        "myst-parser",
+        "jupyter",
+        "furo",
+    ]
     if add_pyprj:
         doc_pkgs.append("pyprj")
     cmd: str = f"uv add --group docs {' '.join(doc_pkgs)}"

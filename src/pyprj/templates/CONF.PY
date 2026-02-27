@@ -65,14 +65,16 @@ release = project_data["version"]
 
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.linkcode",
     "sphinx.ext.napoleon",
-    "myst_parser",
-    "sphinx_copybutton",
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "sphinx.ext.extlinks",
+    "sphinx.ext.mathjax",
+    "sphinx-mathjax-offline"
+    "myst_parser",
+    "sphinx_copybutton",
     "sphinxnotes.comboroles",
-    "sphinx.ext.linkcode",
 ]
 
 templates_path = ["_templates"]

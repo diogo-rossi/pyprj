@@ -16,4 +16,10 @@ This is an example of admonitions in MyST markdown
 
 > [!CAUTION] Negative potential consequences of an action.
 
+Now an example of math equation (offline)
+
+$$
+\int_a^b f(x) dx
+$$
+
 """
