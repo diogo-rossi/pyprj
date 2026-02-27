@@ -23,6 +23,7 @@ notebooks_dirpath: Path = Path("./notebooks")
 
 nbmd.nbmd(notebooks_dirpath)
 
+print(f"{SEP}\n> Preparing README")
 index_sections: list[str] = get_markdown_sections(Path("index.md"))
 usage_sections: list[str] = [
     f"#{sec}" if sec.startswith("#") else sec for sec in get_markdown_sections(notebooks_dirpath / "helps.md")
@@ -32,6 +33,8 @@ readme: str = "".join(index_sections[0:3]) + "".join(usage_sections)
 
 with open(pyproject.dirpath / "README.md", "w", encoding="utf-8") as file:
     file.write(readme)
+
+print(SEP)
 
 # %%          SPHINX DATA
 ############# SPHINX DATA ######################################################################################################
