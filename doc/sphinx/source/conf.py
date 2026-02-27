@@ -72,6 +72,12 @@ templates_path = ["_templates"]
 exclude_patterns = []
 
 myst_heading_anchors = 4
+myst_enable_extensions = [
+    "dollarmath",  # https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#math-shortcuts
+    "amsmath",
+    "html_image",  # https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#html-images
+    "colon_fence",  # https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#code-fences-using-colons
+]
 
 
 maximum_signature_line_length = 70
