@@ -91,3 +91,47 @@ html_logo = "../../icon/logo.png"
 
 def linkcode_resolve(domain: Literal["py", "c", "cpp", "javascript"], info: PyDomainInfo) -> str:
     return "test"
+
+
+def convert_admonitions_to_myst(app, filename, lines: list[str]):
+    _GITHUB_ADMONITIONS = {
+        "> [!NOTE]": "note",
+        "> [!TIP]": "tip",
+        "> [!IMPORTANT]": "important",
+        "> [!WARNING]": "warning",
+        "> [!CAUTION]": "caution",
+    }
+
+    # loop through lines, replace github admonitions
+    for i, orig_line in enumerate(lines):
+        orig_line_splits = orig_line.split("\n")
+        replacing = False
+        for j, line in enumerate(orig_line_splits):
+            # look for admonition key
+            for admonition_key in _GITHUB_ADMONITIONS:
+                if admonition_key in line:
+                    line = line.replace(admonition_key, "```{" + _GITHUB_ADMONITIONS[admonition_key] + "}\n")
+                    # start replacing quotes in subsequent lines
+                    replacing = True
+                    break
+            else:
+                # replace indent to match directive
+                if replacing and "> " in line:
+                    line = line.replace("> ", "  ")
+                elif replacing:
+                    # missing "> ", so stop replacing and terminate directive
+                    line = f"\n```\n{line}"
+                    replacing = False
+            # swap line back in splits
+            orig_line_splits[j] = line
+        # swap line back in original
+        lines[i] = "\n".join(orig_line_splits)
+
+
+def setup(app: Sphinx):
+    print(SEP)
+    print("> Converting admonitions to MyST format")
+    app.connect("source-read", convert_admonitions_to_myst)
+    print("> Adding custom CSS file")
+    app.add_css_file("custom.css")
+    print(SEP)
