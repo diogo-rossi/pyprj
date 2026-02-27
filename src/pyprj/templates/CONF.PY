@@ -7,6 +7,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal, TypedDict, cast
 
+from sphinx.application import Sphinx
+
 
 class PyDomainInfo(TypedDict):
     module: str
@@ -28,6 +30,13 @@ class PyProject(TypedDict):
     project: PyProjectData
 
 
+COLUMNS: int = 100
+try:
+    COLUMNS = os.get_terminal_size().columns
+except OSError:
+    pass
+SEP: str = COLUMNS * "-"
+
 THIS_DIR: Path = Path(__file__).parent.resolve()
 os.chdir(THIS_DIR)
 
@@ -41,7 +50,7 @@ project_data: PyProjectData = pyproject["project"]
 project_name = project_data["name"]
 project_author = project_data["authors"][0]["name"]
 
-os.system("pyprj docs nbmd notebooks") # convert files inside 'notebooks/' folder
+os.system("pyprj docs nbmd notebooks")  # convert files inside 'notebooks/' folder
 
 # %%          SPHINX DATA
 ############# SPHINX DATA ######################################################################################################
