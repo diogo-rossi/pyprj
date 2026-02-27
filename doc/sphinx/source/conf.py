@@ -43,7 +43,7 @@ readme: str = "".join(index_sections[0:3]) + "".join(usage_sections)
 with open(pyproject.dirpath / "README.md", "w", encoding="utf-8") as file:
     file.write(readme)
 
-print(SEP)
+print(f"{SEP}\n> Running sphinx")
 
 # %%          SPHINX DATA
 ############# SPHINX DATA ######################################################################################################
