@@ -149,7 +149,7 @@ def init(
         __create_file(f"src/{pkg_name}/cli.py", CLI_PY.replace("{{pkg_name}}", pkg_name), newline=None)
 
     if not no_about:
-        __create_file(f"src/{pkg_name}/__about__.py", "", newline=None)
+        __create_file(f"src/{pkg_name}/__about__.py", '__version__ = "0.1.0"\n', newline=None)
 
     sep: str = "-" * len(msg)
     print(sep)

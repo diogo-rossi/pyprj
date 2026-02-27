@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 from typing import Literal
 
 from clig import Arg, data
@@ -31,7 +32,20 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
         print("> " + " | ".join(["major", "minor", "patch"]))
         return error_code
 
-    run_cmd(f"uv version --bump {semver}", kind="uv")
+    error_code = run_cmd(f"uv version --bump {semver}", kind="uv")
+    if error_code != 0:
+        sys.exit("\nNo `pyproject.toml` file found in this directory or parent directories.\nIt is not a project yet.\n")
 
     if build:
         buill_project()
+
+    from .pyproject import __get_pyproject_data, pkg_name, pyproject
+
+    about_path: Path = Path(pyproject.dirpath / f"src/{pkg_name}/__about__.py")
+    if about_path.exists():
+        pkg_version = __get_pyproject_data()["project"]["version"]
+        with open(about_path, "r", encoding="utf-8") as file:
+            text: list[str] = file.readlines()
+        text: list[str] = [f'__version__ = "{pkg_version}"' if s.startswith("__version__") else s for s in text]
+        with open(about_path, "w", encoding="utf-8") as file:
+            file.write("".join(text))

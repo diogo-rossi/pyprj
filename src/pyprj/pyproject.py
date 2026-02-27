@@ -29,9 +29,14 @@ except MissingPyProjectFileError:
 
 pyproject_filepath: Path = pyproject.dirpath / "pyproject.toml"
 
-with open(pyproject_filepath, "rb") as f:
-    pyproject_dict = cast(PyProjectDict, tomllib.load(f))
 
+def __get_pyproject_data() -> PyProjectDict:
+    with open(pyproject_filepath, "rb") as f:
+        obj = cast(PyProjectDict, tomllib.load(f))
+    return obj
+
+
+pyproject_dict = __get_pyproject_data()
 
 author_name: str = pyproject_dict["project"]["authors"][0]["name"]
 author_email: str = pyproject_dict["project"]["authors"][0]["email"]
