@@ -59,6 +59,9 @@ extensions = [
 templates_path = ["_templates"]
 exclude_patterns = []
 
+myst_heading_anchors = 4
+
+
 maximum_signature_line_length = 70
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
@@ -68,12 +71,10 @@ default_role = "code"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_static_path = ["_static"]
-
 html_theme = "furo"
 html_title = f'<p style="text-align: center"><b>{pkg_name}</b></p>'
 html_css_files = ["css/custom.css"]
-html_logo = "../../logo.png"
-myst_heading_anchors = 4
+html_logo = "../../icon/logo.png"
 
 
 def linkcode_resolve(domain: Literal["py", "c", "cpp", "javascript"], info: PyDomainInfo) -> str:
