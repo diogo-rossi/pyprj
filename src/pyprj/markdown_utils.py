@@ -12,7 +12,3 @@ def get_markdown_sections(filepath: Path) -> list[str]:
         else:
             sections[-1] += line
     return sections
-
-
-def convert_admonitions_to_myst(text: str) -> str:
-    return text

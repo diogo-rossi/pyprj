@@ -16,7 +16,6 @@ from .cellfuncs import (
     __is_python_repl_code_cell,
     __is_shell_command_code_cell,
 )
-from .markdown_utils import convert_admonitions_to_myst
 from .run_cmd import run_cmd
 
 
@@ -26,7 +25,6 @@ def nbmd(
     no_prettier: bool = False,
     remove_pattern_shell_files: Arg[str, data(metavar="<pattern>")] = "examples/",
     dont_run_notebooks_before: bool = False,
-    convert_admonitions_myst: bool = False,
 ):
     """Process jupyter (nb) files to generate markdown (md) files.
 
@@ -48,9 +46,6 @@ def nbmd(
 
     - `dont_run_notebooks_before` (`bool`, optional): Defaults to `False`.
         Whether to not run the jupyter notebooks before processing.
-
-    - `convert_admonitions_myst` (`bool`, optional): Defaults to `False`.
-        Whether to convert admonitions to MyST parser format.
     """
     if kind != "tutorial":
         print("\nNot yet implemented. Currently, only 'kind=tutorial' is accepted.\n")
@@ -114,9 +109,6 @@ def nbmd(
                 previous_was_simple_python_repl_snippet = True
 
         text: str = "".join(lines)
-        if convert_admonitions_myst:
-            text = convert_admonitions_to_myst(text)
-            print("\nconvert-admonitions-myst not yet implemented")
 
         markdown_filepath: Path = path.with_suffix(".md")
 
