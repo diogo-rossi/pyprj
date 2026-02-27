@@ -155,7 +155,13 @@ def init(
     print(sep)
 
     print("\nCreated a project for a python package with the following structure:")
-    print(TREE.format(pkg_name=pkg_name, cli_file="\n    │            cli.py" if cli else ""))
+    print(
+        TREE.format(
+            pkg_name=pkg_name,
+            about_file="\n    │            __about__.py" if not no_about else "",
+            cli_file="\n    │            cli.py" if cli else "",
+        )
+    )
     if cli:
         print("With the following packages in dependencies:")
         print("- " + " | ".join(dep_pkgs))
