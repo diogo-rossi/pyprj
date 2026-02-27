@@ -1,6 +1,20 @@
 NBUSERGUIDE: str = r"""{
     "cells": [
         {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "c290273e",
+            "metadata": {
+                "tags": [
+                    "to_hide"
+                ]
+            },
+            "outputs": [],
+            "source": [
+                "%load_ext pyprj"
+            ]
+        },
+        {
             "cell_type": "markdown",
             "id": "addd5238",
             "metadata": {},
@@ -49,7 +63,7 @@ NBUSERGUIDE: str = r"""{
             "metadata": {},
             "outputs": [],
             "source": [
-                "%%python -c \"import os; print('CWD:', str(os.getcwd())[str(os.getcwd()).index('doc'):]); os.system('pyprj docs nbex')\"\n",
+                "%%writeexample\n",
                 "# example01.py\n",
                 "import sys\n",
                 "import os\n",
