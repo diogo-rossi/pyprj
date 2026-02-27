@@ -27,6 +27,7 @@ def init(
     python_version: str = "3.12",
     black_line_length: int = 128,
     cli: Arg[str | bool, data(nargs="?", const=True, helpmodifier=str)] = False,
+    no_about: bool = False,
 ):
     """Create a new project for a python package.
 
@@ -45,6 +46,10 @@ def init(
         Optional CLI script name. If omitted, No CLI command is added.
         If provided without a value, the CLI command name defaults to
         the name of the package.
+
+    - `no_about` (`bool`, optional): Defaults to `False`.
+        Whether to not add an `__about__.py` file in the project's `src` folder with
+        the `__version__` property. The default (`False`) will add the file.
     """
 
     exit_code = run_cmd("git init", "git")
