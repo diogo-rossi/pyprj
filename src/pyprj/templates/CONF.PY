@@ -72,7 +72,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.extlinks",
     "sphinx.ext.mathjax",
-    "sphinx-mathjax-offline"
+    "sphinx-mathjax-offline",
     "myst_parser",
     "sphinx_copybutton",
     "sphinxnotes.comboroles",
