@@ -6,6 +6,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal, TypedDict
 
+from sphinx.application import Sphinx
+
 from pyprj import nbmd
 from pyprj.markdown_utils import get_markdown_sections
 from pyprj.pyproject import author_name, pkg_name, pkg_version, pyproject
@@ -15,6 +17,13 @@ class PyDomainInfo(TypedDict):
     module: str
     fullname: str
 
+
+COLUMNS: int = 100
+try:
+    COLUMNS = os.get_terminal_size().columns
+except OSError:
+    pass
+SEP: str = COLUMNS * "-"
 
 THIS_DIR: Path = Path(__file__).parent.resolve()
 os.chdir(THIS_DIR)
