@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .create_file_folder import __create_file, __create_folder
 from .run_cmd import SEP, run_cmd
+from .templates.ADVANCED_USE import ADVANCEDUSE
 from .templates.APIREFERENCE import APIREFRENCE
 from .templates.CONF import CONF_PY
 from .templates.INDEX import INDEX_MD
@@ -93,7 +94,7 @@ def init():
             documentation_page=documentation_page,
         ),
     )
-    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/advanceduse.md", "# Advanced use\n")
+    __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/advanceduse.md", ADVANCEDUSE)
     __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/apireference.md", APIREFRENCE.replace("{{pkg_name}}", pkg_name))
     __create_file(f"{SPHINX_SOURCE_FOLDER.as_posix()}/notebooks/userguide.ipynb", NBUSERGUIDE)
 
