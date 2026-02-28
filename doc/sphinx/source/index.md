@@ -50,3 +50,8 @@ apireference
 - PyPI: [https://pypi.org/project/pyprj/](https://pypi.org/project/pyprj/)
 - Documentation:
   [https://pyprj.readthedocs.io/en/latest/](https://pyprj.readthedocs.io/en/latest/)
+
+## License
+
+`pyprj` is distributed under the terms of the
+[MIT](https://spdx.org/licenses/MIT.html) license.
