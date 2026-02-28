@@ -1,5 +1,8 @@
 # PyPrj
 
+[![PyPI - Version](https://img.shields.io/pypi/v/pyprj.svg)](https://pypi.org/project/pyprj)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyprj.svg)](https://pypi.org/project/pyprj)
+
 An opinionated CLI tool to manage python projects.
 
 Makes use of:
