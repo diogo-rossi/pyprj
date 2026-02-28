@@ -19,9 +19,9 @@ TASKS_JSON = r"""{
             "command": "uv run task open",
         },
         {
-            "label": "Update version of package with uv",
+            "label": "Update version of package with pyprj",
             "type": "shell",
-            "command": "uv version --bump ${input:semver}",
+            "command": "pyprj upver ${input:semver}",
         },
         {
             "label": "Build package with taskipy in root folder",
