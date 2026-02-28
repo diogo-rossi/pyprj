@@ -1,5 +1,8 @@
 README_MD: str = r"""# {{pkg_name}}
 
+[![PyPI - Version](https://img.shields.io/pypi/v/{{pkg_name}}.svg)](https://pypi.org/project/{{pkg_name}})
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/{{pkg_name}}.svg)](https://pypi.org/project/{{pkg_name}})
+
 Description of the package.
 
 ## Installation
