@@ -50,3 +50,4 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
         text: list[str] = [f'__version__ = "{pkg_version}"' if s.startswith("__version__") else s for s in text]
         with open(about_path, "w", encoding="utf-8") as file:
             file.write("".join(text))
+        print("done.")
