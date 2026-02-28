@@ -12,6 +12,9 @@ dependencies = [
     "clig>=0.7.0",
     "taskipy>=1.14.1",
 ]
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+]
 
 [project.scripts]
 pyprj = "pyprj.cli:main"
@@ -38,9 +41,7 @@ Issues = "https://github.com/diogo-rossi/pyprj/issues"
 Source = "https://github.com/diogo-rossi/pyprj/"
 
 [project.optional-dependencies]
-ipython = [
-    "ipython>=9.10.0",
-]
+ipython = ["ipython>=9.10.0"]
 
 [tool.pytest]
 addopts = [
