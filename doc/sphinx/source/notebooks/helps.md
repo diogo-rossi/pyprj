@@ -31,7 +31,7 @@ subcommands:
 ```none
 > pyprj init --help
 
-usage: pyprj init [-h] [-n <name>] [-p <python-version>] [-b <black-line-length>] [-c [<cli>]]
+usage: pyprj init [-h] [-n <name>] [-p <python-version>] [-b <black-line-length>] [-c [<cli-name>]] [-N]
 
 Create a new project for a python package.
 
@@ -52,10 +52,15 @@ options:
                         Line length parameter to use with `black`.
                         Defaults to '128'.
 
-  -c [<cli>], --cli [<cli>]
+  -c [<cli-name>], --cli [<cli-name>]
                         Optional CLI script name. If omitted, No CLI command is added.
-                        If provided without a value, the CLI command name defaults to
-                        the name of the package.
+                        If provided without a value, the CLI command name defaults to the
+                        name of the package.
+
+  -N, --no-about        Whether to not add an `__about__.py` file in the project's `src`
+                        folder with the `__version__` property. The default (`False`) will
+                        add the file.
+                        Defaults to 'False'.
 ```
 
 ## `test` subcommand
@@ -104,12 +109,16 @@ subcommands:
 ```none
 > pyprj docs init --help
 
-usage: pyprj docs init [-h]
+usage: pyprj docs init [-h] [-a]
 
 Initialize documentation folder with packages.
 
 options:
-  -h, --help  Show this help message and exit.
+  -h, --help       Show this help message and exit.
+
+  -a, --add-pyprj  Whether to add `pyprj` itself in the `docs` dependency group of
+                   the project.
+                   Defaults to 'False'.
 ```
 
 ### `docs/nbmd` subcommand
@@ -152,7 +161,7 @@ options:
 ```none
 > pyprj docs nbex --help
 
-usage: pyprj docs nbex [-h] [-c] [-d <dest-directory>] [-o <output-suffix>] [filepath ...]
+usage: pyprj docs nbex [-h] [-o] [-n] [-d <dest-directory>] [-O <output-suffix>] [filepath ...]
 
 Process jupyter (nb) files to generate example files of code.
 Create files from the cells starting with `%%python`.
@@ -165,8 +174,13 @@ positional arguments:
 options:
   -h, --help            Show this help message and exit.
 
-  -c, --change-shell-cells
-                        Whether to edit the following shell cells, after the example
+  -o, --only-rename-examples
+                        Whether to only rename the example cells, not generating example
+                        files.
+                        Defaults to 'False'.
+
+  -n, --no-change-shell-cells
+                        Whether to not edit the following shell cells, after the example
                         cells.
                         Defaults to 'False'.
 
@@ -174,7 +188,7 @@ options:
                         Directory of the resulting examples files.
                         Defaults to 'examples'.
 
-  -o <output-suffix>, --output-suffix <output-suffix>
+  -O <output-suffix>, --output-suffix <output-suffix>
                         If editing original notebook file (`change_shell_cells=True`) add
                         this suffix to the resulting file. Used for debbuging purposes, to
                         not overwrite the original file (which is done with the default
