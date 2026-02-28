@@ -43,6 +43,7 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
 
     about_path: Path = Path(pyproject.dirpath / f"src/{pkg_name}/__about__.py")
     if about_path.exists():
+        print("> Updating version in `__about__.py` file")
         pkg_version = __get_pyproject_data()["project"]["version"]
         with open(about_path, "r", encoding="utf-8") as file:
             text: list[str] = file.readlines()
