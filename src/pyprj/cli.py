@@ -28,10 +28,7 @@ except PackageNotFoundError:
 ############# Commands #########################################################################################################
 
 
-def pyprj(
-    ctx: Context,
-    version: Arg[str, data(action="version", version=f"%(prog)s {__version__}")],
-):
+def pyprj(ctx: Context):
     """A CLI to manage python projects with predefined tools."""
     if vars(ctx.namespace)[ctx.command.subparsers_dest] is None:
         ctx.command.run(["--help"])
@@ -63,7 +60,7 @@ kwargs_without_optmetavarmodifier.pop("optmetavarmodifier")
 def main() -> int:
     # fmt: off
     cmd: Command = (
-        Command(pyprj, **kwargs_only_help_flag_with_subcmds)
+        Command(pyprj, version=True, **kwargs_only_help_flag_with_subcmds)
             .add_subcommand(inip, **kwargs)
             .add_subcommand(test, **kwargs)
             .new_subcommand(docs, **kwargs_only_help_flag_with_subcmds)
