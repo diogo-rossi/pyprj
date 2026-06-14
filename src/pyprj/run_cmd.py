@@ -1,5 +1,7 @@
 import os
 
+from .printcolor import Color, printcolor
+
 COLUMNS = 50
 try:
     COLUMNS = os.get_terminal_size().columns
@@ -25,8 +27,8 @@ def run_cmd(cmd: str, kind: str | None = None, add_sep: bool = True):
 
     sep: str = "-" * len(msg)
     if add_sep:
-        print(f"{SEP}")
-    print(f"{msg}\n{sep}")
+        printcolor(f"{SEP}", Color.GREEN)
+    printcolor(f"{msg}\n{sep}", Color.BLUE)
     error_code = os.system(cmd)
-    print(SEP)
+    printcolor(SEP, Color.GREEN)
     return error_code

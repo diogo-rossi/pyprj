@@ -16,6 +16,7 @@ from .cellfuncs import (
     __is_python_repl_code_cell,
     __is_shell_command_code_cell,
 )
+from .printcolor import Color, printcolor
 from .run_cmd import run_cmd
 
 
@@ -48,7 +49,7 @@ def nbmd(
         Whether to not run the jupyter notebooks before processing.
     """
     if kind != "tutorial":
-        print("\nNot yet implemented. Currently, only 'kind=tutorial' is accepted.\n")
+        printcolor("\nNot yet implemented. Currently, only 'kind=tutorial' is accepted.\n", Color.RED)
         return
 
     if not filepath:
@@ -63,16 +64,16 @@ def nbmd(
             filepath.extend(path.glob("*.ipynb"))
 
     if len(filepath) == 0:
-        print("\nNo notebook files found.\n")
+        printcolor("\nNo notebook files found.\n", Color.RED)
         return
 
     print()
     prettier: bool = not no_prettier
     if prettier:
-        print("> checking `prettier` version:")
+        printcolor("> checking `prettier` version:", Color.BLUE)
         error_code = os.system("prettier --version")
         if error_code != 0:
-            print("> No valid `prettier` command found")
+            printcolor("> No valid `prettier` command found", Color.RED)
             prettier = False
         print()
 
@@ -118,4 +119,4 @@ def nbmd(
         if prettier:
             os.system(f"prettier --write {markdown_filepath}")
 
-        print(f"> generated markdown file '{markdown_filepath}'\n")
+        printcolor(f"> generated markdown file '{markdown_filepath}'\n", Color.BLUE)
