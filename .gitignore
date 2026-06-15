@@ -1,13 +1,14 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
+.venv
+.pytest_cache
+.vscode
 build/
+builds/
 dist/
 wheels/
+*.py[oc]
 *.egg-info
+__pycache__/
 
-# Virtual environments
-.venv
 
 # Example folder in sphinx docs
 doc/sphinx/source/notebooks/examples/
