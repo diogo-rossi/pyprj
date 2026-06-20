@@ -57,10 +57,10 @@ kwargs_without_optmetavarmodifier.pop("optmetavarmodifier")
 ############# Main function ####################################################################################################
 
 
-def main() -> int:
+def main() -> None:
     # fmt: off
     cmd: Command = (
-        Command(pyprj, version=True, **kwargs_only_help_flag_with_subcmds)
+        Command(pyprj, version=True, epilog=" ", **kwargs_only_help_flag_with_subcmds)
             .add_subcommand(inip, **kwargs)
             .add_subcommand(test, **kwargs)
             .new_subcommand(docs, **kwargs_only_help_flag_with_subcmds)
@@ -68,7 +68,7 @@ def main() -> int:
                 .add_subcommand(nbex, **kwargs)
                 .add_subcommand(nbmd, **kwargs_without_optmetavarmodifier)
                 .end_subcommand(modm, **kwargs)
-            .add_subcommand(upver, **kwargs)
+            .add_subcommand(upver, epilogmodifier=lambda s: f"{s}\n ", **kwargs)
             .add_subcommand(build, **kwargs)
             .add_subcommand(publish, **kwargs)
     )

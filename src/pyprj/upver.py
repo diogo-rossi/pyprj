@@ -14,7 +14,6 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
 
     Currently, it uses the command `uv version`.
     If called without positional arguments, only show the project version.
-    .
 
     Parameters
     ----------
