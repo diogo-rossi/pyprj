@@ -56,6 +56,7 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
 
     about_path: Path = Path(pyproject.dirpath / f"src/{pkg_name}/__about__.py")
     if about_path.exists():
+        print("-------------------------")
         print("> Updating version in `__about__.py` file")
         pkg_version = __get_pyproject_data()["project"]["version"]
         text: list[str] = about_path.read_text(encoding="utf-8").splitlines(keepends=True)
@@ -65,6 +66,7 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
 
     init_path: Path = Path(pyproject.dirpath / f"src/{pkg_name}/__init__.py")
     if init_path.exists():
+        print("-------------------------")
         print("> Updating version in `__init__.py` file")
         pkg_version = __get_pyproject_data()["project"]["version"]
         text: list[str] = init_path.read_text(encoding="utf-8").splitlines(keepends=True)
