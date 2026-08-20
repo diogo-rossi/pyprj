@@ -51,11 +51,7 @@ usage: pyprj [-h] [-v] {init,test,docs,upver,build,publish} ...
 
 A CLI to manage python projects with predefined tools.
 
-options:
-  -h, --help            Show this help message and exit.
-  -v, --version         show program's version number and exit
-
-subcommands:
+positional arguments:
   {init,test,docs,upver,build,publish}
     init                Create a new project for a python package.
     test                Run task `test` inside the project.
@@ -63,6 +59,10 @@ subcommands:
     upver               Update or show project version.
     build               Run task `build` inside the project.
     publish             Publish package to PyPI.
+
+options:
+  -h, --help            Show this help message and exit.
+  -v, --version         show program's version number and exit
 ```
 
 ### `init` subcommand
@@ -132,15 +132,15 @@ If called without subcommands, runs the task `docs` inside the project.
 Tasks use the tool `taskipy`. Currently are run with the tool `uv`.
 The task `docs` makes docs with `sphinx` in folder `./doc/sphinx`.
 
-options:
-  -h, --help            Show this help message and exit.
-
-subcommands:
+positional arguments:
   {init,nbex,nbmd,modm}
     init                Initialize documentation folder with packages.
     nbex                Process jupyter (nb) files to generate example files of code.
     nbmd                Process jupyter (nb) files to generate markdown (md) files.
     modm                Process documentation in modules.
+
+options:
+  -h, --help            Show this help message and exit.
 ```
 
 #### `docs/init` subcommand
@@ -274,7 +274,7 @@ options:
 ```none
 > pyprj upver --help
 
-usage: pyprj upver [-h] [-b] [{major,minor,patch}]
+usage: pyprj upver [-h] [-b] [-m] [{major,minor,patch}]
 
 Update or show project version.
 
@@ -285,6 +285,10 @@ options:
   -h, --help           Show this help message and exit.
 
   -b, --build          Whether to build the project after update version.
+                       Defaults to 'False'.
+
+  -m, --move           Whether to move files from `dist/` folder to `builds/` folder
+                       (before building).
                        Defaults to 'False'.
 
 
@@ -306,6 +310,7 @@ Uses token from file `.vscode/pyprj.json`.
 options:
   -h, --help  Show this help message and exit.
 ```
+
 ## License
 
 `pyprj` is distributed under the terms of the
