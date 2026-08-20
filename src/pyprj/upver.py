@@ -6,7 +6,7 @@ from typing import Literal
 from clig import Arg, data
 
 from .run_cmd import run_cmd
-from .taskscmd import build as buill_project
+from .taskscmd import build as build_project
 
 
 def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], build: bool = False, move: bool = False):
@@ -54,16 +54,23 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
                 print(f"Move file: - {file_path}")
                 print(f"To folder: - {builds_dir}")
 
-    if build:
-        buill_project()
-
     about_path: Path = Path(pyproject.dirpath / f"src/{pkg_name}/__about__.py")
     if about_path.exists():
         print("> Updating version in `__about__.py` file")
         pkg_version = __get_pyproject_data()["project"]["version"]
-        with open(about_path, "r", encoding="utf-8") as file:
-            text: list[str] = file.readlines()
+        text: list[str] = about_path.read_text(encoding="utf-8").splitlines(keepends=True)
         text: list[str] = [f'__version__ = "{pkg_version}"' if s.startswith("__version__") else s for s in text]
-        with open(about_path, "w", encoding="utf-8") as file:
-            file.write("".join(text))
-        print("done.")
+        about_path.write_text("".join(text), encoding="utf-8")
+        print("-- done.")
+
+    init_path: Path = Path(pyproject.dirpath / f"src/{pkg_name}/__init__.py")
+    if init_path.exists():
+        print("> Updating version in `__init__.py` file")
+        pkg_version = __get_pyproject_data()["project"]["version"]
+        text: list[str] = init_path.read_text(encoding="utf-8").splitlines(keepends=True)
+        text: list[str] = [f'__version__ = "{pkg_version}"' if s.startswith("__version__") else s for s in text]
+        init_path.write_text("".join(text), encoding="utf-8")
+        print("-- done.")
+
+    if build:
+        build_project()
