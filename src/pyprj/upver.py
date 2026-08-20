@@ -60,7 +60,7 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
         print("> Updating version in `__about__.py` file")
         pkg_version = __get_pyproject_data()["project"]["version"]
         text: list[str] = about_path.read_text(encoding="utf-8").splitlines(keepends=True)
-        text: list[str] = [f'__version__ = "{pkg_version}"' if s.startswith("__version__") else s for s in text]
+        text: list[str] = [f'__version__ = "{pkg_version}"\n' if s.startswith("__version__") else s for s in text]
         about_path.write_text("".join(text), encoding="utf-8")
         print("-- done.")
 
@@ -70,7 +70,7 @@ def upver(semver: Arg[Literal["major", "minor", "patch"], data(nargs="?")], buil
         print("> Updating version in `__init__.py` file")
         pkg_version = __get_pyproject_data()["project"]["version"]
         text: list[str] = init_path.read_text(encoding="utf-8").splitlines(keepends=True)
-        text: list[str] = [f'__version__ = "{pkg_version}"' if s.startswith("__version__") else s for s in text]
+        text: list[str] = [f'__version__ = "{pkg_version}"\n' if s.startswith("__version__") else s for s in text]
         init_path.write_text("".join(text), encoding="utf-8")
         print("-- done.")
 
